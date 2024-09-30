@@ -7,8 +7,13 @@ using InteractiveUtils
 # ╔═╡ 136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 using Manopt, Manifolds, Distributions, Random, LinearAlgebra, Plots
 
+# ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
+md"""
+Note, BZ stands for Bendocat & Zimmerman
+"""
+
 # ╔═╡ 0c74b3ea-f04a-4558-b170-601f360aa54f
-Random.seed!(41)
+Random.seed!(41) # Does this work?
 
 # ╔═╡ 9a2619b4-3130-465f-996e-127e634ce2d3
 md"""
@@ -53,16 +58,10 @@ By picking a random matrix from the Hamiltonian matrix manifold.
 # ╔═╡ ad41f072-9144-497a-88a4-68d0ba7c8b37
 Ω = Ω_unscaled / norm(Ω_unscaled, 2) # 2 = frobenius norm
 
-# ╔═╡ 0765d6e3-94ca-453b-845d-c6470575c5c7
-md"""
-Need Cayley trans. from p. 20
-
-And E from p. 5
-"""
-
 # ╔═╡ 44799ac7-6ccc-4cd1-91f3-21975ff6245a
 md"""
 ##### Define $E$
+From page 5. in BZ
 """
 
 # ╔═╡ f13b4bab-d914-4923-9918-c5a3aac0dda5
@@ -80,6 +79,7 @@ E = vcat(hcat(I_nk,  zeros(n,k)),
 # ╔═╡ e365e09e-d9b4-438e-887f-84f6f15f6f14
 md"""
 ##### Define the Cayley transformation
+Cayley trans. from p. 20 in BZ
 """
 
 # ╔═╡ 479f35f0-67c6-44c7-a86a-07612e72132f
@@ -101,7 +101,7 @@ md"""
 """
 
 # ╔═╡ 84713389-c089-4c1a-ab0b-bc504c4e59c3
-function cost_function(P::Matrix{Float64})
+function cost_function(M, P::Matrix{Float64}) # Why must it include M?
 	# Implement some checks
 	return norm(P - A) ^ 2
 end
@@ -112,17 +112,28 @@ function euclid_grad_cost_function(P::Matrix{Float64})
 	return 2 * (P - A)
 end
 
-# ╔═╡ 627024e8-3217-4f06-8742-ccc5120764b8
-#=function rie_grad_cost_function(M, P)
-	egrad = euclid_grad_cost_function(P)
-	return egrad2rgrad(M, P, egrad)
+# ╔═╡ e8ff80b9-aa18-4cf7-82a7-e42738425d23
+# stepsize = Manopt.ConstantStepsize(M, 0.01) # Naive choice
+
+# ╔═╡ 93add6b4-11d7-4fec-8878-86c128a6e6c8
+md"""
+The armijo linesearch demands an [injectivity radius](https://en.wikipedia.org/wiki/Glossary_of_Riemannian_and_metric_geometry#I). By [Zimmerman & Stoye](https://arxiv.org/abs/2405.02268), the injectivity radius is $\pi$ for the Euclidian norm. Since this is just a constant, this should be the same for our Riemannian metric as well.
+"""
+
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+stepsize = ArmijoLinesearch(M, stop_when_stepsize_exceeds=π) 
+# curcomvent calculation of injectivity radius 
+
+# ╔═╡ 2c06883e-c63d-4ca2-9122-2c07e69eccfa
+#=begin
+import ManifoldsBase: injectivity_radius
+function injectivity_radius(M::Manifolds.SymplecticStiefel{T, N}) where {T, N}
+    return 1.0  # Adjust this value based on your manifold's geometry
+end
 end=#
 
-# ╔═╡ 792dd185-7481-4db9-8275-9e71afcf24ff
-# Manifolds.injectivity_radius(::Manifolds.SymplecticStiefel) = 1.0
-
-# ╔═╡ e8ff80b9-aa18-4cf7-82a7-e42738425d23
-stepsize = Manopt.ConstantStepsize(M, 0.01)
+# ╔═╡ 0425bc7e-c3c8-4f3e-a0d0-9a7bac671bb3
+#Manifolds.injectivity_radius(M::Manifolds.SymplecticStiefel) = 0.4
 
 # ╔═╡ f79b7263-de64-4608-8dda-005312bfdb61
 function symplectic_element(n) # Define the J_{2n} matrix
@@ -140,7 +151,7 @@ end
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
 U= gradient_descent(M, cost_function, rie_grad_cost_function, 
-	p=U0, stepsize = stepsize, debug = [:Iteration,:GradientNorm, "\n", :Stop],record=[:Iteration], return_state = true)
+	p=U0, stepsize = stepsize, debug = [:Iteration,:GradientNorm,:Stepsize, "\n", :Stop],record=[:Iteration], return_state = true)
 # X = zero_vector(M,U0)
 
 
@@ -150,39 +161,15 @@ get_record(U)
 # ╔═╡ 8d732241-df58-48a7-af6f-6f3bab89f4a3
 get_solver_result(U)
 
-# ╔═╡ 2ef86b1c-c2d3-4b39-bed2-02dc360d4245
-state
-
-# ╔═╡ 85cc67c8-2c34-4f59-a69c-b8dc031c796a
-cost_function(U0)
-
-# ╔═╡ 6d718340-278a-4062-aa05-f715c3503e5c
-cost_function(U)
-
 # ╔═╡ 0070c2e9-5329-4aac-8587-4bdaceb025c7
 md"""
-We see that U0 has a cost of $(round(cost_function(U0), digits = 2)), while U has a cost of $(round(cost_function(U), digits = 2))
+##### We see that U0 has a cost of $(round(cost_function(M, U0), digits = 2)), while U has a cost of $(round(cost_function(M, get_solver_result(U)), digits = 2))
 """
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
 ### Plotting
 """
-
-# ╔═╡ b34a1d4a-acb1-4dff-8aa2-725df6a51676
-gradient_norms = state.debug["gradient_norm"]
-
-# Plot the convergence of the gradient norms
-
-# ╔═╡ 20937189-1879-433a-858b-b71a00154dde
-state
-
-# ╔═╡ 3b406d49-5fe4-46d5-adfc-0d58763ffc6c
-plot(gradient_norms, 
-    title = "Convergence of Gradient Descent",
-    xlabel = "Iteration",
-    ylabel = "Gradient Norm",
-    legend = false)
 
 # ╔═╡ e8608653-ddad-479b-ad98-b4de5dd75efb
 
@@ -1619,6 +1606,7 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
+# ╟─5da75c4a-504c-4fb8-a531-ace91b6836a9
 # ╠═136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 # ╠═0c74b3ea-f04a-4558-b170-601f360aa54f
 # ╟─9a2619b4-3130-465f-996e-127e634ce2d3
@@ -1632,7 +1620,6 @@ version = "1.4.1+1"
 # ╟─ae7a5ba8-ece9-4b6a-97a3-dd0ca4541105
 # ╠═b740e538-0692-4842-9320-5222505a59b6
 # ╠═ad41f072-9144-497a-88a4-68d0ba7c8b37
-# ╠═0765d6e3-94ca-453b-845d-c6470575c5c7
 # ╟─44799ac7-6ccc-4cd1-91f3-21975ff6245a
 # ╠═f13b4bab-d914-4923-9918-c5a3aac0dda5
 # ╟─b59fd1ba-f4ea-4ffc-8323-ccf700104d8d
@@ -1643,22 +1630,18 @@ version = "1.4.1+1"
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
 # ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
 # ╠═1787795e-46c1-4d89-8388-0b1753b61fd2
-# ╠═627024e8-3217-4f06-8742-ccc5120764b8
-# ╠═792dd185-7481-4db9-8275-9e71afcf24ff
-# ╠═e8ff80b9-aa18-4cf7-82a7-e42738425d23
+# ╟─e8ff80b9-aa18-4cf7-82a7-e42738425d23
+# ╠═93add6b4-11d7-4fec-8878-86c128a6e6c8
+# ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+# ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
+# ╠═0425bc7e-c3c8-4f3e-a0d0-9a7bac671bb3
 # ╠═f79b7263-de64-4608-8dda-005312bfdb61
 # ╠═42206059-b75a-478f-b3d4-55aaa059a438
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═501d5dd5-541b-453f-b836-713196f5345d
 # ╠═8d732241-df58-48a7-af6f-6f3bab89f4a3
-# ╠═2ef86b1c-c2d3-4b39-bed2-02dc360d4245
-# ╠═85cc67c8-2c34-4f59-a69c-b8dc031c796a
-# ╠═6d718340-278a-4062-aa05-f715c3503e5c
 # ╟─0070c2e9-5329-4aac-8587-4bdaceb025c7
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╠═b34a1d4a-acb1-4dff-8aa2-725df6a51676
-# ╠═20937189-1879-433a-858b-b71a00154dde
-# ╠═3b406d49-5fe4-46d5-adfc-0d58763ffc6c
 # ╠═e8608653-ddad-479b-ad98-b4de5dd75efb
 # ╠═853abf6c-d995-4511-9b0a-0c1a19813648
 # ╠═afc1057a-d1e7-4f1a-a70a-636bfc0183f4
