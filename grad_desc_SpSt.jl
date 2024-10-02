@@ -12,8 +12,29 @@ md"""
 Note, BZ stands for Bendocat & Zimmerman
 """
 
-# ╔═╡ 0c74b3ea-f04a-4558-b170-601f360aa54f
-Random.seed!(41) # Does this work?
+# ╔═╡ eda6e1cd-8b42-4c6f-b830-3a3b5df0743f
+seed = Random.seed!(42); # Dependency issues!
+
+# ╔═╡ 28269c2f-d44a-41a6-8b2d-35129f068c9a
+rn = randn(seed)
+
+# ╔═╡ efe3adfc-d419-495f-b265-746c045b436d
+rn2 = randn(seed)
+
+# ╔═╡ 944b0744-dc1a-4f71-acb8-a3ad08b16962
+t1 = rand(1)
+
+# ╔═╡ 2610784a-7b35-4c56-bc93-f9e0129766d5
+t2 = rand(1)
+
+# ╔═╡ 0c0d5528-6a9f-40be-b453-b3427896f47c
+rng = Random.MersenneTwister(42);
+
+# ╔═╡ 517a436a-dc7c-4356-b440-949e0f7c0a05
+rn3 = randn(rng)
+
+# ╔═╡ b84dd0d3-6a5d-4f60-8c92-c8ad2f4ce4af
+rn4 = randn(rng)
 
 # ╔═╡ 9a2619b4-3130-465f-996e-127e634ce2d3
 md"""
@@ -35,11 +56,15 @@ md"""
 ### Generate a random point, $A$
 """
 
-# ╔═╡ a3114686-4fae-4a5d-9f9a-c748054d8550
-rand_A = randn(2*n,2*k)
+# ╔═╡ 1425e3a0-5964-47e7-ac86-391e35713946
+rand_A = randn(rng, 2*n,2*k); # rng seems to work somewhat
 
 # ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
+
 A = rand_A/norm(rand_A)
+
+# ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
+check_point(M, A)
 
 # ╔═╡ 6460d549-e79d-473e-82e9-92c261a02dd7
 md"""
@@ -53,7 +78,7 @@ By picking a random matrix from the Hamiltonian matrix manifold.
 """
 
 # ╔═╡ b740e538-0692-4842-9320-5222505a59b6
-Ω_unscaled = rand(HamiltonianMatrices(2*n))
+Ω_unscaled = rand(HamiltonianMatrices(2*n)); # Different on every kernel startup!
 
 # ╔═╡ ad41f072-9144-497a-88a4-68d0ba7c8b37
 Ω = Ω_unscaled / norm(Ω_unscaled, 2) # 2 = frobenius norm
@@ -95,6 +120,9 @@ end
 # ╔═╡ 2e862045-402d-4e6c-9c1f-b2f56e7a5420
 U0 = cay(Ω / 2) * E
 
+# ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
+check_point(M, U0) # Not throwing an error, so it is in SpSt
+
 # ╔═╡ a8971fce-7b45-4a50-9c63-9d726b460a5f
 md"""
 ### Define minimization problem
@@ -120,28 +148,34 @@ md"""
 The armijo linesearch demands an [injectivity radius](https://en.wikipedia.org/wiki/Glossary_of_Riemannian_and_metric_geometry#I). By [Zimmerman & Stoye](https://arxiv.org/abs/2405.02268), the injectivity radius is $\pi$ for the Euclidian norm. Since this is just a constant, this should be the same for our Riemannian metric as well.
 """
 
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M, stop_when_stepsize_exceeds=π) 
-# curcomvent calculation of injectivity radius 
-
-# ╔═╡ 2c06883e-c63d-4ca2-9122-2c07e69eccfa
-#=begin
-import ManifoldsBase: injectivity_radius
-function injectivity_radius(M::Manifolds.SymplecticStiefel{T, N}) where {T, N}
-    return 1.0  # Adjust this value based on your manifold's geometry
-end
-end=#
+# ╔═╡ 34dbfd16-9658-4de2-ac07-b91843aceace
+md"""
+We need to define the injectivity radius of the SpSt for the Armijo to work
+"""
 
 # ╔═╡ 0425bc7e-c3c8-4f3e-a0d0-9a7bac671bb3
-#Manifolds.injectivity_radius(M::Manifolds.SymplecticStiefel) = 0.4
+# This does not work:
+# Manifolds.injectivity_radius(M::Manifolds.SymplecticStiefel) = 0.4
+
+# ╔═╡ 2c06883e-c63d-4ca2-9122-2c07e69eccfa
+begin
+import ManifoldsBase: injectivity_radius
+function injectivity_radius(M::Manifolds.SymplecticStiefel{T, N}) where {T, N}
+    return 5  # ⚠️ Put something else here!
+end
+end
+
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+stepsize = ArmijoLinesearch(M, stop_when_stepsize_exceeds=5) 
+# curcomvent calculation of injectivity radius 
 
 # ╔═╡ f79b7263-de64-4608-8dda-005312bfdb61
 function symplectic_element(n) # Define the J_{2n} matrix
-    return [zeros(n, n) I(n); -I(n) zeros(n, n)]
+    return [zeros(n, n) I(n); 
+			-I(n) zeros(n, n)]
 end
 
 # ╔═╡ 42206059-b75a-478f-b3d4-55aaa059a438
-
 function rie_grad_cost_function(M, P)
     Y = euclid_grad_cost_function(P)
     J2n = symplectic_element(n)  # Create the J_{2n} matrix
@@ -150,35 +184,55 @@ function rie_grad_cost_function(M, P)
 end
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
-U= gradient_descent(M, cost_function, rie_grad_cost_function, 
-	p=U0, stepsize = stepsize, debug = [:Iteration,:GradientNorm,:Stepsize, "\n", :Stop],record=[:Iteration], return_state = true)
-# X = zero_vector(M,U0)
-
+solver = gradient_descent(M, cost_function, rie_grad_cost_function, p=U0, 
+	stepsize = stepsize, return_state = true, 
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
+	debug = [:Iteration,(:Cost, " F(p): %1.4f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4f, "),:Stepsize,"\n",:Stop],
+	record=[:Iteration, :Cost])
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
-get_record(U)
+get_record(solver)
 
 # ╔═╡ 8d732241-df58-48a7-af6f-6f3bab89f4a3
-get_solver_result(U)
+U = get_solver_result(solver)
+
+# ╔═╡ fc2d17ae-5bb5-4533-b473-9ba0fe76c380
+canonical_project(M, cay(Ω / 2)) # Only from Sp to SpSt!
+
+# ╔═╡ a7d991a0-b201-4158-b24f-6c9991aff684
+project(M, U, A) # Nearest Tangent!
+
+# ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
+check_point(M, U)
 
 # ╔═╡ 0070c2e9-5329-4aac-8587-4bdaceb025c7
 md"""
-##### We see that U0 has a cost of $(round(cost_function(M, U0), digits = 2)), while U has a cost of $(round(cost_function(M, get_solver_result(U)), digits = 2))
-"""
+##### We see that U0 has a cost of $(round(cost_function(M, U0), digits = 2)), while U has a cost of $(round(cost_function(M, U), digits = 2)). 
+""" # The actual solution is $(round(canonical_project(M, U0)), digits = 2))
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
 ### Plotting
 """
 
-# ╔═╡ e8608653-ddad-479b-ad98-b4de5dd75efb
+# ╔═╡ 16a9173f-d286-43b8-a415-0d2c01f11ae2
+theme(:dark)
 
+# ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
+iterations = [rec[1] for rec in get_record(solver)];
 
-# ╔═╡ 853abf6c-d995-4511-9b0a-0c1a19813648
+# ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
+cost_vals =  [rec[2] for rec in get_record(solver)];
 
+# ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
+plot(iterations, cost_vals, title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost")
 
-# ╔═╡ afc1057a-d1e7-4f1a-a70a-636bfc0183f4
+# ╔═╡ 7ff876ef-1ca0-4700-ab67-9648d1bdb352
+start_plt = 2
 
+# ╔═╡ 17831140-3781-4d9f-bab8-53d0b1c59514
+plot(iterations[start_plt:end], cost_vals[start_plt:end], title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -186,6 +240,7 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Manifolds = "1cead3c2-87b3-11e9-0ccd-23c62b72b94e"
+ManifoldsBase = "3362f125-f0bb-47a3-aa74-596ffd7ef2fb"
 Manopt = "0fc0a36d-df90-57f3-8f93-d78a9fc72bb5"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
@@ -193,6 +248,7 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 [compat]
 Distributions = "~0.25.112"
 Manifolds = "~0.10.2"
+ManifoldsBase = "~0.15.16"
 Manopt = "~0.5.1"
 Plots = "~1.40.8"
 """
@@ -203,7 +259,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "6b6a490f54cdb6b122820d3e7d33656d617d794a"
+project_hash = "a676dc0796e8ff80f3b32b3eb4180064a213d95c"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -1608,42 +1664,58 @@ version = "1.4.1+1"
 # ╔═╡ Cell order:
 # ╟─5da75c4a-504c-4fb8-a531-ace91b6836a9
 # ╠═136aef20-7c14-11ef-0f8a-2f66ffd8fe96
-# ╠═0c74b3ea-f04a-4558-b170-601f360aa54f
+# ╠═eda6e1cd-8b42-4c6f-b830-3a3b5df0743f
+# ╠═28269c2f-d44a-41a6-8b2d-35129f068c9a
+# ╠═efe3adfc-d419-495f-b265-746c045b436d
+# ╠═944b0744-dc1a-4f71-acb8-a3ad08b16962
+# ╠═2610784a-7b35-4c56-bc93-f9e0129766d5
+# ╠═0c0d5528-6a9f-40be-b453-b3427896f47c
+# ╠═517a436a-dc7c-4356-b440-949e0f7c0a05
+# ╠═b84dd0d3-6a5d-4f60-8c92-c8ad2f4ce4af
 # ╟─9a2619b4-3130-465f-996e-127e634ce2d3
 # ╠═ba92e87a-6ac3-4490-ab75-148cc0a25666
 # ╠═fd42108d-79bd-4db5-a1ce-1875341513c2
 # ╠═7d05e993-ae82-4e41-b36f-e76224483849
 # ╟─51b3f6de-8841-4cb0-8eeb-87b9a3e76d55
-# ╠═a3114686-4fae-4a5d-9f9a-c748054d8550
+# ╠═1425e3a0-5964-47e7-ac86-391e35713946
 # ╠═212f0565-d5ee-48e7-90bc-05351d905157
+# ╠═9a50fa8f-123d-4edb-9556-500da8ea2498
 # ╟─6460d549-e79d-473e-82e9-92c261a02dd7
 # ╟─ae7a5ba8-ece9-4b6a-97a3-dd0ca4541105
 # ╠═b740e538-0692-4842-9320-5222505a59b6
 # ╠═ad41f072-9144-497a-88a4-68d0ba7c8b37
 # ╟─44799ac7-6ccc-4cd1-91f3-21975ff6245a
-# ╠═f13b4bab-d914-4923-9918-c5a3aac0dda5
+# ╟─f13b4bab-d914-4923-9918-c5a3aac0dda5
 # ╟─b59fd1ba-f4ea-4ffc-8323-ccf700104d8d
-# ╠═d8faab6f-ff1b-4a70-bf17-f541a52d8c9e
+# ╟─d8faab6f-ff1b-4a70-bf17-f541a52d8c9e
 # ╟─e365e09e-d9b4-438e-887f-84f6f15f6f14
 # ╠═479f35f0-67c6-44c7-a86a-07612e72132f
 # ╠═2e862045-402d-4e6c-9c1f-b2f56e7a5420
+# ╠═75aff951-90ed-491c-8d98-f0149cad8162
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
 # ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
 # ╠═1787795e-46c1-4d89-8388-0b1753b61fd2
-# ╟─e8ff80b9-aa18-4cf7-82a7-e42738425d23
-# ╠═93add6b4-11d7-4fec-8878-86c128a6e6c8
-# ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-# ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
+# ╠═e8ff80b9-aa18-4cf7-82a7-e42738425d23
+# ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
+# ╟─34dbfd16-9658-4de2-ac07-b91843aceace
 # ╠═0425bc7e-c3c8-4f3e-a0d0-9a7bac671bb3
+# ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
+# ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
 # ╠═f79b7263-de64-4608-8dda-005312bfdb61
 # ╠═42206059-b75a-478f-b3d4-55aaa059a438
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═501d5dd5-541b-453f-b836-713196f5345d
 # ╠═8d732241-df58-48a7-af6f-6f3bab89f4a3
+# ╠═fc2d17ae-5bb5-4533-b473-9ba0fe76c380
+# ╠═a7d991a0-b201-4158-b24f-6c9991aff684
+# ╠═4723d019-935f-4344-90ff-b431a7e6388b
 # ╟─0070c2e9-5329-4aac-8587-4bdaceb025c7
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╠═e8608653-ddad-479b-ad98-b4de5dd75efb
-# ╠═853abf6c-d995-4511-9b0a-0c1a19813648
-# ╠═afc1057a-d1e7-4f1a-a70a-636bfc0183f4
+# ╠═16a9173f-d286-43b8-a415-0d2c01f11ae2
+# ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
+# ╠═19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
+# ╟─de8bf366-f01d-43cd-bcd0-db8828d6745a
+# ╠═7ff876ef-1ca0-4700-ab67-9648d1bdb352
+# ╟─17831140-3781-4d9f-bab8-53d0b1c59514
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
