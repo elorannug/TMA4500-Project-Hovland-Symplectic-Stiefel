@@ -5,7 +5,8 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ 136aef20-7c14-11ef-0f8a-2f66ffd8fe96
-using Manopt, Manifolds, Distributions, Random, LinearAlgebra, Plots
+using Manopt, Manifolds, Distributions, Random, LinearAlgebra, 
+Plots
 
 # ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
 md"""
@@ -13,22 +14,10 @@ Note, BZ stands for Bendocat & Zimmerman
 """
 
 # ╔═╡ eda6e1cd-8b42-4c6f-b830-3a3b5df0743f
-seed = Random.seed!(42); # Need to do this in every cell that uses randomness
+Random.seed!(42); # Need to add this in every cell that uses randomness
 
 # ╔═╡ c09b766d-6643-433a-a84e-9416dd2b668d
 theme(:dark) # For darkmode plots
-
-# ╔═╡ 0628baa6-915d-47c0-a12d-952e769d28aa
-begin
-	Random.seed!(42)
-	rand()
-end
-
-# ╔═╡ b85b3bd7-408c-4f76-ac0a-485a15592f87
-begin
-	Random.seed!(42)
-	rand()
-end
 
 # ╔═╡ 9a2619b4-3130-465f-996e-127e634ce2d3
 md"""
@@ -53,8 +42,8 @@ md"""
 # ╔═╡ d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 begin
 	Random.seed!(42)
-	rand_A = randn(2*n,2*k); # rng seems to work somewhat
-end
+	rand_A = randn(2*n,2*k) # rng seems to work somewhat
+end;
 
 # ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
 
@@ -77,8 +66,8 @@ By picking a random matrix from the Hamiltonian matrix manifold.
 # ╔═╡ b740e538-0692-4842-9320-5222505a59b6
 begin
 	Random.seed!(42)
-	Ω_unscaled = rand(HamiltonianMatrices(2*n)); # Different on every kernel startup!
-end
+	Ω_unscaled = rand(HamiltonianMatrices(2*n)) 
+end;
 
 # ╔═╡ ad41f072-9144-497a-88a4-68d0ba7c8b37
 Ω = Ω_unscaled / norm(Ω_unscaled, 2) # 2 = frobenius norm
@@ -153,15 +142,11 @@ md"""
 We need to define the injectivity radius of the SpSt for the Armijo to work
 """
 
-# ╔═╡ 0425bc7e-c3c8-4f3e-a0d0-9a7bac671bb3
-# This does not work:
-# Manifolds.injectivity_radius(M::Manifolds.SymplecticStiefel) = 0.4
-
 # ╔═╡ 2c06883e-c63d-4ca2-9122-2c07e69eccfa
 begin
 import ManifoldsBase: injectivity_radius
 function injectivity_radius(M::Manifolds.SymplecticStiefel{T, N}) where {T, N}
-    return 5  # ⚠️ Put something else here!
+    return 5  # This is good enough for now
 end
 end
 
@@ -169,22 +154,24 @@ end
 stepsize = ArmijoLinesearch(M) 
 # curcomvent calculation of injectivity radius 
 
-# ╔═╡ b5cffae2-c502-4d7a-9a9e-8c1f442fcee2
-Manifolds.SymplecticElement(1.0)
-
 # ╔═╡ f79b7263-de64-4608-8dda-005312bfdb61
-function symplectic_element(n) # Define the J_{2n} matrix
+# Don't need to define it ourselves. Also it is a waste of memory
+#=function symplectic_element(n) # Define the J_{2n} matrix
     return [zeros(n, n) I(n); 
 			-I(n) zeros(n, n)]
-end
+end=#
 
 # ╔═╡ 42206059-b75a-478f-b3d4-55aaa059a438
 function rie_grad_cost_function(M, P)
-    Y = euclid_grad_cost_function(P)
-    J2n = symplectic_element(n)  # Create the J_{2n} matrix
-    X = Y * transpose(P) * P + J2n * P * transpose(Y) * J2n * Y
+    grad_P = euclid_grad_cost_function(P)
+    J2n = Manifolds.SymplecticElement(1.0)  # Create the J_{2n} matrix
+    X = grad_P * transpose(P) * P + J2n * P * transpose(grad_P) * J2n * P
+	# Just a typo for the gradient to be good
     return X
 end
+
+# ╔═╡ 61e52cc4-8fcd-439d-a519-44ed4beb8142
+check_gradient(M, cost_function, rie_grad_cost_function; plot=true)
 
 # ╔═╡ 60850703-1a35-4ca4-8830-8d02ca6b8cfd
 function grad_f2(M,P)
@@ -195,7 +182,7 @@ end
 check_gradient(M, cost_function, grad_f2; plot=true)
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
-solver = gradient_descent(M, cost_function, grad_f2, U0;
+solver = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
@@ -1674,8 +1661,6 @@ version = "1.4.1+1"
 # ╠═136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 # ╠═eda6e1cd-8b42-4c6f-b830-3a3b5df0743f
 # ╠═c09b766d-6643-433a-a84e-9416dd2b668d
-# ╠═0628baa6-915d-47c0-a12d-952e769d28aa
-# ╠═b85b3bd7-408c-4f76-ac0a-485a15592f87
 # ╟─9a2619b4-3130-465f-996e-127e634ce2d3
 # ╠═ba92e87a-6ac3-4490-ab75-148cc0a25666
 # ╠═fd42108d-79bd-4db5-a1ce-1875341513c2
@@ -1702,12 +1687,11 @@ version = "1.4.1+1"
 # ╠═e8ff80b9-aa18-4cf7-82a7-e42738425d23
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
 # ╟─34dbfd16-9658-4de2-ac07-b91843aceace
-# ╠═0425bc7e-c3c8-4f3e-a0d0-9a7bac671bb3
 # ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
 # ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-# ╠═b5cffae2-c502-4d7a-9a9e-8c1f442fcee2
 # ╠═f79b7263-de64-4608-8dda-005312bfdb61
 # ╠═42206059-b75a-478f-b3d4-55aaa059a438
+# ╠═61e52cc4-8fcd-439d-a519-44ed4beb8142
 # ╠═60850703-1a35-4ca4-8830-8d02ca6b8cfd
 # ╠═62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
