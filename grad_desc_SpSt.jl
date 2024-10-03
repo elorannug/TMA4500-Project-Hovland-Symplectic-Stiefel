@@ -36,6 +36,18 @@ rn3 = randn(rng)
 # ╔═╡ b84dd0d3-6a5d-4f60-8c92-c8ad2f4ce4af
 rn4 = randn(rng)
 
+# ╔═╡ 0628baa6-915d-47c0-a12d-952e769d28aa
+begin
+	Random.seed!(42)
+	rand()
+end
+
+# ╔═╡ b85b3bd7-408c-4f76-ac0a-485a15592f87
+begin
+	Random.seed!(42)
+	rand()
+end
+
 # ╔═╡ 9a2619b4-3130-465f-996e-127e634ce2d3
 md"""
 ### Define the $\text{SpSt}(2n,2k)$, where $n$ and $k$ are even.
@@ -64,7 +76,7 @@ rand_A = randn(rng, 2*n,2*k); # rng seems to work somewhat
 A = rand_A/norm(rand_A)
 
 # ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
-check_point(M, A)
+is_point(M, A; error=:warn)
 
 # ╔═╡ 6460d549-e79d-473e-82e9-92c261a02dd7
 md"""
@@ -121,7 +133,7 @@ end
 U0 = cay(Ω / 2) * E
 
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
-check_point(M, U0) # Not throwing an error, so it is in SpSt
+is_point(M, U0) # Not throwing an error, so it is in SpSt
 
 # ╔═╡ a8971fce-7b45-4a50-9c63-9d726b460a5f
 md"""
@@ -166,8 +178,11 @@ end
 end
 
 # ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M, stop_when_stepsize_exceeds=5) 
+stepsize = ArmijoLinesearch(M) 
 # curcomvent calculation of injectivity radius 
+
+# ╔═╡ b5cffae2-c502-4d7a-9a9e-8c1f442fcee2
+Manifolds.SymplecticElement(1.0)
 
 # ╔═╡ f79b7263-de64-4608-8dda-005312bfdb61
 function symplectic_element(n) # Define the J_{2n} matrix
@@ -183,12 +198,20 @@ function rie_grad_cost_function(M, P)
     return X
 end
 
+# ╔═╡ 60850703-1a35-4ca4-8830-8d02ca6b8cfd
+function grad_f2(M,P)
+	riemannian_gradient(M, P, euclid_grad_cost_function(P))
+end
+
+# ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
+check_gradient(M, cost_function, grad_f2; plot=true)
+
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
-solver = gradient_descent(M, cost_function, rie_grad_cost_function, p=U0, 
+solver = gradient_descent(M, cost_function, grad_f2, U0;
 	stepsize = stepsize, return_state = true, 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
-	debug = [:Iteration,(:Cost, " F(p): %1.4f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4f, "),:Stepsize,"\n",:Stop],
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost])
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
@@ -204,7 +227,7 @@ canonical_project(M, cay(Ω / 2)) # Only from Sp to SpSt!
 project(M, U, A) # Nearest Tangent!
 
 # ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
-check_point(M, U)
+is_point(M, U; error=:warn)
 
 # ╔═╡ 0070c2e9-5329-4aac-8587-4bdaceb025c7
 md"""
@@ -257,7 +280,7 @@ Plots = "~1.40.8"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.2"
+julia_version = "1.10.5"
 manifest_format = "2.0"
 project_hash = "a676dc0796e8ff80f3b32b3eb4180064a213d95c"
 
@@ -347,7 +370,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.1.1+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1588,7 +1611,7 @@ version = "0.15.2+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
+version = "5.11.0+0"
 
 [[deps.libdecor_jll]]
 deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
@@ -1672,6 +1695,8 @@ version = "1.4.1+1"
 # ╠═0c0d5528-6a9f-40be-b453-b3427896f47c
 # ╠═517a436a-dc7c-4356-b440-949e0f7c0a05
 # ╠═b84dd0d3-6a5d-4f60-8c92-c8ad2f4ce4af
+# ╠═0628baa6-915d-47c0-a12d-952e769d28aa
+# ╠═b85b3bd7-408c-4f76-ac0a-485a15592f87
 # ╟─9a2619b4-3130-465f-996e-127e634ce2d3
 # ╠═ba92e87a-6ac3-4490-ab75-148cc0a25666
 # ╠═fd42108d-79bd-4db5-a1ce-1875341513c2
@@ -1701,8 +1726,11 @@ version = "1.4.1+1"
 # ╠═0425bc7e-c3c8-4f3e-a0d0-9a7bac671bb3
 # ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
 # ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+# ╠═b5cffae2-c502-4d7a-9a9e-8c1f442fcee2
 # ╠═f79b7263-de64-4608-8dda-005312bfdb61
 # ╠═42206059-b75a-478f-b3d4-55aaa059a438
+# ╠═60850703-1a35-4ca4-8830-8d02ca6b8cfd
+# ╠═62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═501d5dd5-541b-453f-b836-713196f5345d
 # ╠═8d732241-df58-48a7-af6f-6f3bab89f4a3
