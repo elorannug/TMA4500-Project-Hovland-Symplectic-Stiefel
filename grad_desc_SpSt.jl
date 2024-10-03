@@ -13,28 +13,10 @@ Note, BZ stands for Bendocat & Zimmerman
 """
 
 # ╔═╡ eda6e1cd-8b42-4c6f-b830-3a3b5df0743f
-seed = Random.seed!(42); # Dependency issues!
+seed = Random.seed!(42); # Need to do this in every cell that uses randomness
 
-# ╔═╡ 28269c2f-d44a-41a6-8b2d-35129f068c9a
-rn = randn(seed)
-
-# ╔═╡ efe3adfc-d419-495f-b265-746c045b436d
-rn2 = randn(seed)
-
-# ╔═╡ 944b0744-dc1a-4f71-acb8-a3ad08b16962
-t1 = rand(1)
-
-# ╔═╡ 2610784a-7b35-4c56-bc93-f9e0129766d5
-t2 = rand(1)
-
-# ╔═╡ 0c0d5528-6a9f-40be-b453-b3427896f47c
-rng = Random.MersenneTwister(42);
-
-# ╔═╡ 517a436a-dc7c-4356-b440-949e0f7c0a05
-rn3 = randn(rng)
-
-# ╔═╡ b84dd0d3-6a5d-4f60-8c92-c8ad2f4ce4af
-rn4 = randn(rng)
+# ╔═╡ c09b766d-6643-433a-a84e-9416dd2b668d
+theme(:dark) # For darkmode plots
 
 # ╔═╡ 0628baa6-915d-47c0-a12d-952e769d28aa
 begin
@@ -68,15 +50,18 @@ md"""
 ### Generate a random point, $A$
 """
 
-# ╔═╡ 1425e3a0-5964-47e7-ac86-391e35713946
-rand_A = randn(rng, 2*n,2*k); # rng seems to work somewhat
+# ╔═╡ d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
+begin
+	Random.seed!(42)
+	rand_A = randn(2*n,2*k); # rng seems to work somewhat
+end
 
 # ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
 
 A = rand_A/norm(rand_A)
 
 # ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
-is_point(M, A; error=:warn)
+is_point(M, A; error=:info)
 
 # ╔═╡ 6460d549-e79d-473e-82e9-92c261a02dd7
 md"""
@@ -90,7 +75,10 @@ By picking a random matrix from the Hamiltonian matrix manifold.
 """
 
 # ╔═╡ b740e538-0692-4842-9320-5222505a59b6
-Ω_unscaled = rand(HamiltonianMatrices(2*n)); # Different on every kernel startup!
+begin
+	Random.seed!(42)
+	Ω_unscaled = rand(HamiltonianMatrices(2*n)); # Different on every kernel startup!
+end
 
 # ╔═╡ ad41f072-9144-497a-88a4-68d0ba7c8b37
 Ω = Ω_unscaled / norm(Ω_unscaled, 2) # 2 = frobenius norm
@@ -212,7 +200,7 @@ solver = gradient_descent(M, cost_function, grad_f2, U0;
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
-	record=[:Iteration, :Cost])
+	record=[:Iteration, :Cost, RecordGradientNorm()])
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
 get_record(solver)
@@ -239,23 +227,20 @@ md"""
 ### Plotting
 """
 
-# ╔═╡ 16a9173f-d286-43b8-a415-0d2c01f11ae2
-theme(:dark)
-
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
 iterations = [rec[1] for rec in get_record(solver)];
 
 # ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
 cost_vals =  [rec[2] for rec in get_record(solver)];
 
+# ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
+gradient_vals = [rec[3] for rec in get_record(solver)];
+
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
-plot(iterations, cost_vals, title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost")
+plot(iterations[begin:end], cost_vals; title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost")
 
-# ╔═╡ 7ff876ef-1ca0-4700-ab67-9648d1bdb352
-start_plt = 2
-
-# ╔═╡ 17831140-3781-4d9f-bab8-53d0b1c59514
-plot(iterations[start_plt:end], cost_vals[start_plt:end], title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost")
+# ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
+plot(iterations[begin:end], gradient_vals; yaxis = :log10, title = "|∇f| plot", xlabel = "# iterations", ylabel = "|∇f|")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -280,7 +265,7 @@ Plots = "~1.40.8"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.5"
+julia_version = "1.10.2"
 manifest_format = "2.0"
 project_hash = "a676dc0796e8ff80f3b32b3eb4180064a213d95c"
 
@@ -370,7 +355,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.1+0"
+version = "1.1.0+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1611,7 +1596,7 @@ version = "0.15.2+0"
 [[deps.libblastrampoline_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.11.0+0"
+version = "5.8.0+1"
 
 [[deps.libdecor_jll]]
 deps = ["Artifacts", "Dbus_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pango_jll", "Wayland_jll", "xkbcommon_jll"]
@@ -1688,13 +1673,7 @@ version = "1.4.1+1"
 # ╟─5da75c4a-504c-4fb8-a531-ace91b6836a9
 # ╠═136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 # ╠═eda6e1cd-8b42-4c6f-b830-3a3b5df0743f
-# ╠═28269c2f-d44a-41a6-8b2d-35129f068c9a
-# ╠═efe3adfc-d419-495f-b265-746c045b436d
-# ╠═944b0744-dc1a-4f71-acb8-a3ad08b16962
-# ╠═2610784a-7b35-4c56-bc93-f9e0129766d5
-# ╠═0c0d5528-6a9f-40be-b453-b3427896f47c
-# ╠═517a436a-dc7c-4356-b440-949e0f7c0a05
-# ╠═b84dd0d3-6a5d-4f60-8c92-c8ad2f4ce4af
+# ╠═c09b766d-6643-433a-a84e-9416dd2b668d
 # ╠═0628baa6-915d-47c0-a12d-952e769d28aa
 # ╠═b85b3bd7-408c-4f76-ac0a-485a15592f87
 # ╟─9a2619b4-3130-465f-996e-127e634ce2d3
@@ -1702,7 +1681,7 @@ version = "1.4.1+1"
 # ╠═fd42108d-79bd-4db5-a1ce-1875341513c2
 # ╠═7d05e993-ae82-4e41-b36f-e76224483849
 # ╟─51b3f6de-8841-4cb0-8eeb-87b9a3e76d55
-# ╠═1425e3a0-5964-47e7-ac86-391e35713946
+# ╠═d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 # ╠═212f0565-d5ee-48e7-90bc-05351d905157
 # ╠═9a50fa8f-123d-4edb-9556-500da8ea2498
 # ╟─6460d549-e79d-473e-82e9-92c261a02dd7
@@ -1739,11 +1718,10 @@ version = "1.4.1+1"
 # ╠═4723d019-935f-4344-90ff-b431a7e6388b
 # ╟─0070c2e9-5329-4aac-8587-4bdaceb025c7
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╠═16a9173f-d286-43b8-a415-0d2c01f11ae2
 # ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
 # ╠═19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
-# ╟─de8bf366-f01d-43cd-bcd0-db8828d6745a
-# ╠═7ff876ef-1ca0-4700-ab67-9648d1bdb352
-# ╟─17831140-3781-4d9f-bab8-53d0b1c59514
+# ╠═a82b1ec9-3d03-43dc-9b38-0f4ca3442927
+# ╠═de8bf366-f01d-43cd-bcd0-db8828d6745a
+# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
