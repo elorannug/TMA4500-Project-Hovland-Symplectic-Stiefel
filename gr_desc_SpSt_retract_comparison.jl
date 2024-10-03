@@ -129,9 +129,6 @@ function euclid_grad_cost_function(P::Matrix{Float64})
 	return 2 * (P - A)
 end
 
-# ╔═╡ e8ff80b9-aa18-4cf7-82a7-e42738425d23
-# stepsize = Manopt.ConstantStepsize(M, 0.01) # Naive choice
-
 # ╔═╡ 93add6b4-11d7-4fec-8878-86c128a6e6c8
 md"""
 The armijo linesearch demands an [injectivity radius](https://en.wikipedia.org/wiki/Glossary_of_Riemannian_and_metric_geometry#I). By [Zimmerman & Stoye](https://arxiv.org/abs/2405.02268), the injectivity radius is $\pi$ for the Euclidian norm. Since this is just a constant, this should be the same for our Riemannian metric as well.
@@ -154,13 +151,6 @@ end
 stepsize = ArmijoLinesearch(M) 
 # curcomvent calculation of injectivity radius 
 
-# ╔═╡ f79b7263-de64-4608-8dda-005312bfdb61
-# Don't need to define it ourselves. Also it is a waste of memory
-#=function symplectic_element(n) # Define the J_{2n} matrix
-    return [zeros(n, n) I(n); 
-			-I(n) zeros(n, n)]
-end=#
-
 # ╔═╡ 42206059-b75a-478f-b3d4-55aaa059a438
 function rie_grad_cost_function(M, P)
     grad_P = euclid_grad_cost_function(P)
@@ -171,15 +161,7 @@ function rie_grad_cost_function(M, P)
 end
 
 # ╔═╡ 61e52cc4-8fcd-439d-a519-44ed4beb8142
-check_gradient(M, cost_function, rie_grad_cost_function; plot=true)
-
-# ╔═╡ 60850703-1a35-4ca4-8830-8d02ca6b8cfd
-function grad_f2(M,P)
-	riemannian_gradient(M, P, euclid_grad_cost_function(P))
-end
-
-# ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
-check_gradient(M, cost_function, grad_f2; plot=true)
+check_gradient(M, cost_function, rie_grad_cost_function; plot=false)
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
 solver = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
@@ -193,13 +175,7 @@ solver = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 get_record(solver)
 
 # ╔═╡ 8d732241-df58-48a7-af6f-6f3bab89f4a3
-U = get_solver_result(solver)
-
-# ╔═╡ fc2d17ae-5bb5-4533-b473-9ba0fe76c380
-canonical_project(M, cay(Ω / 2)) # Only from Sp to SpSt!
-
-# ╔═╡ a7d991a0-b201-4158-b24f-6c9991aff684
-project(M, U, A) # Nearest Tangent!
+U = get_solver_result(solver);
 
 # ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
 is_point(M, U; error=:warn)
@@ -222,9 +198,6 @@ cost_vals =  [rec[2] for rec in get_record(solver)];
 
 # ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
 gradient_vals = [rec[3] for rec in get_record(solver)];
-
-# ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
-plot(iterations[begin:end], cost_vals; title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost")
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 plot(iterations[begin:end], gradient_vals; yaxis = :log10, title = "|∇f| plot", xlabel = "# iterations", ylabel = "|∇f|")
@@ -1678,34 +1651,27 @@ version = "1.4.1+1"
 # ╟─b59fd1ba-f4ea-4ffc-8323-ccf700104d8d
 # ╟─d8faab6f-ff1b-4a70-bf17-f541a52d8c9e
 # ╟─e365e09e-d9b4-438e-887f-84f6f15f6f14
-# ╠═479f35f0-67c6-44c7-a86a-07612e72132f
+# ╟─479f35f0-67c6-44c7-a86a-07612e72132f
 # ╠═2e862045-402d-4e6c-9c1f-b2f56e7a5420
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
-# ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
-# ╠═1787795e-46c1-4d89-8388-0b1753b61fd2
-# ╠═e8ff80b9-aa18-4cf7-82a7-e42738425d23
+# ╟─84713389-c089-4c1a-ab0b-bc504c4e59c3
+# ╟─1787795e-46c1-4d89-8388-0b1753b61fd2
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
 # ╟─34dbfd16-9658-4de2-ac07-b91843aceace
-# ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
-# ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-# ╠═f79b7263-de64-4608-8dda-005312bfdb61
-# ╠═42206059-b75a-478f-b3d4-55aaa059a438
+# ╟─2c06883e-c63d-4ca2-9122-2c07e69eccfa
+# ╟─fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+# ╟─42206059-b75a-478f-b3d4-55aaa059a438
 # ╠═61e52cc4-8fcd-439d-a519-44ed4beb8142
-# ╠═60850703-1a35-4ca4-8830-8d02ca6b8cfd
-# ╠═62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═501d5dd5-541b-453f-b836-713196f5345d
 # ╠═8d732241-df58-48a7-af6f-6f3bab89f4a3
-# ╠═fc2d17ae-5bb5-4533-b473-9ba0fe76c380
-# ╠═a7d991a0-b201-4158-b24f-6c9991aff684
 # ╠═4723d019-935f-4344-90ff-b431a7e6388b
 # ╟─0070c2e9-5329-4aac-8587-4bdaceb025c7
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
 # ╠═19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
 # ╠═a82b1ec9-3d03-43dc-9b38-0f4ca3442927
-# ╠═de8bf366-f01d-43cd-bcd0-db8828d6745a
 # ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
