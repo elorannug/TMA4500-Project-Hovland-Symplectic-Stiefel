@@ -148,7 +148,8 @@ end
 end
 
 # ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M) 
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
+# Init. step size as in paper
 # curcomvent calculation of injectivity radius 
 
 # ╔═╡ 42206059-b75a-478f-b3d4-55aaa059a438
@@ -164,18 +165,32 @@ end
 check_gradient(M, cost_function, rie_grad_cost_function; plot=false)
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
-solver = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+solver_default = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
+
+	retraction_method = default_retraction_method(M), # :=CayleyRetraction()
+
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
+	record=[:Iteration, :Cost, RecordGradientNorm()]);
+
+# ╔═╡ 1404149f-158f-42bf-9960-e4480ee9682b
+solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+	stepsize = stepsize, return_state = true, 
+
+	retraction_method = ExponentialRetraction(),
+
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
-get_record(solver)
+get_record(solver_default)
 
 # ╔═╡ 8d732241-df58-48a7-af6f-6f3bab89f4a3
-U = get_solver_result(solver);
+U = get_solver_result(solver_default);
 
 # ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
 is_point(M, U; error=:warn)
@@ -191,16 +206,34 @@ md"""
 """
 
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
-iterations = [rec[1] for rec in get_record(solver)];
+iterations_default = [rec[1] for rec in get_record(solver_default)];
 
 # ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
-cost_vals =  [rec[2] for rec in get_record(solver)];
+cost_vals_default =  [rec[2] for rec in get_record(solver_default)];
 
 # ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
-gradient_vals = [rec[3] for rec in get_record(solver)];
+gradient_vals_default = [rec[3] for rec in get_record(solver_default)];
+
+# ╔═╡ 90979486-111c-4d4a-a08e-c9fdcf448857
+iterations_other = [rec[1] for rec in get_record(solver_other)];
+
+# ╔═╡ c8e7bc8a-acac-436b-8117-11136f150a71
+cost_vals_other =  [rec[2] for rec in get_record(solver_other)];
+
+# ╔═╡ 0b4115c3-bf6b-4bb3-bfe5-f0bddd2789ba
+gradient_vals_other = [rec[3] for rec in get_record(solver_other)];
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
-plot(iterations[begin:end], gradient_vals; yaxis = :log10, title = "|∇f| plot", xlabel = "# iterations", ylabel = "|∇f|")
+begin
+plot(iterations_default, cost_vals_default; title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost", label = "Cayley retraction", xaxis=:log10)
+plot!(iterations_other, cost_vals_other, label = "Other retraction")
+end
+
+# ╔═╡ 7d511678-c208-446d-86e8-f064e18c0891
+begin
+plot(iterations_default, gradient_vals_default; title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost", label = "Cayley retraction", xaxis=:log10)
+plot!(iterations_other, gradient_vals_other, label = "Other retraction")
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1660,10 +1693,11 @@ version = "1.4.1+1"
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
 # ╟─34dbfd16-9658-4de2-ac07-b91843aceace
 # ╟─2c06883e-c63d-4ca2-9122-2c07e69eccfa
-# ╟─fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+# ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
 # ╟─42206059-b75a-478f-b3d4-55aaa059a438
 # ╠═61e52cc4-8fcd-439d-a519-44ed4beb8142
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
+# ╠═1404149f-158f-42bf-9960-e4480ee9682b
 # ╠═501d5dd5-541b-453f-b836-713196f5345d
 # ╠═8d732241-df58-48a7-af6f-6f3bab89f4a3
 # ╠═4723d019-935f-4344-90ff-b431a7e6388b
@@ -1672,6 +1706,10 @@ version = "1.4.1+1"
 # ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
 # ╠═19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
 # ╠═a82b1ec9-3d03-43dc-9b38-0f4ca3442927
-# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╠═90979486-111c-4d4a-a08e-c9fdcf448857
+# ╠═c8e7bc8a-acac-436b-8117-11136f150a71
+# ╠═0b4115c3-bf6b-4bb3-bfe5-f0bddd2789ba
+# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╠═7d511678-c208-446d-86e8-f064e18c0891
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
