@@ -6,7 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ 136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 using Manopt, Manifolds, Distributions, Random, LinearAlgebra, 
-Plots
+Plots, BenchmarkTools
 
 # ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
 md"""
@@ -184,7 +184,7 @@ solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
-	record=[:Iteration, :Cost, RecordGradientNorm()])
+	record=[:Iteration, :Cost, RecordGradientNorm()]);
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
 get_record(solver_default)
@@ -206,22 +206,17 @@ md"""
 """
 
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
-iterations_default = [rec[1] for rec in get_record(solver_default)];
+begin
+iterations_default = [rec[1] for rec in get_record(solver_default)]
+cost_vals_default =  [rec[2] for rec in get_record(solver_default)]
+gradient_vals_default = [rec[3] for rec in get_record(solver_default)]
 
-# ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
-cost_vals_default =  [rec[2] for rec in get_record(solver_default)];
+iterations_other = [rec[1] for rec in get_record(solver_other)]
+cost_vals_other =  [rec[2] for rec in get_record(solver_other)]
+gradient_vals_other = [rec[3] for rec in get_record(solver_other)]
 
-# ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
-gradient_vals_default = [rec[3] for rec in get_record(solver_default)];
-
-# ╔═╡ 90979486-111c-4d4a-a08e-c9fdcf448857
-iterations_other = [rec[1] for rec in get_record(solver_other)];
-
-# ╔═╡ c8e7bc8a-acac-436b-8117-11136f150a71
-cost_vals_other =  [rec[2] for rec in get_record(solver_other)];
-
-# ╔═╡ 0b4115c3-bf6b-4bb3-bfe5-f0bddd2789ba
-gradient_vals_other = [rec[3] for rec in get_record(solver_other)];
+print("Fetching vectors for plotting")
+end;
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 begin
@@ -231,13 +226,50 @@ end
 
 # ╔═╡ 7d511678-c208-446d-86e8-f064e18c0891
 begin
-plot(iterations_default, gradient_vals_default; title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost", label = "Cayley retraction", xaxis=:log10)
-plot!(iterations_other, gradient_vals_other, label = "Other retraction")
+plot(iterations_default, gradient_vals_default; title = "|▽f| plot", xlabel = "# iterations", ylabel = "|▽f|", label = "Cayley retraction", xaxis=:log10)
+plot!(iterations_other, gradient_vals_other, label = "Exp retraction")
 end
+
+# ╔═╡ 5a23ebce-129f-47d7-a1c4-29c0bb91b828
+md"""
+### Benchmarking
+"""
+
+# ╔═╡ 4c2e431d-0e62-4cc0-b4fe-f7b38cd911ca
+md"""
+##### ▽ descent with Cayley Retraction
+"""
+
+# ╔═╡ b511ad19-1a1f-4719-b185-be83468f2a86
+@benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+	stepsize = stepsize, return_state = true, 
+
+	retraction_method = default_retraction_method(M), # :=CayleyRetraction()
+
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9))
+
+# ╔═╡ d0d78bc7-8159-4014-8c1b-a8231330e332
+md"""
+##### ▽ descent with Exponential Retraction *(BZ Riemannian Geodesic)*
+"""
+
+# ╔═╡ fd880b0d-9c79-4134-96ae-ad00a0e8d2a6
+@benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+	stepsize = stepsize, return_state = true, 
+
+	retraction_method = ExponentialRetraction(),
+
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9))
+
+# ╔═╡ 8d79f9b5-9416-46d5-b27b-ed8838d1638d
+md"""
+We can see that the Cayley Retraction method is faster than projecting with the exponential map.
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Manifolds = "1cead3c2-87b3-11e9-0ccd-23c62b72b94e"
@@ -247,6 +279,7 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
+BenchmarkTools = "~1.5.0"
 Distributions = "~0.25.112"
 Manifolds = "~0.10.2"
 ManifoldsBase = "~0.15.16"
@@ -260,7 +293,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "a676dc0796e8ff80f3b32b3eb4180064a213d95c"
+project_hash = "341567d1dd3d3b80b42158635819ff0acaa30a79"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -283,6 +316,12 @@ uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[deps.BenchmarkTools]]
+deps = ["JSON", "Logging", "Printf", "Profile", "Statistics", "UUIDs"]
+git-tree-sha1 = "f1dff6729bc61f4d49e140da1af55dcd1ac97b2f"
+uuid = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+version = "1.5.0"
 
 [[deps.BitFlags]]
 git-tree-sha1 = "0691e34b3bb8be9307330f88d1a3c3f25466c24d"
@@ -1070,6 +1109,10 @@ version = "1.4.3"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
+[[deps.Profile]]
+deps = ["Printf"]
+uuid = "9abbd945-dff8-562f-b5e8-e1ebf5ef1b79"
+
 [[deps.PtrArrays]]
 git-tree-sha1 = "77a42d78b6a92df47ab37e177b2deac405e1c88f"
 uuid = "43287f4e-b6f4-7ad1-bb20-aadabca52c3d"
@@ -1703,13 +1746,14 @@ version = "1.4.1+1"
 # ╠═4723d019-935f-4344-90ff-b431a7e6388b
 # ╟─0070c2e9-5329-4aac-8587-4bdaceb025c7
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╠═19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
-# ╠═a82b1ec9-3d03-43dc-9b38-0f4ca3442927
-# ╠═90979486-111c-4d4a-a08e-c9fdcf448857
-# ╠═c8e7bc8a-acac-436b-8117-11136f150a71
-# ╠═0b4115c3-bf6b-4bb3-bfe5-f0bddd2789ba
-# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
-# ╠═7d511678-c208-446d-86e8-f064e18c0891
+# ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
+# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╟─7d511678-c208-446d-86e8-f064e18c0891
+# ╟─5a23ebce-129f-47d7-a1c4-29c0bb91b828
+# ╟─4c2e431d-0e62-4cc0-b4fe-f7b38cd911ca
+# ╠═b511ad19-1a1f-4719-b185-be83468f2a86
+# ╟─d0d78bc7-8159-4014-8c1b-a8231330e332
+# ╠═fd880b0d-9c79-4134-96ae-ad00a0e8d2a6
+# ╟─8d79f9b5-9416-46d5-b27b-ed8838d1638d
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
