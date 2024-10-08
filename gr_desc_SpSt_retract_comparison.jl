@@ -6,7 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ 136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 using Manopt, Manifolds, Distributions, Random, LinearAlgebra, 
-Plots, BenchmarkTools
+Plots, BenchmarkTools, LinearAlgebra
 
 # ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
 md"""
@@ -25,10 +25,10 @@ md"""
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 2
+n = 2 # BZ: 1000
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 1
+k = 1 # BZ: 20, 200
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 # Define the Symplectic Stiefel manifold
@@ -46,8 +46,8 @@ begin
 end;
 
 # ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
-
 A = rand_A/norm(rand_A)
+#A = U0 + 0.01*U0 # Small nudge for testing
 
 # ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
 is_point(M, A; error=:info)
@@ -112,6 +112,50 @@ U0 = cay(Ω / 2) * E
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
 is_point(M, U0) # Not throwing an error, so it is in SpSt
 
+# ╔═╡ 62da690c-5fa0-48ac-b3dd-1a8272e9d18c
+md"""
+### Defining a custom retraction method
+*(In BZ, the so-called "pseudo-Riemannian geodecic" retraction (3.11))*
+
+We'll implement in the generic function environment `ManifoldsBase.retract_project!`. We can do this since the method involves only simple operations, and the `retract_project` function has not been implemented for the $\text{SpSt}$.
+
+Inspired by [This tutorial](https://juliamanifolds.github.io/manopt/stable/tutorials/ImplementOwnManifold/#A-retraction)
+"""
+
+# ╔═╡ 3e326a89-c38a-4eb9-83ce-192d9a2b42ca
+begin
+import ManifoldsBase: retract_project!
+# Function to compute the pseudo-Riemannian exponential map
+function retract_project!(M::Manifolds.SymplecticStiefel, 
+	q::Matrix{Float64}, P::Matrix{Float64}, X::Matrix{Float64}, t::Number)
+    A = symplectic_inverse(P) * X  # Pseudoinverse of U times X
+    H = X - P * A    
+    # k = size(A, 1) ÷ 2  # Assuming A is a 2k x 2k matrix
+
+	# Check if H^+ * H is invertible, i.e. det(H^+ H) =/= 0
+	#=if isapprox(det(BigFloat.(symplectic_inverse(H)*H)), 0, atol = 1e-39)
+		#=throw(DomainError(det(BigFloat.(symplectic_inverse(H)*H)), 
+			"=det(H^{+}H). H^{+}H is not invertible!"))=#
+		#counter.count += 1
+		@warn "det(H⁺H) is approximately zero, meaning H⁺H is not invertible!" det(BigFloat.(symplectic_inverse(H)*H))
+	end=#
+    # The block matrix components
+    top_left = 0.5 * A
+    top_right = 0.25 * (A^2) - (symplectic_inverse(H) * H)
+    bottom_left = I(2k)
+    bottom_right = 0.5 * A
+	
+    exp_matrix = exp(t * [top_left top_right; bottom_left bottom_right])
+
+	# Using .= to change q in place
+    q .= [P (0.5 * P * A + H)] * exp_matrix * [I(2k); zeros(2k, 2k)]
+    return q
+end
+end
+
+# ╔═╡ bb5fd8e9-2f70-4402-910c-eb98e757b34d
+retract_project! # without defining above: "(generic function with 18 methods)"
+
 # ╔═╡ a8971fce-7b45-4a50-9c63-9d726b460a5f
 md"""
 ### Define minimization problem
@@ -175,8 +219,8 @@ solver_default = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
 
-# ╔═╡ 1404149f-158f-42bf-9960-e4480ee9682b
-solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+# ╔═╡ 0e328c4b-1d86-4f0f-adc0-df483defef43
+solver_exp = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 
 	retraction_method = ExponentialRetraction(),
@@ -186,19 +230,42 @@ solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
 
-# ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
-get_record(solver_default)
+# ╔═╡ 1404149f-158f-42bf-9960-e4480ee9682b
+begin
+	
+mutable struct WarningCounter
+    count::Int
+end
+counter = WarningCounter(0)
 
-# ╔═╡ 8d732241-df58-48a7-af6f-6f3bab89f4a3
-U = get_solver_result(solver_default);
+bing = 0
+	
+solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+	stepsize = stepsize, return_state = true, 
+
+	retraction_method = ProjectionRetraction(), # Custom projection
+
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
+	record=[:Iteration, :Cost, RecordGradientNorm()]);
+
+if counter.count > 0
+    @warn "H⁺H was detected as non-invertible in $counter.count iterations."
+end
+end
+
+# ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
+get_record(solver_default);
 
 # ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
-is_point(M, U; error=:warn)
+is_point(M, get_solver_result(solver_default); error=:warn)
 
-# ╔═╡ 0070c2e9-5329-4aac-8587-4bdaceb025c7
-md"""
-##### We see that U0 has a cost of $(round(cost_function(M, U0), digits = 2)), while U has a cost of $(round(cost_function(M, U), digits = 2)). 
-""" # The actual solution is $(round(canonical_project(M, U0)), digits = 2))
+# ╔═╡ 55e812aa-ca8e-4481-9685-4aae67d89420
+is_point(M, get_solver_result(solver_exp); error=:warn)
+
+# ╔═╡ 4b6034e4-18a8-47bd-9221-f52569e5f54b
+is_point(M, get_solver_result(solver_other); error=:warn)
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
@@ -211,6 +278,10 @@ iterations_default = [rec[1] for rec in get_record(solver_default)]
 cost_vals_default =  [rec[2] for rec in get_record(solver_default)]
 gradient_vals_default = [rec[3] for rec in get_record(solver_default)]
 
+iterations_exp = [rec[1] for rec in get_record(solver_exp)]
+cost_vals_exp =  [rec[2] for rec in get_record(solver_exp)]
+gradient_vals_exp = [rec[3] for rec in get_record(solver_exp)]
+
 iterations_other = [rec[1] for rec in get_record(solver_other)]
 cost_vals_other =  [rec[2] for rec in get_record(solver_other)]
 gradient_vals_other = [rec[3] for rec in get_record(solver_other)]
@@ -220,14 +291,16 @@ end;
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 begin
-plot(iterations_default, cost_vals_default; title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost", label = "Cayley retraction", xaxis=:log10)
+plot(iterations_default, cost_vals_default; title = "Convergence plot for different retractions", xlabel = "# iterations", ylabel = "Cost", label = "Cayley", xaxis=:log10)
+plot!(iterations_exp, cost_vals_exp, label = "Exponential")
 plot!(iterations_other, cost_vals_other, label = "Other retraction")
 end
 
 # ╔═╡ 7d511678-c208-446d-86e8-f064e18c0891
 begin
-plot(iterations_default, gradient_vals_default; title = "|▽f| plot", xlabel = "# iterations", ylabel = "|▽f|", label = "Cayley retraction", xaxis=:log10)
-plot!(iterations_other, gradient_vals_other, label = "Exp retraction")
+plot(iterations_default, gradient_vals_default; title = "|▽f| plot of different retractions", xlabel = "# iterations", ylabel = "|▽f|", label = "Cayley retraction", xaxis=:log10)
+plot!(iterations_exp, gradient_vals_exp, label = "Exponential")
+plot!(iterations_other, gradient_vals_other, label = "Other")
 end
 
 # ╔═╡ 5a23ebce-129f-47d7-a1c4-29c0bb91b828
@@ -258,6 +331,19 @@ md"""
 	stepsize = stepsize, return_state = true, 
 
 	retraction_method = ExponentialRetraction(),
+
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9))
+
+# ╔═╡ 5e26ac9c-2203-4071-a387-7224a15de904
+md"""
+##### ▽ descent with Custom retraction *(BZ Pseudo-Riemannian Geodesic)*
+"""
+
+# ╔═╡ c296e92a-18a8-44c1-8170-f14b37ce9ec9
+@benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+	stepsize = stepsize, return_state = true, 
+
+	retraction_method = ProjectionRetraction(), # Custom projection
 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9))
 
@@ -1730,6 +1816,9 @@ version = "1.4.1+1"
 # ╟─479f35f0-67c6-44c7-a86a-07612e72132f
 # ╠═2e862045-402d-4e6c-9c1f-b2f56e7a5420
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
+# ╠═62da690c-5fa0-48ac-b3dd-1a8272e9d18c
+# ╠═3e326a89-c38a-4eb9-83ce-192d9a2b42ca
+# ╟─bb5fd8e9-2f70-4402-910c-eb98e757b34d
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
 # ╟─84713389-c089-4c1a-ab0b-bc504c4e59c3
 # ╟─1787795e-46c1-4d89-8388-0b1753b61fd2
@@ -1740,20 +1829,23 @@ version = "1.4.1+1"
 # ╟─42206059-b75a-478f-b3d4-55aaa059a438
 # ╠═61e52cc4-8fcd-439d-a519-44ed4beb8142
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
+# ╠═0e328c4b-1d86-4f0f-adc0-df483defef43
 # ╠═1404149f-158f-42bf-9960-e4480ee9682b
-# ╠═501d5dd5-541b-453f-b836-713196f5345d
-# ╠═8d732241-df58-48a7-af6f-6f3bab89f4a3
+# ╟─501d5dd5-541b-453f-b836-713196f5345d
 # ╠═4723d019-935f-4344-90ff-b431a7e6388b
-# ╟─0070c2e9-5329-4aac-8587-4bdaceb025c7
+# ╠═55e812aa-ca8e-4481-9685-4aae67d89420
+# ╠═4b6034e4-18a8-47bd-9221-f52569e5f54b
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╟─7d511678-c208-446d-86e8-f064e18c0891
 # ╟─5a23ebce-129f-47d7-a1c4-29c0bb91b828
 # ╟─4c2e431d-0e62-4cc0-b4fe-f7b38cd911ca
 # ╠═b511ad19-1a1f-4719-b185-be83468f2a86
 # ╟─d0d78bc7-8159-4014-8c1b-a8231330e332
 # ╠═fd880b0d-9c79-4134-96ae-ad00a0e8d2a6
+# ╟─5e26ac9c-2203-4071-a387-7224a15de904
+# ╠═c296e92a-18a8-44c1-8170-f14b37ce9ec9
 # ╟─8d79f9b5-9416-46d5-b27b-ed8838d1638d
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
