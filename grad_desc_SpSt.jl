@@ -123,11 +123,6 @@ function cost_function(M, P::Matrix{Float64}) # Why must it include M?
 	return norm(P - A) ^ 2
 end
 
-# ╔═╡ 93add6b4-11d7-4fec-8878-86c128a6e6c8
-md"""
-The armijo linesearch demands an [injectivity radius](https://en.wikipedia.org/wiki/Glossary_of_Riemannian_and_metric_geometry#I). By [Zimmerman & Stoye](https://arxiv.org/abs/2405.02268), the injectivity radius is $\pi$ for the Euclidian norm. Since this is just a constant, this should be the same for our Riemannian metric as well.
-"""
-
 # ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
 function euclid_grad_cost_function(P::Matrix{Float64})
 	# Implement some checks
@@ -174,6 +169,11 @@ md"""
 # ╔═╡ e8ff80b9-aa18-4cf7-82a7-e42738425d23
 # stepsize = Manopt.ConstantStepsize(M, 0.01) # Naive choice
 
+# ╔═╡ 93add6b4-11d7-4fec-8878-86c128a6e6c8
+md"""
+The armijo linesearch demands an [injectivity radius](https://en.wikipedia.org/wiki/Glossary_of_Riemannian_and_metric_geometry#I). By [Zimmerman & Stoye](https://arxiv.org/abs/2405.02268), the injectivity radius is $\pi$ for the Euclidian norm. Since this is just a constant, this should be the same for our Riemannian metric as well.
+"""
+
 # ╔═╡ 34dbfd16-9658-4de2-ac07-b91843aceace
 md"""
 We need to define the injectivity radius of the SpSt for the Armijo to work
@@ -198,6 +198,9 @@ stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
 
 # Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
 # curcomvent calculation of injectivity radius 
+
+# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
+
 
 # ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
 md"""
@@ -1706,7 +1709,6 @@ version = "1.4.1+1"
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
 # ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
-# ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
 # ╠═1787795e-46c1-4d89-8388-0b1753b61fd2
 # ╠═f79b7263-de64-4608-8dda-005312bfdb61
 # ╟─51fc0bfb-8796-40a9-9d93-16d3f2282a75
@@ -1716,10 +1718,12 @@ version = "1.4.1+1"
 # ╠═62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
 # ╟─d25a8e78-b216-4e99-a29d-3a0fd898b8da
 # ╠═e8ff80b9-aa18-4cf7-82a7-e42738425d23
-# ╟─34dbfd16-9658-4de2-ac07-b91843aceace
+# ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
+# ╠═34dbfd16-9658-4de2-ac07-b91843aceace
 # ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
 # ╠═1d30c99e-f58a-42a9-9f60-f1ca5d68addf
 # ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+# ╠═afdac687-8170-4679-bb9e-2af82b6877de
 # ╟─0960b834-ee78-42bf-8fbd-955734e3426c
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═501d5dd5-541b-453f-b836-713196f5345d
