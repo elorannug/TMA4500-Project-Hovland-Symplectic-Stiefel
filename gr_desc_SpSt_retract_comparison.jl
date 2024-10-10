@@ -122,40 +122,6 @@ We'll implement in the generic function environment `ManifoldsBase.retract_proje
 Inspired by [This tutorial](https://juliamanifolds.github.io/manopt/stable/tutorials/ImplementOwnManifold/#A-retraction)
 """
 
-# ╔═╡ 3e326a89-c38a-4eb9-83ce-192d9a2b42ca
-begin
-import ManifoldsBase: retract_project!
-# Function to compute the pseudo-Riemannian exponential map
-function retract_project!(M::Manifolds.SymplecticStiefel, 
-	q::Matrix{Float64}, P::Matrix{Float64}, X::Matrix{Float64}, t::Number)
-    A = symplectic_inverse(P) * X  # Pseudoinverse of U times X
-    H = X - P * A    
-    # k = size(A, 1) ÷ 2  # Assuming A is a 2k x 2k matrix
-
-	# Check if H^+ * H is invertible, i.e. det(H^+ H) =/= 0
-	#=if isapprox(det(BigFloat.(symplectic_inverse(H)*H)), 0, atol = 1e-39)
-		#=throw(DomainError(det(BigFloat.(symplectic_inverse(H)*H)), 
-			"=det(H^{+}H). H^{+}H is not invertible!"))=#
-		#counter.count += 1
-		@warn "det(H⁺H) is approximately zero, meaning H⁺H is not invertible!" det(BigFloat.(symplectic_inverse(H)*H))
-	end=#
-    # The block matrix components
-    top_left = 0.5 * A
-    top_right = 0.25 * (A^2) - (symplectic_inverse(H) * H)
-    bottom_left = I(2k)
-    bottom_right = 0.5 * A
-	
-    exp_matrix = exp(t * [top_left top_right; bottom_left bottom_right])
-
-	# Using .= to change q in place
-    q .= [P (0.5 * P * A + H)] * exp_matrix * [I(2k); zeros(2k, 2k)]
-    return q
-end
-end
-
-# ╔═╡ bb5fd8e9-2f70-4402-910c-eb98e757b34d
-retract_project! # without defining above: "(generic function with 18 methods)"
-
 # ╔═╡ a8971fce-7b45-4a50-9c63-9d726b460a5f
 md"""
 ### Define minimization problem
@@ -230,13 +196,51 @@ solver_exp = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
 
+# ╔═╡ 3edf1102-53ab-4d40-b84d-335ae2e6c487
+begin
+   mutable struct WarningCounter
+       count::Int
+   end
+   counter = WarningCounter(0)
+end
+
+# ╔═╡ 3e326a89-c38a-4eb9-83ce-192d9a2b42ca
+begin
+import ManifoldsBase: retract_project!
+# Function to compute the pseudo-Riemannian exponential map
+function retract_project!(M::Manifolds.SymplecticStiefel, 
+	q::Matrix{Float64}, P::Matrix{Float64}, X::Matrix{Float64}, t::Number)
+    A = symplectic_inverse(P) * X  # Pseudoinverse of U times X
+    H = X - P * A    
+    # k = size(A, 1) ÷ 2  # Assuming A is a 2k x 2k matrix
+
+	# Check if H^+ * H is invertible, i.e. det(H^+ H) ≠ 0
+	v = det(BigFloat.(symplectic_inverse(H)*H))
+	if isapprox(v, 0, atol = 1e-37)
+		#=throw(DomainError(det(BigFloat.(symplectic_inverse(H)*H)), 
+			"=det(H^{+}H). H^{+}H is not invertible!"))=#
+		global counter.count += 1
+		#@warn "det(H⁺H) is approximately zero, meaning H⁺H is not invertible!" det(BigFloat.(symplectic_inverse(H)*H))
+	end
+    # The block matrix components
+    top_left = 0.5 * A
+    top_right = 0.25 * (A^2) - (symplectic_inverse(H) * H)
+    bottom_left = I(2k)
+    bottom_right = 0.5 * A
+	
+    exp_matrix = exp(t * [top_left top_right; bottom_left bottom_right])
+
+	# Using .= to change q in place
+    q .= [P (0.5 * P * A + H)] * exp_matrix * [I(2k); zeros(2k, 2k)]
+    return q
+end
+end
+
+# ╔═╡ bb5fd8e9-2f70-4402-910c-eb98e757b34d
+retract_project! # without defining above: "(generic function with 18 methods)"
+
 # ╔═╡ 1404149f-158f-42bf-9960-e4480ee9682b
 begin
-	
-mutable struct WarningCounter
-    count::Int
-end
-counter = WarningCounter(0)
 
 bing = 0
 	
@@ -251,7 +255,7 @@ solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
 
 if counter.count > 0
-    @warn "H⁺H was detected as non-invertible in $counter.count iterations."
+    @warn "H⁺H was detected as non-invertible in $(counter.count) iterations."
 end
 end
 
@@ -1831,6 +1835,7 @@ version = "1.4.1+1"
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═0e328c4b-1d86-4f0f-adc0-df483defef43
 # ╠═1404149f-158f-42bf-9960-e4480ee9682b
+# ╠═3edf1102-53ab-4d40-b84d-335ae2e6c487
 # ╟─501d5dd5-541b-453f-b836-713196f5345d
 # ╠═4723d019-935f-4344-90ff-b431a7e6388b
 # ╠═55e812aa-ca8e-4481-9685-4aae67d89420
