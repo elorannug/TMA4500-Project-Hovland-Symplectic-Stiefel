@@ -179,9 +179,31 @@ function cost_function(M, P::Matrix{Float64}) # Includes M because manopt demand
 	return norm(S - P * symplectic_inverse(P) * S) ^ 2
 end
 
+# ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
+function euclid_grad_cost_function(M, P::Matrix{Float64})
+	#return (2 * (S - P * symplectic_inverse(P) * S) * (symplectic_inverse(P) * S  + P * Manifolds.SymplecticElement(1) * S))
+	
+	#return (2 * (-symplectic_inverse(P)*S*transpose(S) +transpose(S)*symplectic_inverse(P)*S))
+	#return (-4 * (S - P * symplectic_inverse(P) * S) * transpose(P) * Manifolds.SymplecticElement() * S)
+	#return (-2*(S-P*symplectic_inverse(P)*S)*transpose(symplectic_inverse(P)*S)+2*(S-P*symplectic_inverse(P)*S)*P*Manifolds.SymplecticElement()*transpose(S*Manifolds.SymplecticElement()))
+	ST = transpose(S)
+	Pplus = symplectic_inverse(P)
+	J = SymplecticElement(1)
+	return -2((I-P*Pplus)*S*(S')*(J')*P*J-J*S*(S')*((I-P*Pplus)')*P*J)
+	
+end
+
+# ╔═╡ fbd74099-a487-4dc6-bba7-fae8ebcd15f1
+# ╠═╡ disabled = true
+#=╠═╡
+function euclid_grad_cost_function(M, P::Matrix{Float64})
+	Manifolds.gradient(M, cost_function, P::Matrix{Float64})
+end
+  ╠═╡ =#
+
 # ╔═╡ 1d642cef-4b8e-4316-a355-ad9aaaca27f3
 function rie_grad_cost_function(M,P)
-	riemannian_gradient(M, P, grad_tempeuclid_grad_cost_function(M, P))
+	riemannian_gradient(M, P, euclid_grad_cost_function(M, P))
 end
 
 # ╔═╡ 1b6dc414-a019-41b8-b986-99972bdd67cd
@@ -214,12 +236,9 @@ stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
 # curcomvent calculation of injectivity radius 
 
 # ╔═╡ 61e52cc4-8fcd-439d-a519-44ed4beb8142
-#=╠═╡
-check_gradient(M, cost_function, rie_grad_cost_function; plot=false)
-  ╠═╡ =#
+#check_gradient(M, cost_function, rie_grad_cost_function; plot=false)
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
-#=╠═╡
 solver_default = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 
@@ -229,7 +248,6 @@ solver_default = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
-  ╠═╡ =#
 
 # ╔═╡ 0e328c4b-1d86-4f0f-adc0-df483defef43
 solver_exp = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
@@ -243,6 +261,8 @@ solver_exp = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
 
 # ╔═╡ 1404149f-158f-42bf-9960-e4480ee9682b
+# ╠═╡ show_logs = false
+# ╠═╡ disabled = true
 #=╠═╡
 begin
 	
@@ -270,24 +290,16 @@ end
   ╠═╡ =#
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
-#=╠═╡
 get_record(solver_default);
-  ╠═╡ =#
 
 # ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
-#=╠═╡
 is_point(M, get_solver_result(solver_default); error=:warn)
-  ╠═╡ =#
 
 # ╔═╡ 55e812aa-ca8e-4481-9685-4aae67d89420
-#=╠═╡
 is_point(M, get_solver_result(solver_exp); error=:warn)
-  ╠═╡ =#
 
 # ╔═╡ 4b6034e4-18a8-47bd-9221-f52569e5f54b
-#=╠═╡
-is_point(M, get_solver_result(solver_other); error=:warn)
-  ╠═╡ =#
+#is_point(M, get_solver_result(solver_other); error=:warn)
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
@@ -295,7 +307,6 @@ md"""
 """
 
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
-#=╠═╡
 begin
 iterations_default = [rec[1] for rec in get_record(solver_default)]
 cost_vals_default =  [rec[2] for rec in get_record(solver_default)]
@@ -304,32 +315,27 @@ gradient_vals_default = [rec[3] for rec in get_record(solver_default)]
 iterations_exp = [rec[1] for rec in get_record(solver_exp)]
 cost_vals_exp =  [rec[2] for rec in get_record(solver_exp)]
 gradient_vals_exp = [rec[3] for rec in get_record(solver_exp)]
-
+#=
 iterations_other = [rec[1] for rec in get_record(solver_other)]
 cost_vals_other =  [rec[2] for rec in get_record(solver_other)]
 gradient_vals_other = [rec[3] for rec in get_record(solver_other)]
-
+=#
 print("Fetching vectors for plotting")
 end;
-  ╠═╡ =#
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
-#=╠═╡
 begin
 plot(iterations_default, cost_vals_default; title = "Convergence plot for different retractions", xlabel = "# iterations", ylabel = "Cost", label = "Cayley", xaxis=:log10)
 plot!(iterations_exp, cost_vals_exp, label = "Exponential")
-plot!(iterations_other, cost_vals_other, label = "Other retraction")
+#plot!(iterations_other, cost_vals_other, label = "Other retraction")
 end
-  ╠═╡ =#
 
 # ╔═╡ 7d511678-c208-446d-86e8-f064e18c0891
-#=╠═╡
 begin
 plot(iterations_default, gradient_vals_default; title = "|▽f| plot of different retractions", xlabel = "# iterations", ylabel = "|▽f|", label = "Cayley retraction", xaxis=:log10)
 plot!(iterations_exp, gradient_vals_exp, label = "Exponential")
-plot!(iterations_other, gradient_vals_other, label = "Other")
+#plot!(iterations_other, gradient_vals_other, label = "Other")
 end
-  ╠═╡ =#
 
 # ╔═╡ 5a23ebce-129f-47d7-a1c4-29c0bb91b828
 md"""
@@ -342,6 +348,7 @@ md"""
 """
 
 # ╔═╡ b511ad19-1a1f-4719-b185-be83468f2a86
+# ╠═╡ disabled = true
 #=╠═╡
 @benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
@@ -357,6 +364,7 @@ md"""
 """
 
 # ╔═╡ fd880b0d-9c79-4134-96ae-ad00a0e8d2a6
+# ╠═╡ disabled = true
 #=╠═╡
 @benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
@@ -372,6 +380,7 @@ md"""
 """
 
 # ╔═╡ c296e92a-18a8-44c1-8170-f14b37ce9ec9
+# ╠═╡ disabled = true
 #=╠═╡
 @benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
@@ -385,24 +394,6 @@ md"""
 md"""
 We can see that the Cayley Retraction method is faster than projecting with the exponential map.
 """
-
-# ╔═╡ fbd74099-a487-4dc6-bba7-fae8ebcd15f1
-# ╠═╡ disabled = true
-#=╠═╡
-function euclid_grad_cost_function(M, P::Matrix{Float64})
-	Manifolds.gradient(M, cost_function, P::Matrix{Float64})
-end
-  ╠═╡ =#
-
-# ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
-function euclid_grad_cost_function(M, P::Matrix{Float64})
-	#return (2 * (S - P * symplectic_inverse(P) * S) * (symplectic_inverse(P) * S  + P * Manifolds.SymplecticElement(1) * S))
-	
-	#return (2 * (-symplectic_inverse(P)*S*transpose(S) +transpose(S)*symplectic_inverse(P)*S))
-	#return (-4 * (S - P * symplectic_inverse(P) * S) * transpose(P) * Manifolds.SymplecticElement() * S)
-	return (-2*(S-P*symplectic_inverse(P)*S)*transpose(symplectic_inverse(P)*S)+2*(S-P*symplectic_inverse(P)*S)*P*Manifolds.SymplecticElement()*transpose(S*Manifolds.SymplecticElement()))
-	
-end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1895,9 +1886,9 @@ version = "1.4.1+1"
 # ╠═55e812aa-ca8e-4481-9685-4aae67d89420
 # ╠═4b6034e4-18a8-47bd-9221-f52569e5f54b
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
+# ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
 # ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
-# ╟─7d511678-c208-446d-86e8-f064e18c0891
+# ╠═7d511678-c208-446d-86e8-f064e18c0891
 # ╟─5a23ebce-129f-47d7-a1c4-29c0bb91b828
 # ╟─4c2e431d-0e62-4cc0-b4fe-f7b38cd911ca
 # ╠═b511ad19-1a1f-4719-b185-be83468f2a86
