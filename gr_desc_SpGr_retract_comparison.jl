@@ -34,6 +34,9 @@ k = 1 # BZ: 20, 200
 # Define the Symplectic Grassmann manifold
 M = SymplecticGrassmann(2*n, 2*k)
 
+# ╔═╡ bc042e3c-1973-4172-9e04-f13376a236f6
+M_SpSt = SymplecticStiefel(2*n, 2*k)
+
 # ╔═╡ d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 begin
 	Random.seed!(42)
@@ -133,6 +136,8 @@ Inspired by [This tutorial](https://juliamanifolds.github.io/manopt/stable/tutor
 """
 
 # ╔═╡ 3e326a89-c38a-4eb9-83ce-192d9a2b42ca
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 import ManifoldsBase: retract_project!
 # Function to compute the pseudo-Riemannian exponential map
@@ -162,44 +167,30 @@ function retract_project!(M::Manifolds.SymplecticStiefel,
     return q
 end
 end
+  ╠═╡ =#
 
 # ╔═╡ bb5fd8e9-2f70-4402-910c-eb98e757b34d
+#=╠═╡
 retract_project! # without defining above: "(generic function with 18 methods)"
+  ╠═╡ =#
 
 # ╔═╡ a8971fce-7b45-4a50-9c63-9d726b460a5f
 md"""
 ### Define minimization problem
 """
 
-# ╔═╡ d5197f51-94b3-4a2b-a0ad-f4fe49caaaea
-U0
-
 # ╔═╡ 84713389-c089-4c1a-ab0b-bc504c4e59c3
-function cost_function(M, P::Matrix{Float64}) # Includes M because manopt demands it
+function cost_function(M, P::Matrix{Float64}) 
 	return norm(S - P * symplectic_inverse(P) * S) ^ 2
 end
 
 # ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
 function euclid_grad_cost_function(M, P::Matrix{Float64})
-	#return (2 * (S - P * symplectic_inverse(P) * S) * (symplectic_inverse(P) * S  + P * Manifolds.SymplecticElement(1) * S))
-	
-	#return (2 * (-symplectic_inverse(P)*S*transpose(S) +transpose(S)*symplectic_inverse(P)*S))
-	#return (-4 * (S - P * symplectic_inverse(P) * S) * transpose(P) * Manifolds.SymplecticElement() * S)
-	#return (-2*(S-P*symplectic_inverse(P)*S)*transpose(symplectic_inverse(P)*S)+2*(S-P*symplectic_inverse(P)*S)*P*Manifolds.SymplecticElement()*transpose(S*Manifolds.SymplecticElement()))
-	ST = transpose(S)
 	Pplus = symplectic_inverse(P)
 	J = SymplecticElement(1)
-	return -2((I-P*Pplus)*S*(S')*(J')*P*J-J*S*(S')*((I-P*Pplus)')*P*J)
+	return -2*((I-P*Pplus)*S*(S')*(J')*P*J-J*S*(S')*((I-P*Pplus)')*P*J)
 	
 end
-
-# ╔═╡ fbd74099-a487-4dc6-bba7-fae8ebcd15f1
-# ╠═╡ disabled = true
-#=╠═╡
-function euclid_grad_cost_function(M, P::Matrix{Float64})
-	Manifolds.gradient(M, cost_function, P::Matrix{Float64})
-end
-  ╠═╡ =#
 
 # ╔═╡ 1d642cef-4b8e-4316-a355-ad9aaaca27f3
 function rie_grad_cost_function(M,P)
@@ -222,35 +213,64 @@ md"""
 We need to define the injectivity radius of the SpSt for the Armijo to work
 """
 
-# ╔═╡ 2c06883e-c63d-4ca2-9122-2c07e69eccfa
+# ╔═╡ a7ff5dcc-262c-4054-9404-551677a17937
 begin
 import ManifoldsBase: injectivity_radius
+
 function injectivity_radius(M::Manifolds.SymplecticGrassmann{T, N}) where {T, N}
+    return 5  # This is good enough for now
+end
+	
+function injectivity_radius(M::Manifolds.SymplecticStiefel{T, N}) where {T, N}
     return 5  # This is good enough for now
 end
 end
 
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
-# Init. step size as in paper
-# curcomvent calculation of injectivity radius 
+# ╔═╡ ea550142-7f44-46fa-a46c-5dba222977d1
+#stepsize = DecreasingLength(M)
 
 # ╔═╡ 61e52cc4-8fcd-439d-a519-44ed4beb8142
 #check_gradient(M, cost_function, rie_grad_cost_function; plot=false)
 
-# ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
-solver_default = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
-	stepsize = stepsize, return_state = true, 
+# ╔═╡ 800a5a1f-fe2c-4df7-ab80-8337cf45c977
+md"""
+BZ: "For the gradient descent from **[14]** and for the gradient descent according to $g^{\text{SpSt}}$ with Cayley stepping, we ignore the quotient structure and treat (6.1) as a minimization problem on $\mathrm{SpSt}(2n, 2k)$."
 
-	retraction_method = default_retraction_method(M), # :=CayleyRetraction()
+**[14]** *B. Gao, N. T. Son, P.-A. Absil, and T. Stykel, Riemannian optimization on the symplectic Stiefel manifold, SIAM Journal on Optimization, 31 (2021), pp. 1546{1575, https://doi.org/10.1137/20M1348522.*
+"""
+
+# ╔═╡ ca9a5e41-ba00-4757-919a-ee7c40cc6b26
+solver_SpGr = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+	stepsize = stepsize, 
+	return_state = true, 
+
+	#retraction_method = default_retraction_method(M), # :=CayleyRetraction()
 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
 
+# ╔═╡ 8483ed75-1321-43e6-a1cf-472896197e97
+get_solver_result(solver_SpGr)
+
+# ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
+solver_default = gradient_descent(M_SpSt, cost_function, rie_grad_cost_function, U0;
+	stepsize = stepsize, 
+	return_state = true, 
+
+	retraction_method = default_retraction_method(M_SpSt), # :=CayleyRetraction()
+
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
+	record=[:Iteration, :Cost, RecordGradientNorm()]);
+
+# ╔═╡ ae624b0a-c22e-4d4d-9ecb-0fccbcdabc77
+get_solver_result(solver_default)
+
 # ╔═╡ 0e328c4b-1d86-4f0f-adc0-df483defef43
-solver_exp = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
+solver_exp = gradient_descent(M_SpSt, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 
 	retraction_method = ExponentialRetraction(),
@@ -260,19 +280,13 @@ solver_exp = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
 
+# ╔═╡ 8dbf3460-f5cd-4477-bf3d-e298ef284c83
+get_solver_result(solver_exp)
+
 # ╔═╡ 1404149f-158f-42bf-9960-e4480ee9682b
 # ╠═╡ show_logs = false
 # ╠═╡ disabled = true
 #=╠═╡
-begin
-	
-mutable struct WarningCounter
-    count::Int
-end
-counter = WarningCounter(0)
-
-bing = 0
-	
 solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 
@@ -282,11 +296,6 @@ solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
-
-if counter.count > 0
-    @warn "H⁺H was detected as non-invertible in $counter.count iterations."
-end
-end
   ╠═╡ =#
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
@@ -394,6 +403,17 @@ md"""
 md"""
 We can see that the Cayley Retraction method is faster than projecting with the exponential map.
 """
+
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
+# Init. step size as in paper
+# curcomvent calculation of injectivity radius 
+
+# ╔═╡ f66c616e-79d8-4ecc-aadf-7cdaab1b2fdf
+# ╠═╡ disabled = true
+#=╠═╡
+stepsize = ConstantLength(M, 0.000001)
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1843,6 +1863,7 @@ version = "1.4.1+1"
 # ╠═ba92e87a-6ac3-4490-ab75-148cc0a25666
 # ╠═fd42108d-79bd-4db5-a1ce-1875341513c2
 # ╠═7d05e993-ae82-4e41-b36f-e76224483849
+# ╠═bc042e3c-1973-4172-9e04-f13376a236f6
 # ╠═d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 # ╠═7181d670-e87e-426a-9d85-e5748d4827c7
 # ╟─6460d549-e79d-473e-82e9-92c261a02dd7
@@ -1858,7 +1879,7 @@ version = "1.4.1+1"
 # ╟─479f35f0-67c6-44c7-a86a-07612e72132f
 # ╠═2e862045-402d-4e6c-9c1f-b2f56e7a5420
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
-# ╠═8a1d44c5-ee2a-4ec3-9c2d-a79409502cc9
+# ╟─8a1d44c5-ee2a-4ec3-9c2d-a79409502cc9
 # ╠═2b8cbb25-1ac0-46ff-a6d9-509bf738bf15
 # ╠═1a78405b-ab75-43dd-a212-6a53f64e25ee
 # ╠═c2328224-89f5-4f86-8735-ed9f4a189eb5
@@ -1866,18 +1887,23 @@ version = "1.4.1+1"
 # ╠═3e326a89-c38a-4eb9-83ce-192d9a2b42ca
 # ╟─bb5fd8e9-2f70-4402-910c-eb98e757b34d
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
-# ╠═d5197f51-94b3-4a2b-a0ad-f4fe49caaaea
 # ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
 # ╠═1787795e-46c1-4d89-8388-0b1753b61fd2
-# ╠═fbd74099-a487-4dc6-bba7-fae8ebcd15f1
 # ╠═1d642cef-4b8e-4316-a355-ad9aaaca27f3
 # ╠═1b6dc414-a019-41b8-b986-99972bdd67cd
 # ╠═e0c395d0-4827-4344-821f-0ddf84fb43fe
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
 # ╟─34dbfd16-9658-4de2-ac07-b91843aceace
-# ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
+# ╠═a7ff5dcc-262c-4054-9404-551677a17937
 # ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+# ╠═ea550142-7f44-46fa-a46c-5dba222977d1
+# ╠═f66c616e-79d8-4ecc-aadf-7cdaab1b2fdf
 # ╠═61e52cc4-8fcd-439d-a519-44ed4beb8142
+# ╟─800a5a1f-fe2c-4df7-ab80-8337cf45c977
+# ╠═ca9a5e41-ba00-4757-919a-ee7c40cc6b26
+# ╠═8483ed75-1321-43e6-a1cf-472896197e97
+# ╠═ae624b0a-c22e-4d4d-9ecb-0fccbcdabc77
+# ╠═8dbf3460-f5cd-4477-bf3d-e298ef284c83
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═0e328c4b-1d86-4f0f-adc0-df483defef43
 # ╠═1404149f-158f-42bf-9960-e4480ee9682b
@@ -1886,9 +1912,9 @@ version = "1.4.1+1"
 # ╠═55e812aa-ca8e-4481-9685-4aae67d89420
 # ╠═4b6034e4-18a8-47bd-9221-f52569e5f54b
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
-# ╠═7d511678-c208-446d-86e8-f064e18c0891
+# ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
+# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╟─7d511678-c208-446d-86e8-f064e18c0891
 # ╟─5a23ebce-129f-47d7-a1c4-29c0bb91b828
 # ╟─4c2e431d-0e62-4cc0-b4fe-f7b38cd911ca
 # ╠═b511ad19-1a1f-4719-b185-be83468f2a86
