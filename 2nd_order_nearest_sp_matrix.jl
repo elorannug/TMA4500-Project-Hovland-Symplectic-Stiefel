@@ -10,7 +10,9 @@ Plots
 
 # ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
 md"""
-Note, BZ stands for Bendocat & Zimmerman
+Note, BZ stands for Bendocat & Zimmermann
+
+JZ stands for Jensen & Zimmermann
 """
 
 # ╔═╡ c09b766d-6643-433a-a84e-9416dd2b668d
@@ -102,17 +104,49 @@ end
 check_gradient(M, cost_function, r_grad; plot=false)
 
 # ╔═╡ 42115133-f3cf-4512-9251-f8e8fc655dfa
+# Since r hess is not implemented for SpSt, implement it myself
+#=
 function r_hess(M, P, X)
-	riemannian_Hessian(M, P, X, euclid_hessian_cost_function(P, X))
+	riemannian_Hessian(M, P, euclid_grad_cost_function(P), euclid_hessian_cost_function(P,X), X)
+end=#
+
+# ╔═╡ 30c6c236-86f1-4289-b717-e0d4d31a1403
+md"""
+### Defining Riemannian Hessian from Theory (JZ)
+
+"""
+
+# ╔═╡ 29ba7f46-b89b-4bed-8513-cda843f11806
+# Defining the horizonta lift (2.6) in [JZ]
+function Ω(P, X)
+	J = SymplecticElement(1)
+	invPTP = inv(P'*P) # Storing to not compute 3 times
+	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
+end
+
+# ╔═╡ cab5b270-2bfa-493b-9885-12b2d01a227c
+function christoff(P,X)
+	return -(Ω(P,X)-Ω(P,X)')*(X-Ω(P,X)'*P)-((Ω(P,X)')^2)*P
+end
+
+# ╔═╡ bbd894c9-b269-4919-8af5-e0b03869a0ce
+function two_imput_christoff(P,X,Y)
+	return 0.25*(christoff(P,X+Y)-christoff(P,X-Y))
+end
+
+# ╔═╡ f54ff29b-c6d6-43c9-a58e-06c4b2579fda
+function directional_r_grad(P, X)
+	# Project euclidian hessian to the tangent space
+	return project(M, P, euclid_hessian_cost_function(P,X))
+end
+
+# ╔═╡ 8d97e650-7584-49f3-9a76-4af9b0426b37
+function r_hess(M, P, X)
+	return directional_r_grad(P,X) + two_imput_christoff(P,r_grad(M,P), X)
 end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-#check_Hessian(M, cost_function, r_grad, r_hess)
-
-# ╔═╡ b0fc5565-f41a-491a-b19f-aa3fd9ebfc2e
-md"""
-##### 🚩Stopped here. The rie hessian function does not seem to be defined for the SpSt, so i might have to implement this.
-"""
+check_Hessian(M, cost_function, r_grad, r_hess)
 
 # ╔═╡ d25a8e78-b216-4e99-a29d-3a0fd898b8da
 md"""
@@ -147,66 +181,19 @@ md"""
 As the trial step size,$k$, use the alternating BB method $\gamma_{k}^{ABB}$.
 """
 
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
+# Init. step size as in paper
+
+# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
+# curcomvent calculation of injectivity radius 
+
 # ╔═╡ 0b518b71-c2d3-4330-aae8-62447c923114
 # ╠═╡ disabled = true
 #=╠═╡
 # Create a storage action to store previous iterates and gradients
 storage = StoreStateAction(M; store_fields=[:Iterate, :Gradient])
   ╠═╡ =#
-
-# ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
-md"""
-### Defining and running gradient descent
-"""
-
-# ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
-solver = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
-	stepsize = stepsize, return_state = true, 
-	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
-	#store = storage,
-	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
-	record=[:Iteration, :Cost, RecordGradientNorm()])
-
-# ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
-get_record(solver)
-
-# ╔═╡ 8d732241-df58-48a7-af6f-6f3bab89f4a3
-U = get_solver_result(solver)
-
-# ╔═╡ fc2d17ae-5bb5-4533-b473-9ba0fe76c380
-canonical_project(M, cay(Ω / 2)) # Only from Sp to SpSt!
-
-# ╔═╡ a7d991a0-b201-4158-b24f-6c9991aff684
-project(M, U, A) # Nearest Tangent!
-
-# ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
-is_point(M, U; error=:warn)
-
-# ╔═╡ 0070c2e9-5329-4aac-8587-4bdaceb025c7
-md"""
-##### We see that U0 has a cost of $(round(cost_function(M, U0), digits = 2)), while U has a cost of $(round(cost_function(M, U), digits = 2)). 
-""" # The actual solution is $(round(canonical_project(M, U0)), digits = 2))
-
-# ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
-md"""
-### Plotting
-"""
-
-# ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
-iterations = [rec[1] for rec in get_record(solver)];
-
-# ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
-cost_vals =  [rec[2] for rec in get_record(solver)];
-
-# ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
-gradient_vals = [rec[3] for rec in get_record(solver)];
-
-# ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
-plot(iterations[begin:end], cost_vals; title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost")
-
-# ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
-plot(iterations[begin:end], gradient_vals; yaxis = :log10, title = "|∇f| plot", xlabel = "# iterations", ylabel = "|∇f|")
 
 # ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
 # ╠═╡ disabled = true
@@ -215,12 +202,70 @@ stepsize = NonmonotoneLinesearch(M;
 	initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
   ╠═╡ =#
 
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
-# Init. step size as in paper
+# ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
+md"""
+### Defining and running gradient descent
+"""
 
-# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
-# curcomvent calculation of injectivity radius 
+# ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
+solver = gradient_descent(M, cost_function, r_grad, U0;
+	stepsize = stepsize, return_state = true, 
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
+	#store = storage,
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
+	record=[:Iteration, :Cost, RecordGradientNorm()])
+
+# ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
+solver_og_tr = trust_regions(M, cost_function, r_grad, r_hess, U0;
+	return_state = true,
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
+	record=[:Iteration, :Cost, RecordGradientNorm()])
+
+#;return_state = true)
+#(M, cost_function, r_grad, r_hess)
+
+# ╔═╡ 4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
+solver_cubic = adaptive_regularization_with_cubics(M, cost_function, r_grad, r_hess, U0)
+
+# ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
+md"""
+### Plotting
+"""
+
+# ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
+begin
+	iterations = [rec[1] for rec in get_record(solver)];
+	iterations_og_tr = [rec[1] for rec in get_record(solver_og_tr)]
+end
+
+# ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
+begin
+	cost_vals =  [rec[2] for rec in get_record(solver)];
+	cost_vals_og_tr =  [rec[2] for rec in get_record(solver_og_tr)];
+end
+
+# ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
+begin
+	gradient_vals = [rec[3] for rec in get_record(solver)];
+	gradient_vals_og_tr = [rec[3] for rec in get_record(solver_og_tr)];
+end
+
+# ╔═╡ ea7304b2-e8db-4a67-b185-4eab86077bbe
+plot(iterations_og_tr[begin:end], cost_vals_og_tr; title = "Grad. descentConvergence plot", xlabel = "# iterations", ylabel = "Cost", xaxis = :log10)
+
+# ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
+begin
+	plot(iterations[begin:end], cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, label = "Grad. Descent")
+	plot!(iterations_og_tr, cost_vals_og_tr, label = "Trust region")
+end
+
+# ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
+begin
+	plot(iterations[begin:end], gradient_vals; yaxis = :log10, title = "|∇f| plot comparison", xlabel = "# iterations", ylabel = "|∇f|", xaxis = :log10, label = "Grad. Descent")
+	plot!(iterations_og_tr, gradient_vals_og_tr, label = "Trust region")
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1672,8 +1717,13 @@ version = "1.4.1+1"
 # ╠═60850703-1a35-4ca4-8830-8d02ca6b8cfd
 # ╠═62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
 # ╠═42115133-f3cf-4512-9251-f8e8fc655dfa
+# ╠═30c6c236-86f1-4289-b717-e0d4d31a1403
+# ╠═29ba7f46-b89b-4bed-8513-cda843f11806
+# ╠═cab5b270-2bfa-493b-9885-12b2d01a227c
+# ╠═bbd894c9-b269-4919-8af5-e0b03869a0ce
+# ╠═f54ff29b-c6d6-43c9-a58e-06c4b2579fda
+# ╠═8d97e650-7584-49f3-9a76-4af9b0426b37
 # ╠═2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-# ╠═b0fc5565-f41a-491a-b19f-aa3fd9ebfc2e
 # ╟─d25a8e78-b216-4e99-a29d-3a0fd898b8da
 # ╟─ee37b666-aaa5-4303-b080-39c90831d473
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
@@ -1685,17 +1735,14 @@ version = "1.4.1+1"
 # ╠═afdac687-8170-4679-bb9e-2af82b6877de
 # ╟─0960b834-ee78-42bf-8fbd-955734e3426c
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
-# ╠═501d5dd5-541b-453f-b836-713196f5345d
-# ╠═8d732241-df58-48a7-af6f-6f3bab89f4a3
-# ╠═fc2d17ae-5bb5-4533-b473-9ba0fe76c380
-# ╠═a7d991a0-b201-4158-b24f-6c9991aff684
-# ╠═4723d019-935f-4344-90ff-b431a7e6388b
-# ╟─0070c2e9-5329-4aac-8587-4bdaceb025c7
+# ╠═97db13d5-9e70-41be-84e7-866d26558b90
+# ╠═4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
 # ╠═19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
 # ╠═a82b1ec9-3d03-43dc-9b38-0f4ca3442927
+# ╠═ea7304b2-e8db-4a67-b185-4eab86077bbe
 # ╠═de8bf366-f01d-43cd-bcd0-db8828d6745a
-# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
