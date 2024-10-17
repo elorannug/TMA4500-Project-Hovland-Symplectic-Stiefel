@@ -197,12 +197,6 @@ function rie_grad_cost_function(M,P)
 	riemannian_gradient(M, P, euclid_grad_cost_function(M, P))
 end
 
-# ╔═╡ 1b6dc414-a019-41b8-b986-99972bdd67cd
-euclid_grad_cost_function(M, U0)
-
-# ╔═╡ e0c395d0-4827-4344-821f-0ddf84fb43fe
-rie_grad_cost_function(M,U0)
-
 # ╔═╡ 93add6b4-11d7-4fec-8878-86c128a6e6c8
 md"""
 The armijo linesearch demands an [injectivity radius](https://en.wikipedia.org/wiki/Glossary_of_Riemannian_and_metric_geometry#I). By [Zimmerman & Stoye](https://arxiv.org/abs/2405.02268), the injectivity radius is $\pi$ for the Euclidian norm. Since this is just a constant, this should be the same for our Riemannian metric as well.
@@ -226,8 +220,19 @@ function injectivity_radius(M::Manifolds.SymplecticStiefel{T, N}) where {T, N}
 end
 end
 
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
+# Init. step size as in paper
+# curcomvent calculation of injectivity radius 
+
 # ╔═╡ ea550142-7f44-46fa-a46c-5dba222977d1
 #stepsize = DecreasingLength(M)
+
+# ╔═╡ f66c616e-79d8-4ecc-aadf-7cdaab1b2fdf
+# ╠═╡ disabled = true
+#=╠═╡
+stepsize = ConstantLength(M, 0.000001)
+  ╠═╡ =#
 
 # ╔═╡ 61e52cc4-8fcd-439d-a519-44ed4beb8142
 #check_gradient(M, cost_function, rie_grad_cost_function; plot=false)
@@ -238,6 +243,9 @@ BZ: "For the gradient descent from **[14]** and for the gradient descent accordi
 
 **[14]** *B. Gao, N. T. Son, P.-A. Absil, and T. Stykel, Riemannian optimization on the symplectic Stiefel manifold, SIAM Journal on Optimization, 31 (2021), pp. 1546{1575, https://doi.org/10.1137/20M1348522.*
 """
+
+# ╔═╡ 916de1bb-562c-480a-ad64-95cc4e578de5
+# Not converging on grassman, M
 
 # ╔═╡ ca9a5e41-ba00-4757-919a-ee7c40cc6b26
 solver_SpGr = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
@@ -253,6 +261,9 @@ solver_SpGr = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 
 # ╔═╡ 8483ed75-1321-43e6-a1cf-472896197e97
 get_solver_result(solver_SpGr)
+
+# ╔═╡ 9cc58315-09c8-42d9-8179-004f204ee5b7
+# Converging on Stiefel
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
 solver_default = gradient_descent(M_SpSt, cost_function, rie_grad_cost_function, U0;
@@ -324,6 +335,11 @@ gradient_vals_default = [rec[3] for rec in get_record(solver_default)]
 iterations_exp = [rec[1] for rec in get_record(solver_exp)]
 cost_vals_exp =  [rec[2] for rec in get_record(solver_exp)]
 gradient_vals_exp = [rec[3] for rec in get_record(solver_exp)]
+
+iterations_SpGr = [rec[1] for rec in get_record(solver_SpGr)]
+cost_vals_SpGr =  [rec[2] for rec in get_record(solver_SpGr)]
+gradient_vals_SpGr = [rec[3] for rec in get_record(solver_SpGr)]
+	
 #=
 iterations_other = [rec[1] for rec in get_record(solver_other)]
 cost_vals_other =  [rec[2] for rec in get_record(solver_other)]
@@ -334,15 +350,17 @@ end;
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 begin
-plot(iterations_default, cost_vals_default; title = "Convergence plot for different retractions", xlabel = "# iterations", ylabel = "Cost", label = "Cayley", xaxis=:log10)
+plot(iterations_default, cost_vals_default; title = "Convergence plot for different retractions", xlabel = "# iterations", ylabel = "Cost", label = "Cayley", xaxis=:log10, yaxis=:log10)
 plot!(iterations_exp, cost_vals_exp, label = "Exponential")
+plot!(iterations_SpGr, cost_vals_SpGr, label = "Grassmann")
 #plot!(iterations_other, cost_vals_other, label = "Other retraction")
 end
 
 # ╔═╡ 7d511678-c208-446d-86e8-f064e18c0891
 begin
-plot(iterations_default, gradient_vals_default; title = "|▽f| plot of different retractions", xlabel = "# iterations", ylabel = "|▽f|", label = "Cayley retraction", xaxis=:log10)
+plot(iterations_default, gradient_vals_default; title = "|▽f| plot of different retractions", xlabel = "# iterations", ylabel = "|▽f|", label = "Cayley retraction", xaxis=:log10, yaxis=:log10)
 plot!(iterations_exp, gradient_vals_exp, label = "Exponential")
+plot!(iterations_SpGr, gradient_vals_SpGr, label = "Grassmann")
 #plot!(iterations_other, gradient_vals_other, label = "Other")
 end
 
@@ -403,17 +421,6 @@ md"""
 md"""
 We can see that the Cayley Retraction method is faster than projecting with the exponential map.
 """
-
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
-# Init. step size as in paper
-# curcomvent calculation of injectivity radius 
-
-# ╔═╡ f66c616e-79d8-4ecc-aadf-7cdaab1b2fdf
-# ╠═╡ disabled = true
-#=╠═╡
-stepsize = ConstantLength(M, 0.000001)
-  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1890,8 +1897,6 @@ version = "1.4.1+1"
 # ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
 # ╠═1787795e-46c1-4d89-8388-0b1753b61fd2
 # ╠═1d642cef-4b8e-4316-a355-ad9aaaca27f3
-# ╠═1b6dc414-a019-41b8-b986-99972bdd67cd
-# ╠═e0c395d0-4827-4344-821f-0ddf84fb43fe
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
 # ╟─34dbfd16-9658-4de2-ac07-b91843aceace
 # ╠═a7ff5dcc-262c-4054-9404-551677a17937
@@ -1900,10 +1905,12 @@ version = "1.4.1+1"
 # ╠═f66c616e-79d8-4ecc-aadf-7cdaab1b2fdf
 # ╠═61e52cc4-8fcd-439d-a519-44ed4beb8142
 # ╟─800a5a1f-fe2c-4df7-ab80-8337cf45c977
+# ╠═916de1bb-562c-480a-ad64-95cc4e578de5
 # ╠═ca9a5e41-ba00-4757-919a-ee7c40cc6b26
 # ╠═8483ed75-1321-43e6-a1cf-472896197e97
 # ╠═ae624b0a-c22e-4d4d-9ecb-0fccbcdabc77
 # ╠═8dbf3460-f5cd-4477-bf3d-e298ef284c83
+# ╠═9cc58315-09c8-42d9-8179-004f204ee5b7
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═0e328c4b-1d86-4f0f-adc0-df483defef43
 # ╠═1404149f-158f-42bf-9960-e4480ee9682b
@@ -1912,9 +1919,9 @@ version = "1.4.1+1"
 # ╠═55e812aa-ca8e-4481-9685-4aae67d89420
 # ╠═4b6034e4-18a8-47bd-9221-f52569e5f54b
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
-# ╟─7d511678-c208-446d-86e8-f064e18c0891
+# ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
+# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╠═7d511678-c208-446d-86e8-f064e18c0891
 # ╟─5a23ebce-129f-47d7-a1c4-29c0bb91b828
 # ╟─4c2e431d-0e62-4cc0-b4fe-f7b38cd911ca
 # ╠═b511ad19-1a1f-4719-b185-be83468f2a86

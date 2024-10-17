@@ -181,25 +181,11 @@ md"""
 As the trial step size,$k$, use the alternating BB method $\gamma_{k}^{ABB}$.
 """
 
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
-# Init. step size as in paper
-
-# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
-# curcomvent calculation of injectivity radius 
-
 # ╔═╡ 0b518b71-c2d3-4330-aae8-62447c923114
 # ╠═╡ disabled = true
 #=╠═╡
 # Create a storage action to store previous iterates and gradients
 storage = StoreStateAction(M; store_fields=[:Iterate, :Gradient])
-  ╠═╡ =#
-
-# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
-# ╠═╡ disabled = true
-#=╠═╡
-stepsize = NonmonotoneLinesearch(M; 
-	initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
   ╠═╡ =#
 
 # ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
@@ -208,6 +194,7 @@ md"""
 """
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
+#=╠═╡
 solver = gradient_descent(M, cost_function, r_grad, U0;
 	stepsize = stepsize, return_state = true, 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
@@ -215,6 +202,7 @@ solver = gradient_descent(M, cost_function, r_grad, U0;
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
+  ╠═╡ =#
 
 # ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
 solver_og_tr = trust_regions(M, cost_function, r_grad, r_hess, U0;
@@ -235,37 +223,65 @@ md"""
 """
 
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
+#=╠═╡
 begin
 	iterations = [rec[1] for rec in get_record(solver)];
 	iterations_og_tr = [rec[1] for rec in get_record(solver_og_tr)]
 end
+  ╠═╡ =#
 
 # ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
+#=╠═╡
 begin
 	cost_vals =  [rec[2] for rec in get_record(solver)];
 	cost_vals_og_tr =  [rec[2] for rec in get_record(solver_og_tr)];
 end
+  ╠═╡ =#
 
 # ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
+#=╠═╡
 begin
 	gradient_vals = [rec[3] for rec in get_record(solver)];
 	gradient_vals_og_tr = [rec[3] for rec in get_record(solver_og_tr)];
 end
+  ╠═╡ =#
 
 # ╔═╡ ea7304b2-e8db-4a67-b185-4eab86077bbe
+#=╠═╡
 plot(iterations_og_tr[begin:end], cost_vals_og_tr; title = "Grad. descentConvergence plot", xlabel = "# iterations", ylabel = "Cost", xaxis = :log10)
+  ╠═╡ =#
 
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
+#=╠═╡
 begin
 	plot(iterations[begin:end], cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, label = "Grad. Descent")
 	plot!(iterations_og_tr, cost_vals_og_tr, label = "Trust region")
 end
+  ╠═╡ =#
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
+#=╠═╡
 begin
 	plot(iterations[begin:end], gradient_vals; yaxis = :log10, title = "|∇f| plot comparison", xlabel = "# iterations", ylabel = "|∇f|", xaxis = :log10, label = "Grad. Descent")
 	plot!(iterations_og_tr, gradient_vals_og_tr, label = "Trust region")
 end
+  ╠═╡ =#
+
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+#=╠═╡
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
+# Init. step size as in paper
+
+# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
+# curcomvent calculation of injectivity radius 
+  ╠═╡ =#
+
+# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
+# ╠═╡ disabled = true
+#=╠═╡
+stepsize = NonmonotoneLinesearch(M; 
+	initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
