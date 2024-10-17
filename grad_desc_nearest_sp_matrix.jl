@@ -167,7 +167,37 @@ md"""
 """
 
 # ╔═╡ e8ff80b9-aa18-4cf7-82a7-e42738425d23
-# stepsize = Manopt.ConstantStepsize(M, 0.01) # Naive choice
+#stepsize = Manopt.ConstantStepsize(M, 0.01) # Naive choice
+
+# ╔═╡ 079e658b-080d-4dfa-aeec-109ae3e7409f
+#stepsize = ConstantLength(M, 0.1) # ✔ Works
+
+# ╔═╡ 9b6f75cc-8cf3-484d-9374-7c2203388a83
+#stepsize = AdaptiveWNGradient() # ✔ Works
+
+# ╔═╡ ad3a3702-0ecf-4840-b9b1-46823a51cd43
+#stepsize = DecreasingLength() # ✔ Works
+
+# ╔═╡ 9d0b3372-4ee9-4d83-8819-4233a9df7b1b
+# stepsize = NonmonotoneLinesearch() # ✖ Does not work
+
+# ╔═╡ c621c0ef-f8df-414c-b564-1f04e9c45509
+# stepsize = Polyak() # ✔ Works
+
+# ╔═╡ 6e2a65aa-970b-4dc6-8cd9-ef31d175fcf9
+# stepsize = WolfePowellLinesearch() # ✖ Does not work
+
+#=MethodError: parallel_transport_to!(::ManifoldsBase.AbstractManifold, ::Matrix{Float64}, ::Matrix{Float64}, ::Matrix{Float64}, ::Matrix{Float64}) is ambiguous.=#
+
+# ╔═╡ bb9492e9-67ab-4d41-9351-1fac2b73e955
+# stepsize = WolfePowellBinaryLinesearch(M) # ✖ Does not work
+
+#=MethodError: parallel_transport_to!(::ManifoldsBase.AbstractManifold, ::Matrix{Float64}, ::Matrix{Float64}, ::Matrix{Float64}, ::Matrix{Float64}) is ambiguous.=#
+
+# ╔═╡ ee37b666-aaa5-4303-b080-39c90831d473
+md"""
+# ⚠️ It seems like vectortransport is not defined for SpSt
+"""
 
 # ╔═╡ 93add6b4-11d7-4fec-8878-86c128a6e6c8
 md"""
@@ -192,15 +222,12 @@ md"""
 As the trial step size,$k$, use the alternating BB method $\gamma_{k}^{ABB}$.
 """
 
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
-# Init. step size as in paper
-
-# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
-# curcomvent calculation of injectivity radius 
-
-# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
-
+# ╔═╡ 0b518b71-c2d3-4330-aae8-62447c923114
+# ╠═╡ disabled = true
+#=╠═╡
+# Create a storage action to store previous iterates and gradients
+storage = StoreStateAction(M; store_fields=[:Iterate, :Gradient])
+  ╠═╡ =#
 
 # ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
 md"""
@@ -211,6 +238,7 @@ md"""
 solver = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
+	#store = storage,
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
@@ -254,6 +282,20 @@ plot(iterations[begin:end], cost_vals; title = "Convergence plot", xlabel = "# i
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 plot(iterations[begin:end], gradient_vals; yaxis = :log10, title = "|∇f| plot", xlabel = "# iterations", ylabel = "|∇f|")
+
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
+# Init. step size as in paper
+
+# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
+# curcomvent calculation of injectivity radius 
+
+# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
+# ╠═╡ disabled = true
+#=╠═╡
+stepsize = NonmonotoneLinesearch(M; 
+	initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1718,11 +1760,20 @@ version = "1.4.1+1"
 # ╠═62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
 # ╟─d25a8e78-b216-4e99-a29d-3a0fd898b8da
 # ╠═e8ff80b9-aa18-4cf7-82a7-e42738425d23
+# ╠═079e658b-080d-4dfa-aeec-109ae3e7409f
+# ╠═9b6f75cc-8cf3-484d-9374-7c2203388a83
+# ╠═ad3a3702-0ecf-4840-b9b1-46823a51cd43
+# ╠═9d0b3372-4ee9-4d83-8819-4233a9df7b1b
+# ╠═c621c0ef-f8df-414c-b564-1f04e9c45509
+# ╠═6e2a65aa-970b-4dc6-8cd9-ef31d175fcf9
+# ╠═bb9492e9-67ab-4d41-9351-1fac2b73e955
+# ╟─ee37b666-aaa5-4303-b080-39c90831d473
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
-# ╠═34dbfd16-9658-4de2-ac07-b91843aceace
+# ╟─34dbfd16-9658-4de2-ac07-b91843aceace
 # ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
-# ╠═1d30c99e-f58a-42a9-9f60-f1ca5d68addf
+# ╟─1d30c99e-f58a-42a9-9f60-f1ca5d68addf
 # ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+# ╠═0b518b71-c2d3-4330-aae8-62447c923114
 # ╠═afdac687-8170-4679-bb9e-2af82b6877de
 # ╟─0960b834-ee78-42bf-8fbd-955734e3426c
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8

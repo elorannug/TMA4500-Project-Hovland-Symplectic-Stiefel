@@ -6,7 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ 136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 using Manopt, Manifolds, Distributions, Random, LinearAlgebra, 
-Plots, BenchmarkTools, LinearAlgebra
+Plots, BenchmarkTools
 
 # ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
 md"""
@@ -114,13 +114,135 @@ is_point(M, U0) # Not throwing an error, so it is in SpSt
 
 # ╔═╡ 62da690c-5fa0-48ac-b3dd-1a8272e9d18c
 md"""
-### Defining a custom retraction method
+### [OLD] Defining a custom retraction method
 *(In BZ, the so-called "pseudo-Riemannian geodecic" retraction (3.11))*
 
 We'll implement in the generic function environment `ManifoldsBase.retract_project!`. We can do this since the method involves only simple operations, and the `retract_project` function has not been implemented for the $\text{SpSt}$.
 
 Inspired by [This tutorial](https://juliamanifolds.github.io/manopt/stable/tutorials/ImplementOwnManifold/#A-retraction)
 """
+
+# ╔═╡ d5948632-cc6d-4198-b70e-eaed7add50bf
+md"""
+### Defining the custom retraction properly
+We want to define a new metric manifold, where the pseudo-Riemannian geodesic is defined. 
+"""
+
+# ╔═╡ 993f0136-10d0-445b-9219-3df0358bafdc
+# ╠═╡ disabled = true
+#=╠═╡
+Es = vcat(hcat(zeros(k, n-k),  zeros(k, n-k)), 
+			  hcat(I,  zeros(n-k, n-k)), 
+			  hcat(zeros(k, n-k),  zeros(k, n-k)), 
+		 	  hcat(zeros(n-k, n-k), I))
+  ╠═╡ =#
+
+# ╔═╡ 9a24190d-6ca1-4614-8334-47b545ab63ac
+# ╠═╡ disabled = true
+#=╠═╡
+struct OGPseudoRieMetric <: RiemannianMetric end
+  ╠═╡ =#
+
+# ╔═╡ 904f220a-e9cd-4895-8bea-41b34aeb21a7
+begin 
+struct OGPseudoRieMetric <: RiemannianMetric end
+
+@doc raw"""
+    exp(::MetricManifold{ℝ,SymplecticStiefel,OGPseudoRieMetric}, p, X)
+"""
+exp(::MetricManifold{ℝ,<:SymplecticStiefel,OGPseudoRieMetric}, p, X)
+	
+function exp!(
+    ::MetricManifold{ℝ,<:SymplecticStiefel,OGPseudoRieMetric},
+    q,
+    p, # ⚠️ TODO: Maybe change to small "p". 
+    X,
+)
+    A = symplectic_inverse(p) * X  # Pseudoinverse of U times X
+    H = X - p * A    
+    # k = size(A, 1) ÷ 2  # Assuming A is a 2k x 2k matrix
+
+	# Check if H^+ * H is invertible, i.e. det(H^+ H) ≠ 0
+	v = det(BigFloat.(symplectic_inverse(H)*H))
+	#=
+	if isapprox(v, 0, atol = 1e-37)
+		#=throw(DomainError(det(BigFloat.(symplectic_inverse(H)*H)), 
+			"=det(H^{+}H). H^{+}H is not invertible!"))=#
+		global counter.count += 1
+		#@warn "det(H⁺H) is approximately zero, meaning H⁺H is not invertible!" det(BigFloat.(symplectic_inverse(H)*H))
+	end
+	=#
+    # The block matrix components
+    top_left = 0.5 * A
+    top_right = 0.25 * (A^2) - (symplectic_inverse(H) * H)
+    bottom_left = I(2k)
+    bottom_right = 0.5 * A
+	
+    exp_matrix = exp([top_left top_right; bottom_left bottom_right]) # 🚩Removed t
+
+	# Using .= to change q in place
+    q .= [p (0.5 * p * A + H)] * exp_matrix * [I(2k); zeros(2k, 2k)]
+    return q
+end
+#=
+function inner(::MetricManifold{ℝ,<:SymplecticStiefel,OGPseudoRieMetric},
+    p,
+    X,
+    Y,
+)
+	# From BZ proposition 3.6, eqn. (3.8)
+    return tr(symplectic_inverse(X)*(I-0.5*p*symplectic_inverse(p))*Y)
+end=#
+end
+
+# ╔═╡ fc7ad0b4-4482-4e6c-8b90-ecfc8e5e4b7d
+exp!
+
+# ╔═╡ d45cc8a3-0520-46c6-98fd-11224765f4f0
+#inner(U0, I, I)
+
+# ╔═╡ 8771556b-8ab3-41e1-bb25-26ae7112e9fe
+#=
+function inner(::SymplecticStiefel, p, X, Y)
+    J = SymplecticElement(p, X, Y) # in BZ21 also J
+    # Procompute lu(p'p) since we solve a^{-1}* 3 times
+    a = lu(p' * p) # note that p'p is symmetric, thus so is its inverse c=a^{-1}
+    b = J' * p
+    # we split the original trace into two one with I->(X'Yc)
+    # and the other with 1/2 X'b c b' Y c
+    # 1) we permute X' and Y c to c^{\mathrm{T}}Y^{\mathrm{T}}X = a\(Y'X) (avoids a large interims matrix)
+    # 2) we permute Y c up front, the center term is symmetric, so we get cY'b c b' X
+    # and (b'X) again avoids a large interims matrix, so does Y'b.
+    return tr(a \ (Y' * X)) - (1 / 2) * tr(a \ ((Y' * b) * (a \ (b' * X))))
+end
+=#
+
+# ╔═╡ 3efcebe1-08b6-4a4c-baed-3193b062c4d0
+M_pseudo = MetricManifold(SymplecticStiefel(2*n,2*k),OGPseudoRieMetric())
+
+# ╔═╡ feec9ded-778f-4ffa-ad45-1622fa65f0f7
+is_point(M_pseudo, U0)
+
+# ╔═╡ 148492c6-39f2-49ea-a267-91107428cc74
+begin
+	import ManifoldsBase: AbstractManifold
+	#=
+	@doc raw"""
+	    inner(::MetricManifold{ℝ,SymmetricPositiveDefinite,BuresWassersteinMetric}, p, X, Y)"""=#
+	
+	function inner(::MetricManifold{ℝ,<:SymplecticStiefel,OGPseudoRieMetric},p,X,Y,)
+		# From BZ proposition 3.6, eqn. (3.8)
+	    return tr(symplectic_inverse(X)*(I-0.5*p*symplectic_inverse(p))*Y)
+	end
+
+	
+	function inner(::AbstractManifold,p,X,Y,)
+		return inner(M_pseudo,p,X,Y,)
+	end
+end
+
+# ╔═╡ e46df705-6d51-43da-96ce-250069c2842a
+inner
 
 # ╔═╡ a8971fce-7b45-4a50-9c63-9d726b460a5f
 md"""
@@ -134,7 +256,7 @@ function cost_function(M, P::Matrix{Float64}) # Why must it include M?
 end
 
 # ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
-function euclid_grad_cost_function(P::Matrix{Float64})
+function euclid_grad_cost_function(M, P::Matrix{Float64})
 	# Implement some checks
 	return 2 * (P - A)
 end
@@ -162,9 +284,12 @@ stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
 # Init. step size as in paper
 # curcomvent calculation of injectivity radius 
 
+# ╔═╡ a6befb63-914f-4c9e-af87-f782d2cac03e
+stepsize_pseudo = ArmijoLinesearch(M_pseudo; initial_stepsize = cost_function(M_pseudo, U0))
+
 # ╔═╡ 42206059-b75a-478f-b3d4-55aaa059a438
 function rie_grad_cost_function(M, P)
-    grad_P = euclid_grad_cost_function(P)
+    grad_P = euclid_grad_cost_function(M,P)
     J2n = Manifolds.SymplecticElement(1.0)  # Create the J_{2n} matrix
     X = grad_P * transpose(P) * P + J2n * P * transpose(grad_P) * J2n * P
 	# Just a typo for the gradient to be good
@@ -241,8 +366,8 @@ retract_project! # without defining above: "(generic function with 18 methods)"
 
 # ╔═╡ 1404149f-158f-42bf-9960-e4480ee9682b
 begin
-
-bing = 0
+	
+counter.count *= 0 # Reset counter for subsequent reruns
 	
 solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
@@ -257,6 +382,27 @@ solver_other = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 if counter.count > 0
     @warn "H⁺H was detected as non-invertible in $(counter.count) iterations."
 end
+end
+
+# ╔═╡ c4118451-9743-41cb-a28e-ecc85a9bfd7f
+begin
+	
+#counter.count *= 0 # Reset counter for subsequent reruns
+	
+solver_proper = gradient_descent(M_pseudo, cost_function,
+	rie_grad_cost_function,  U0;
+	stepsize = stepsize_pseudo, return_state = true, 
+
+	retraction_method = ExponentialRetraction(), # Custom projection
+	
+	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
+	record=[:Iteration, :Cost, RecordGradientNorm()]);
+#=
+if counter.count > 0
+    @warn "H⁺H was detected as non-invertible in $(counter.count) iterations."
+end=#
 end
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
@@ -318,12 +464,15 @@ md"""
 """
 
 # ╔═╡ b511ad19-1a1f-4719-b185-be83468f2a86
+# ╠═╡ disabled = true
+#=╠═╡
 @benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 
 	retraction_method = default_retraction_method(M), # :=CayleyRetraction()
 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9))
+  ╠═╡ =#
 
 # ╔═╡ d0d78bc7-8159-4014-8c1b-a8231330e332
 md"""
@@ -331,12 +480,15 @@ md"""
 """
 
 # ╔═╡ fd880b0d-9c79-4134-96ae-ad00a0e8d2a6
+# ╠═╡ disabled = true
+#=╠═╡
 @benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 
 	retraction_method = ExponentialRetraction(),
 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9))
+  ╠═╡ =#
 
 # ╔═╡ 5e26ac9c-2203-4071-a387-7224a15de904
 md"""
@@ -344,12 +496,15 @@ md"""
 """
 
 # ╔═╡ c296e92a-18a8-44c1-8170-f14b37ce9ec9
+# ╠═╡ disabled = true
+#=╠═╡
 @benchmark gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 
 	retraction_method = ProjectionRetraction(), # Custom projection
 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9))
+  ╠═╡ =#
 
 # ╔═╡ 8d79f9b5-9416-46d5-b27b-ed8838d1638d
 md"""
@@ -1813,36 +1968,49 @@ version = "1.4.1+1"
 # ╠═b740e538-0692-4842-9320-5222505a59b6
 # ╠═ad41f072-9144-497a-88a4-68d0ba7c8b37
 # ╟─44799ac7-6ccc-4cd1-91f3-21975ff6245a
-# ╟─f13b4bab-d914-4923-9918-c5a3aac0dda5
+# ╠═f13b4bab-d914-4923-9918-c5a3aac0dda5
 # ╟─b59fd1ba-f4ea-4ffc-8323-ccf700104d8d
-# ╟─d8faab6f-ff1b-4a70-bf17-f541a52d8c9e
+# ╠═d8faab6f-ff1b-4a70-bf17-f541a52d8c9e
 # ╟─e365e09e-d9b4-438e-887f-84f6f15f6f14
 # ╟─479f35f0-67c6-44c7-a86a-07612e72132f
 # ╠═2e862045-402d-4e6c-9c1f-b2f56e7a5420
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
+# ╠═feec9ded-778f-4ffa-ad45-1622fa65f0f7
 # ╟─62da690c-5fa0-48ac-b3dd-1a8272e9d18c
 # ╠═3e326a89-c38a-4eb9-83ce-192d9a2b42ca
-# ╟─bb5fd8e9-2f70-4402-910c-eb98e757b34d
+# ╠═bb5fd8e9-2f70-4402-910c-eb98e757b34d
+# ╟─d5948632-cc6d-4198-b70e-eaed7add50bf
+# ╠═993f0136-10d0-445b-9219-3df0358bafdc
+# ╠═9a24190d-6ca1-4614-8334-47b545ab63ac
+# ╠═904f220a-e9cd-4895-8bea-41b34aeb21a7
+# ╠═fc7ad0b4-4482-4e6c-8b90-ecfc8e5e4b7d
+# ╠═148492c6-39f2-49ea-a267-91107428cc74
+# ╠═e46df705-6d51-43da-96ce-250069c2842a
+# ╠═d45cc8a3-0520-46c6-98fd-11224765f4f0
+# ╠═8771556b-8ab3-41e1-bb25-26ae7112e9fe
+# ╠═3efcebe1-08b6-4a4c-baed-3193b062c4d0
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
-# ╟─84713389-c089-4c1a-ab0b-bc504c4e59c3
-# ╟─1787795e-46c1-4d89-8388-0b1753b61fd2
+# ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
+# ╠═1787795e-46c1-4d89-8388-0b1753b61fd2
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
 # ╟─34dbfd16-9658-4de2-ac07-b91843aceace
 # ╟─2c06883e-c63d-4ca2-9122-2c07e69eccfa
 # ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-# ╟─42206059-b75a-478f-b3d4-55aaa059a438
+# ╠═a6befb63-914f-4c9e-af87-f782d2cac03e
+# ╠═42206059-b75a-478f-b3d4-55aaa059a438
 # ╠═61e52cc4-8fcd-439d-a519-44ed4beb8142
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═0e328c4b-1d86-4f0f-adc0-df483defef43
-# ╠═1404149f-158f-42bf-9960-e4480ee9682b
 # ╠═3edf1102-53ab-4d40-b84d-335ae2e6c487
+# ╠═1404149f-158f-42bf-9960-e4480ee9682b
+# ╠═c4118451-9743-41cb-a28e-ecc85a9bfd7f
 # ╟─501d5dd5-541b-453f-b836-713196f5345d
 # ╠═4723d019-935f-4344-90ff-b431a7e6388b
 # ╠═55e812aa-ca8e-4481-9685-4aae67d89420
 # ╠═4b6034e4-18a8-47bd-9221-f52569e5f54b
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╟─7d511678-c208-446d-86e8-f064e18c0891
 # ╟─5a23ebce-129f-47d7-a1c4-29c0bb91b828
 # ╟─4c2e431d-0e62-4cc0-b4fe-f7b38cd911ca
