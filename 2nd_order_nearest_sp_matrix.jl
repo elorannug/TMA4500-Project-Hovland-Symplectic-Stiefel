@@ -24,10 +24,10 @@ md"""
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 10
+n = 2
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 4
+k = 1
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
@@ -103,13 +103,6 @@ end
 # ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
 check_gradient(M, cost_function, r_grad; plot=false)
 
-# ╔═╡ 42115133-f3cf-4512-9251-f8e8fc655dfa
-# Since r hess is not implemented for SpSt, implement it myself
-#=
-function r_hess(M, P, X)
-	riemannian_Hessian(M, P, euclid_grad_cost_function(P), euclid_hessian_cost_function(P,X), X)
-end=#
-
 # ╔═╡ 30c6c236-86f1-4289-b717-e0d4d31a1403
 md"""
 ### Defining Riemannian Hessian from Theory (JZ)
@@ -121,50 +114,75 @@ both variants."*
 """
 
 # ╔═╡ 29ba7f46-b89b-4bed-8513-cda843f11806
-# ╠═╡ disabled = true
-#=╠═╡
 # Defining the horizonta lift (2.6) in [JZ]
 function Ω(P, X)
 	J = SymplecticElement(1)
 	invPTP = inv(P'*P) # Storing to not compute 3 times
 	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
 end
-  ╠═╡ =#
 
 # ╔═╡ cab5b270-2bfa-493b-9885-12b2d01a227c
-#=╠═╡
-function christoff(P,X)
+function Γ(P,X)
 	return -(Ω(P,X)-Ω(P,X)')*(X-Ω(P,X)'*P)-((Ω(P,X)')^2)*P
 end
-  ╠═╡ =#
 
 # ╔═╡ bbd894c9-b269-4919-8af5-e0b03869a0ce
-#=╠═╡
-function two_imput_christoff(P,X,Y)
-	return 0.25*(christoff(P,X+Y)-christoff(P,X-Y))
+function two_imput_christoff(p,X,Y)
+	return 0.25*(Γ(p,X+Y)-Γ(p,X-Y))
 end
-  ╠═╡ =#
 
 # ╔═╡ f54ff29b-c6d6-43c9-a58e-06c4b2579fda
-# ╠═╡ disabled = true
-#=╠═╡
-function directional_r_grad(P, X)
+function directional_r_grad(p, X)
 	# Project euclidian hessian to the tangent space
-	return project(M, P, euclid_hessian_cost_function(P,X))
+	return project(M, p, euclid_hessian_cost_function(p,X))
 end
-  ╠═╡ =#
 
 # ╔═╡ 8d97e650-7584-49f3-9a76-4af9b0426b37
-#=╠═╡
-function r_hess(M, P, X)
-	return directional_r_grad(P,X) + two_imput_christoff(P,r_grad(M,P), X)
+function r_hess(M, p, X)
+	eg = euclid_grad_cost_function(p)
+	eh = euclid_hessian_cost_function(p, X)
+	rg = r_grad(M, p)
+
+	# Minimal norm condition (enshures numerical stability)
+	if norm(rg - X) < eps() # eps ≈ machine small, but not zero
+		Nn = 1
+	else
+		Nn = norm(rg - X) # Norm negative
+	end
+
+	if norm(rg + X) < eps() # eps ≈ machine small, but not zero
+		Np = 1
+	else
+		Np = norm(rg + X) # Norm negative
+	end
+	
+	
+	#Np = norm(rg + X) # Norm positive
+	
+	XTp = X' * p # Memoization
+
+	Dgrad_f = (eh * (p' * p) 
+	+ eg * XTp 
+	+ eg * XTp' 
+	- (symplectic_inverse(eg * X') + symplectic_inverse(eh * p')) * p 
+	- symplectic_inverse(eg * p') * X
+	)
+
+	#=
+	println("XTp size: ", size(XTp))
+	println("Dgrad_f size: ", size(Dgrad_f))
+	println("rg: ", rg)
+	println("X: ", X)
+	println("Np: ", Np)
+	println("Nn: ", Nn)=#
+	
+	return Dgrad_f + 0.25*((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn))
+	
+	#return directional_r_grad(p,X) + two_imput_christoff(p,r_grad(M,p), X)
 end
-  ╠═╡ =#
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-#=╠═╡
 check_Hessian(M, cost_function, r_grad, r_hess)
-  ╠═╡ =#
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -178,6 +196,17 @@ Where:
 -  $P_{p}$ is the projection onto the tangent space at $p$,
 -  $D (\overline{\operatorname{grad}} f(p))[X]$ is the directional derivative of the smooth extension of the Riemannian gradient $\operatorname{grad} f(p)$ along $X$.
 """
+
+# ╔═╡ a183a142-188a-4991-92a7-69ddc7bc187b
+# for debugging, implement own projection
+function custom_project(p, X)
+	# project X onto SpSt at point p
+	if n < k # dont care about this case
+		throw(DomainError("n < k!"))
+	end
+	XPp = symplectic_inverse(X) * p
+	return X - 0.5 * p * (XPp + symplectic_inverse(XPp))
+end
 
 # ╔═╡ 5fd713a4-54be-4828-bb5a-3edb030f89eb
 function r_hess_approx(M, p, X)
@@ -203,6 +232,9 @@ function r_hess_approx(M, p, X)
 	- symplectic_inverse(eg * p') * X
 	)
 	return project(M, p, Dgrad_f)
+	#F(p): 0.556936, |▽F(p)|: 5.2116e-07, 
+	#return custom_project(p, Dgrad_f) 
+	#F(p): 0.556936, |▽F(p)|: 5.2116e-07, 
 end
 
 # ╔═╡ d64a5af1-0190-4cbb-a791-e44a5c5f1953
@@ -263,8 +295,6 @@ md"""
 BZ p. 15:
 
 "The algorithms terminate when $∥\operatorname{grad}f(x_k)∥_{x_k} < 10^{−6}$, or when the step size $τ_k$ in R–SD or R–CG becomes smaller than $10^{-11}$."
-
-⚠️ `10e-6` *might* be suspiciusly high for the TR.
 """
 
 # ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
@@ -275,16 +305,24 @@ md"""
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
 solver = gradient_descent(M, cost_function, r_grad, U0;
 	stepsize = stepsize, return_state = true, 
-	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-6) | StopWhenStepsizeLess(10.0^-11),
+	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-9) | StopWhenStepsizeLess(10.0^-11),
 	#store = storage,
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 
+# ╔═╡ 715fb2bf-5f2c-4e68-ac9e-80056152146a
+solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
+	return_state = true,
+	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-9),
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
+	record=[:Iteration, :Cost, RecordGradientNorm()])
+
 # ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
 solver_og_tr = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
 	return_state = true,
-	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-6),
+	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-9),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
@@ -310,35 +348,37 @@ md"""
 
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
 begin
-	iterations = [rec[1] for rec in get_record(solver)];
+	#solver_og_tr_hess
+	iterations = [rec[1] for rec in get_record(solver)]
 	iterations_og_tr = [rec[1] for rec in get_record(solver_og_tr)]
-end
+	iterations_og_tr_hess = [rec[1] for rec in get_record(solver_og_tr_hess)]
 
-# ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
-begin
-	cost_vals =  [rec[2] for rec in get_record(solver)];
-	cost_vals_og_tr =  [rec[2] for rec in get_record(solver_og_tr)];
-end
+	cost_vals =  [rec[2] for rec in get_record(solver)]
+	cost_vals_og_tr =  [rec[2] for rec in get_record(solver_og_tr)]
+	cost_vals_og_tr_hess =  [rec[2] for rec in get_record(solver_og_tr_hess)]
 
-# ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
-begin
-	gradient_vals = [rec[3] for rec in get_record(solver)];
-	gradient_vals_og_tr = [rec[3] for rec in get_record(solver_og_tr)];
+	gradient_vals = [rec[3] for rec in get_record(solver)]
+	gradient_vals_og_tr = [rec[3] for rec in get_record(solver_og_tr)]
+	gradient_vals_og_tr_hess = [rec[3] for rec in get_record(solver_og_tr_hess)]
+
+	println("Fetched arrays for plotting")
 end
 
 # ╔═╡ ea7304b2-e8db-4a67-b185-4eab86077bbe
-plot(iterations_og_tr, cost_vals_og_tr; title = "Grad. descentConvergence plot", xlabel = "# iterations", ylabel = "Cost", xaxis = :log10)
+#plot(iterations_og_tr, cost_vals_og_tr; title = "Grad. descentConvergence plot", xlabel = "# iterations", ylabel = "Cost", xaxis = :log10)
 
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
 begin
 	plot(iterations, cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, label = "Grad. Descent")
-	plot!(iterations_og_tr, cost_vals_og_tr, label = "Trust region")
+	plot!(iterations_og_tr, cost_vals_og_tr, label = "TR approx Hess")
+	plot!(iterations_og_tr_hess, cost_vals_og_tr_hess, label = "TR exact Hess")
 end
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 begin
 	plot(iterations, gradient_vals; yaxis = :log10, title = "|∇f| plot comparison", xlabel = "# iterations", ylabel = "|∇f|", xaxis = :log10, label = "Grad. Descent")
-	plot!(iterations_og_tr, gradient_vals_og_tr, label = "Trust region")
+	plot!(iterations_og_tr, gradient_vals_og_tr, label = "TR approx Hess")
+	plot!(iterations_og_tr_hess, gradient_vals_og_tr_hess, label = "TR exact Hess")
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1790,15 +1830,15 @@ version = "1.4.1+1"
 # ╟─51fc0bfb-8796-40a9-9d93-16d3f2282a75
 # ╠═60850703-1a35-4ca4-8830-8d02ca6b8cfd
 # ╠═62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
-# ╠═42115133-f3cf-4512-9251-f8e8fc655dfa
 # ╟─30c6c236-86f1-4289-b717-e0d4d31a1403
-# ╟─29ba7f46-b89b-4bed-8513-cda843f11806
-# ╟─cab5b270-2bfa-493b-9885-12b2d01a227c
-# ╟─bbd894c9-b269-4919-8af5-e0b03869a0ce
-# ╟─f54ff29b-c6d6-43c9-a58e-06c4b2579fda
-# ╟─8d97e650-7584-49f3-9a76-4af9b0426b37
+# ╠═29ba7f46-b89b-4bed-8513-cda843f11806
+# ╠═cab5b270-2bfa-493b-9885-12b2d01a227c
+# ╠═bbd894c9-b269-4919-8af5-e0b03869a0ce
+# ╠═f54ff29b-c6d6-43c9-a58e-06c4b2579fda
+# ╠═8d97e650-7584-49f3-9a76-4af9b0426b37
 # ╠═2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
 # ╟─e3878383-0f27-4859-bd9e-165076a52da6
+# ╠═a183a142-188a-4991-92a7-69ddc7bc187b
 # ╠═5fd713a4-54be-4828-bb5a-3edb030f89eb
 # ╠═d64a5af1-0190-4cbb-a791-e44a5c5f1953
 # ╟─d25a8e78-b216-4e99-a29d-3a0fd898b8da
@@ -1809,19 +1849,18 @@ version = "1.4.1+1"
 # ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
 # ╠═0b518b71-c2d3-4330-aae8-62447c923114
 # ╠═afdac687-8170-4679-bb9e-2af82b6877de
-# ╠═5918c34b-c435-428f-bd18-5b156b5bb0bc
+# ╟─5918c34b-c435-428f-bd18-5b156b5bb0bc
 # ╟─0960b834-ee78-42bf-8fbd-955734e3426c
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
+# ╠═715fb2bf-5f2c-4e68-ac9e-80056152146a
 # ╠═97db13d5-9e70-41be-84e7-866d26558b90
 # ╠═6f2dcb01-6d44-4bfc-b89c-b69e7df19422
 # ╠═755f4c1c-153c-4f64-9caa-cc2e30e06c61
 # ╠═4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╠═19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
-# ╠═a82b1ec9-3d03-43dc-9b38-0f4ca3442927
-# ╟─ea7304b2-e8db-4a67-b185-4eab86077bbe
-# ╟─de8bf366-f01d-43cd-bcd0-db8828d6745a
-# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╠═ea7304b2-e8db-4a67-b185-4eab86077bbe
+# ╠═de8bf366-f01d-43cd-bcd0-db8828d6745a
+# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
