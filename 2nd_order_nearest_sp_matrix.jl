@@ -74,19 +74,19 @@ md"""
 """
 
 # ╔═╡ 84713389-c089-4c1a-ab0b-bc504c4e59c3
-function cost_function(M, P::Matrix{Float64}) # Why must it include M?
+function cost_function(M, p::Matrix{Float64}) # Why must it include M?
 	# Implement some checks
-	return norm(P - A) ^ 2
+	return norm(p - A) ^ 2
 end
 
 # ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
-function euclid_grad_cost_function(P::Matrix{Float64})
+function euclid_grad_cost_function(p::Matrix{Float64})
 	# Implement some checks
-	return 2 * (P - A)
+	return 2 * (p - A)
 end
 
 # ╔═╡ 402611b0-d0f2-4b13-8a67-6c60007bb377
-function euclid_hessian_cost_function(P::Matrix{Float64}, X::Matrix{Float64})
+function euclid_hessian_cost_function(p::Matrix{Float64}, X::Matrix{Float64})
 	return X
 end
 
@@ -96,8 +96,8 @@ md"""
 """
 
 # ╔═╡ 60850703-1a35-4ca4-8830-8d02ca6b8cfd
-function r_grad(M,P)
-	riemannian_gradient(M, P, euclid_grad_cost_function(P))
+function r_grad(M,p)
+	riemannian_gradient(M, p, euclid_grad_cost_function(p))
 end
 
 # ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
@@ -113,17 +113,13 @@ R–TR2 uses the approximation given in (2.25). We will write R–TR when addres
 both variants."*
 """
 
-# ╔═╡ 29ba7f46-b89b-4bed-8513-cda843f11806
-# Defining the horizonta lift (2.6) in [JZ]
-function Ω(P, X)
-	J = SymplecticElement(1)
-	invPTP = inv(P'*P) # Storing to not compute 3 times
-	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
-end
-
 # ╔═╡ cab5b270-2bfa-493b-9885-12b2d01a227c
-function Γ(P,X)
-	return -(Ω(P,X)-Ω(P,X)')*(X-Ω(P,X)'*P)-((Ω(P,X)')^2)*P
+function Γ(p,X)
+	Ω_p = Ω(p, X)
+	ΩTp = Ω_p' * p
+	#return -(Ω(p,X)-Ω(p,X)')*(X-Ω(p,X)'*p)-((Ω(p,X)')^2)*p
+	#return -(Ω(p,X) - Ω(p,X)') * (X - ΩTp) - Ω(p,X)' * ΩTp
+	return -(Ω_p - Ω_p') * (X - ΩTp) - Ω_p' * ΩTp
 end
 
 # ╔═╡ bbd894c9-b269-4919-8af5-e0b03869a0ce
@@ -144,16 +140,19 @@ function r_hess(M, p, X)
 	rg = r_grad(M, p)
 
 	# Minimal norm condition (enshures numerical stability)
+	minimal = 1
 	if norm(rg - X) < eps() # eps ≈ machine small, but not zero
-		Nn = 1
+		Nn = minimal
 	else
 		Nn = norm(rg - X) # Norm negative
 	end
-
+	# ⚠️ matlab code only included the check above!
 	if norm(rg + X) < eps() # eps ≈ machine small, but not zero
-		Np = 1
+		Np = minimal
+		#print("bing - ")
 	else
 		Np = norm(rg + X) # Norm negative
+		#print("bong + ")
 	end
 	
 	
@@ -182,7 +181,7 @@ function r_hess(M, p, X)
 end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-check_Hessian(M, cost_function, r_grad, r_hess)
+check_Hessian(M, cost_function, r_grad, r_hess, exactness_tol=1e-6)
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -232,9 +231,9 @@ function r_hess_approx(M, p, X)
 	- symplectic_inverse(eg * p') * X
 	)
 	return project(M, p, Dgrad_f)
-	#F(p): 0.556936, |▽F(p)|: 5.2116e-07, 
+	#F(p): 0.556918, |▽F(p)|: 2.0134e-06,
 	#return custom_project(p, Dgrad_f) 
-	#F(p): 0.556936, |▽F(p)|: 5.2116e-07, 
+	#F(p): 0.556918, |▽F(p)|: 1.9975e-06, 
 end
 
 # ╔═╡ d64a5af1-0190-4cbb-a791-e44a5c5f1953
@@ -312,12 +311,19 @@ solver = gradient_descent(M, cost_function, r_grad, U0;
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 
 # ╔═╡ 715fb2bf-5f2c-4e68-ac9e-80056152146a
+begin
 solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
+	#F(p): 0.556936, |▽F(p)|: 5.2116e-07, 
+	#augmentation_threshold = 0.1,
+	#F(p): 0.552004, |▽F(p)|: 3.2531e-07, 
+	# Removed StopWHenModelIncreased() from subproblem stopping criterion
+	sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 	return_state = true,
 	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-9),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
+end
 
 # ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
 solver_og_tr = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
@@ -337,9 +343,7 @@ solver_og_tr = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
 isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr))
 
 # ╔═╡ 4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
-#=╠═╡
 solver_cubic = adaptive_regularization_with_cubics(M, cost_function, r_grad, r_hess, U0)
-  ╠═╡ =#
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
@@ -380,6 +384,23 @@ begin
 	plot!(iterations_og_tr, gradient_vals_og_tr, label = "TR approx Hess")
 	plot!(iterations_og_tr_hess, gradient_vals_og_tr_hess, label = "TR exact Hess")
 end
+
+# ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
+function Ω(p,X)
+	Q = p/(p'*p)
+	XQT = -symplectic_inverse(X*Q')
+	return X*Q' + XQT - (XQT*Q)*p'
+end
+
+# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
+# ╠═╡ disabled = true
+#=╠═╡
+function Ω(P, X)
+	J = SymplecticElement(1)
+	invPTP = inv(P'*P) # Storing to not compute 3 times
+	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
+end
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1831,7 +1852,8 @@ version = "1.4.1+1"
 # ╠═60850703-1a35-4ca4-8830-8d02ca6b8cfd
 # ╠═62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
 # ╟─30c6c236-86f1-4289-b717-e0d4d31a1403
-# ╠═29ba7f46-b89b-4bed-8513-cda843f11806
+# ╠═3e1e94a9-1356-47ea-993f-df79a5105fdb
+# ╠═71170916-48e8-42b1-a1f1-c0d55ae73fc5
 # ╠═cab5b270-2bfa-493b-9885-12b2d01a227c
 # ╠═bbd894c9-b269-4919-8af5-e0b03869a0ce
 # ╠═f54ff29b-c6d6-43c9-a58e-06c4b2579fda
@@ -1858,7 +1880,7 @@ version = "1.4.1+1"
 # ╠═755f4c1c-153c-4f64-9caa-cc2e30e06c61
 # ╠═4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
+# ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
 # ╠═ea7304b2-e8db-4a67-b185-4eab86077bbe
 # ╠═de8bf366-f01d-43cd-bcd0-db8828d6745a
 # ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
