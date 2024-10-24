@@ -6,7 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ 136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 using Manopt, Manifolds, Distributions, Random, LinearAlgebra, 
-Plots
+Plots, BenchmarkTools
 
 # ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
 md"""
@@ -39,8 +39,8 @@ md"""
 
 # ╔═╡ d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 begin
-	Random.seed!(42) # matlab seed
-	rand_A = randn(2*n,2*k) # rng seems to work somewhat
+	Random.seed!(42)
+	rand_A = randn(2*n,2*k) 
 end;
 
 # ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
@@ -76,13 +76,13 @@ md"""
 # ╔═╡ 84713389-c089-4c1a-ab0b-bc504c4e59c3
 function cost_function(M, p::Matrix{Float64}) # Why must it include M?
 	# Implement some checks
-	return norm(p - A) ^ 2
+	return 0.5 * norm(p - A) ^ 2
 end
 
 # ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
 function euclid_grad_cost_function(p::Matrix{Float64})
 	# Implement some checks
-	return 2 * (p - A)
+	return p - A
 end
 
 # ╔═╡ 402611b0-d0f2-4b13-8a67-6c60007bb377
@@ -113,28 +113,40 @@ R–TR2 uses the approximation given in (2.25). We will write R–TR when addres
 both variants."*
 """
 
+# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
+function Ω(P, X) # Seems to work the same as MATLAB JZ
+	J = SymplecticElement(1)
+	invPTP = inv(P'*P) # Storing to not compute 3 times
+	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
+end
+
+# ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
+# ╠═╡ disabled = true
+#=╠═╡
+function Ω(p,X) # translated from MATLAB JZ
+	Q = p/(p'*p)
+	XQT = -symplectic_inverse(X*Q')
+	return X*Q' + XQT - (XQT*Q)*p'
+end
+  ╠═╡ =#
+
 # ╔═╡ cab5b270-2bfa-493b-9885-12b2d01a227c
 function Γ(p,X)
 	Ω_p = Ω(p, X)
 	ΩTp = Ω_p' * p
-	#return -(Ω(p,X)-Ω(p,X)')*(X-Ω(p,X)'*p)-((Ω(p,X)')^2)*p
-	#return -(Ω(p,X) - Ω(p,X)') * (X - ΩTp) - Ω(p,X)' * ΩTp
 	return -(Ω_p - Ω_p') * (X - ΩTp) - Ω_p' * ΩTp
 end
 
 # ╔═╡ bbd894c9-b269-4919-8af5-e0b03869a0ce
-function two_imput_christoff(p,X,Y)
+# ╠═╡ disabled = true
+#=╠═╡
+function two_imput_christoff(p,X,Y) # not in use. Incorporated into r_hess
 	return 0.25*(Γ(p,X+Y)-Γ(p,X-Y))
 end
-
-# ╔═╡ f54ff29b-c6d6-43c9-a58e-06c4b2579fda
-function directional_r_grad(p, X)
-	# Project euclidian hessian to the tangent space
-	return project(M, p, euclid_hessian_cost_function(p,X))
-end
+  ╠═╡ =#
 
 # ╔═╡ 8d97e650-7584-49f3-9a76-4af9b0426b37
-function r_hess(M, p, X)
+function r_hess(M, p, X) 
 	eg = euclid_grad_cost_function(p)
 	eh = euclid_hessian_cost_function(p, X)
 	rg = r_grad(M, p)
@@ -146,6 +158,7 @@ function r_hess(M, p, X)
 	else
 		Nn = norm(rg - X) # Norm negative
 	end
+	
 	# ⚠️ matlab code only included the check above!
 	if norm(rg + X) < eps() # eps ≈ machine small, but not zero
 		Np = minimal
@@ -155,10 +168,9 @@ function r_hess(M, p, X)
 		#print("bong + ")
 	end
 	
-	
 	#Np = norm(rg + X) # Norm positive
 	
-	XTp = X' * p # Memoization
+	XTp = X' * p 
 
 	Dgrad_f = (eh * (p' * p) 
 	+ eg * XTp 
@@ -166,22 +178,11 @@ function r_hess(M, p, X)
 	- (symplectic_inverse(eg * X') + symplectic_inverse(eh * p')) * p 
 	- symplectic_inverse(eg * p') * X
 	)
-
-	#=
-	println("XTp size: ", size(XTp))
-	println("Dgrad_f size: ", size(Dgrad_f))
-	println("rg: ", rg)
-	println("X: ", X)
-	println("Np: ", Np)
-	println("Nn: ", Nn)=#
-	
 	return Dgrad_f + 0.25*((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn))
-	
-	#return directional_r_grad(p,X) + two_imput_christoff(p,r_grad(M,p), X)
 end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-check_Hessian(M, cost_function, r_grad, r_hess, exactness_tol=1e-6)
+check_Hessian(M, cost_function, r_grad, r_hess)#, exactness_tol=1e-6)
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -217,12 +218,6 @@ function r_hess_approx(M, p, X)
 	# Debug:
     println("eg size: ", size(eg))
     println("eh size: ", size(eh))
-    println("p size: ", size(p))
-    println("X size: ", size(X))
-    println("XTp size: ", size(XTp))
-	println("symplectic_inverse(eg * X')  size: ", size(symplectic_inverse(eg * X') ))
-	println("symplectic_inverse(eh * p') * p   size: ", size(symplectic_inverse(eh * p') * p ))
-	println("symplectic_inverse(eg * p') * X  size: ", size(symplectic_inverse(eg * p') * X))
 	=#
 	Dgrad_f = (eh * (p' * p) 
 	+ eg * XTp 
@@ -237,7 +232,7 @@ function r_hess_approx(M, p, X)
 end
 
 # ╔═╡ d64a5af1-0190-4cbb-a791-e44a5c5f1953
-check_Hessian(M, cost_function, r_grad, r_hess_approx)
+check_Hessian(M, cost_function, r_grad, r_hess_approx)#; Hessian = r_hess_approx)
 
 # ╔═╡ d25a8e78-b216-4e99-a29d-3a0fd898b8da
 md"""
@@ -274,18 +269,10 @@ stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Wo
 # Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
 # curcomvent calculation of injectivity radius 
 
-# ╔═╡ 0b518b71-c2d3-4330-aae8-62447c923114
-# ╠═╡ disabled = true
-#=╠═╡
-# Create a storage action to store previous iterates and gradients
-storage = StoreStateAction(M; store_fields=[:Iterate, :Gradient])
-  ╠═╡ =#
-
 # ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
 # ╠═╡ disabled = true
 #=╠═╡
-stepsize = NonmonotoneLinesearch(M; 
-	initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
+stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
   ╠═╡ =#
 
 # ╔═╡ 5918c34b-c435-428f-bd18-5b156b5bb0bc
@@ -296,6 +283,9 @@ BZ p. 15:
 "The algorithms terminate when $∥\operatorname{grad}f(x_k)∥_{x_k} < 10^{−6}$, or when the step size $τ_k$ in R–SD or R–CG becomes smaller than $10^{-11}$."
 """
 
+# ╔═╡ a9b024f7-07ea-4e26-a4e8-b20f7b9af814
+grad_tol = 10^-6
+
 # ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
 md"""
 ### Defining and running gradient descent
@@ -304,31 +294,33 @@ md"""
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
 solver = gradient_descent(M, cost_function, r_grad, U0;
 	stepsize = stepsize, return_state = true, 
-	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-9) | StopWhenStepsizeLess(10.0^-11),
-	#store = storage,
+	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol) | StopWhenStepsizeLess(10.0^-11),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 
 # ╔═╡ 715fb2bf-5f2c-4e68-ac9e-80056152146a
-begin
+begin # JZ: TR-1
 solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
 	#F(p): 0.556936, |▽F(p)|: 5.2116e-07, 
 	#augmentation_threshold = 0.1,
 	#F(p): 0.552004, |▽F(p)|: 3.2531e-07, 
 	# Removed StopWHenModelIncreased() from subproblem stopping criterion
-	sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
+	#sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 	return_state = true,
-	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-9),
+	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 end
 
 # ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
-solver_og_tr = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
+# JZ: TR-2
+solver_og_tr_approx = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
 	return_state = true,
-	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(10.0^-9),
+	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
+	# Removed StopWHenModelIncreased() from subproblem stopping criterion
+	#sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
@@ -336,14 +328,14 @@ solver_og_tr = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
 #;return_state = true)
 #(M, cost_function, r_grad, r_hess)
 
-# ╔═╡ 6f2dcb01-6d44-4bfc-b89c-b69e7df19422
-[get_solver_result(solver), get_solver_result(solver_og_tr)]
-
 # ╔═╡ 755f4c1c-153c-4f64-9caa-cc2e30e06c61
-isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr))
+isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_approx))
+
+# ╔═╡ 8ab39b2a-6b4d-4ccc-a988-53654827b647
+isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_hess))
 
 # ╔═╡ 4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
-solver_cubic = adaptive_regularization_with_cubics(M, cost_function, r_grad, r_hess, U0)
+#solver_cubic = adaptive_regularization_with_cubics(M, cost_function, r_grad, r_hess, U0)
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
@@ -354,57 +346,85 @@ md"""
 begin
 	#solver_og_tr_hess
 	iterations = [rec[1] for rec in get_record(solver)]
-	iterations_og_tr = [rec[1] for rec in get_record(solver_og_tr)]
+	iterations_og_tr_approx = [rec[1] for rec in get_record(solver_og_tr_approx)]
 	iterations_og_tr_hess = [rec[1] for rec in get_record(solver_og_tr_hess)]
 
 	cost_vals =  [rec[2] for rec in get_record(solver)]
-	cost_vals_og_tr =  [rec[2] for rec in get_record(solver_og_tr)]
+	cost_vals_og_tr_approx =  [rec[2] for rec in get_record(solver_og_tr_approx)]
 	cost_vals_og_tr_hess =  [rec[2] for rec in get_record(solver_og_tr_hess)]
 
 	gradient_vals = [rec[3] for rec in get_record(solver)]
-	gradient_vals_og_tr = [rec[3] for rec in get_record(solver_og_tr)]
+	gradient_vals_og_tr_approx = [rec[3] for rec in get_record(solver_og_tr_approx)]
 	gradient_vals_og_tr_hess = [rec[3] for rec in get_record(solver_og_tr_hess)]
 
 	println("Fetched arrays for plotting")
 end
 
-# ╔═╡ ea7304b2-e8db-4a67-b185-4eab86077bbe
-#plot(iterations_og_tr, cost_vals_og_tr; title = "Grad. descentConvergence plot", xlabel = "# iterations", ylabel = "Cost", xaxis = :log10)
-
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
 begin
 	plot(iterations, cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, label = "Grad. Descent")
-	plot!(iterations_og_tr, cost_vals_og_tr, label = "TR approx Hess")
+	plot!(iterations_og_tr_approx, cost_vals_og_tr_approx, label = "TR approx Hess")
 	plot!(iterations_og_tr_hess, cost_vals_og_tr_hess, label = "TR exact Hess")
 end
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 begin
 	plot(iterations, gradient_vals; yaxis = :log10, title = "|∇f| plot comparison", xlabel = "# iterations", ylabel = "|∇f|", xaxis = :log10, label = "Grad. Descent")
-	plot!(iterations_og_tr, gradient_vals_og_tr, label = "TR approx Hess")
+	plot!(iterations_og_tr_approx, gradient_vals_og_tr_approx, label = "TR approx Hess")
 	plot!(iterations_og_tr_hess, gradient_vals_og_tr_hess, label = "TR exact Hess")
 end
 
-# ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
-function Ω(p,X)
-	Q = p/(p'*p)
-	XQT = -symplectic_inverse(X*Q')
-	return X*Q' + XQT - (XQT*Q)*p'
+# ╔═╡ f2526a0a-f155-4e41-b9bd-1d824904907f
+run_diag = true
+
+# ╔═╡ 8c04cb67-1e83-4fce-a32e-9067790409cb
+md"""
+### `Gradient Descent:`
+"""
+
+# ╔═╡ f1b8d378-d68b-4627-a467-87a92b17766b
+begin
+	if run_diag
+		@benchmark gradient_descent(M, cost_function, r_grad, U0;
+		stepsize = stepsize, return_state = true, 
+		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol) | StopWhenStepsizeLess(10.0^-11))
+	end
 end
 
-# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
-# ╠═╡ disabled = true
-#=╠═╡
-function Ω(P, X)
-	J = SymplecticElement(1)
-	invPTP = inv(P'*P) # Storing to not compute 3 times
-	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
+# ╔═╡ 16545b66-7876-48ba-aa86-b144e8dce95c
+md"""
+### `Analytical Hessian, TR-1:`
+"""
+
+# ╔═╡ 2fd0c4fd-ebe4-44b6-b439-3afc7480f57b
+begin # Anal. Hess, TR-1
+	if run_diag
+		@benchmark trust_regions(M, cost_function, r_grad, r_hess, U0;
+		return_state = true,
+		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
+		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0))
+	end
 end
-  ╠═╡ =#
+
+# ╔═╡ 24af7e68-de2f-452f-a9c0-12d6892cf90a
+md"""
+### `Approx Hessian, TR-2:`
+"""
+
+# ╔═╡ 8c481b4e-e62c-4ab5-9289-75ec0262db9a
+begin # Approx Hess, TR-2
+	if run_diag
+		@benchmark trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
+		return_state = true,
+		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
+		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0))
+	end
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Manifolds = "1cead3c2-87b3-11e9-0ccd-23c62b72b94e"
@@ -414,6 +434,7 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
+BenchmarkTools = "~1.5.0"
 Distributions = "~0.25.112"
 Manifolds = "~0.10.2"
 ManifoldsBase = "~0.15.16"
@@ -427,7 +448,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "a676dc0796e8ff80f3b32b3eb4180064a213d95c"
+project_hash = "341567d1dd3d3b80b42158635819ff0acaa30a79"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -450,6 +471,12 @@ uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 
 [[deps.Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+
+[[deps.BenchmarkTools]]
+deps = ["JSON", "Logging", "Printf", "Profile", "Statistics", "UUIDs"]
+git-tree-sha1 = "f1dff6729bc61f4d49e140da1af55dcd1ac97b2f"
+uuid = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+version = "1.5.0"
 
 [[deps.BitFlags]]
 git-tree-sha1 = "0691e34b3bb8be9307330f88d1a3c3f25466c24d"
@@ -1237,6 +1264,10 @@ version = "1.4.3"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
+[[deps.Profile]]
+deps = ["Printf"]
+uuid = "9abbd945-dff8-562f-b5e8-e1ebf5ef1b79"
+
 [[deps.PtrArrays]]
 git-tree-sha1 = "77a42d78b6a92df47ab37e177b2deac405e1c88f"
 uuid = "43287f4e-b6f4-7ad1-bb20-aadabca52c3d"
@@ -1856,7 +1887,6 @@ version = "1.4.1+1"
 # ╠═71170916-48e8-42b1-a1f1-c0d55ae73fc5
 # ╠═cab5b270-2bfa-493b-9885-12b2d01a227c
 # ╠═bbd894c9-b269-4919-8af5-e0b03869a0ce
-# ╠═f54ff29b-c6d6-43c9-a58e-06c4b2579fda
 # ╠═8d97e650-7584-49f3-9a76-4af9b0426b37
 # ╠═2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
 # ╟─e3878383-0f27-4859-bd9e-165076a52da6
@@ -1869,20 +1899,26 @@ version = "1.4.1+1"
 # ╠═2c06883e-c63d-4ca2-9122-2c07e69eccfa
 # ╟─1d30c99e-f58a-42a9-9f60-f1ca5d68addf
 # ╠═fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-# ╠═0b518b71-c2d3-4330-aae8-62447c923114
 # ╠═afdac687-8170-4679-bb9e-2af82b6877de
 # ╟─5918c34b-c435-428f-bd18-5b156b5bb0bc
+# ╠═a9b024f7-07ea-4e26-a4e8-b20f7b9af814
 # ╟─0960b834-ee78-42bf-8fbd-955734e3426c
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═715fb2bf-5f2c-4e68-ac9e-80056152146a
 # ╠═97db13d5-9e70-41be-84e7-866d26558b90
-# ╠═6f2dcb01-6d44-4bfc-b89c-b69e7df19422
 # ╠═755f4c1c-153c-4f64-9caa-cc2e30e06c61
+# ╠═8ab39b2a-6b4d-4ccc-a988-53654827b647
 # ╠═4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╠═ea7304b2-e8db-4a67-b185-4eab86077bbe
-# ╠═de8bf366-f01d-43cd-bcd0-db8828d6745a
-# ╠═b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╟─de8bf366-f01d-43cd-bcd0-db8828d6745a
+# ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
+# ╠═f2526a0a-f155-4e41-b9bd-1d824904907f
+# ╟─8c04cb67-1e83-4fce-a32e-9067790409cb
+# ╟─f1b8d378-d68b-4627-a467-87a92b17766b
+# ╟─16545b66-7876-48ba-aa86-b144e8dce95c
+# ╟─2fd0c4fd-ebe4-44b6-b439-3afc7480f57b
+# ╟─24af7e68-de2f-452f-a9c0-12d6892cf90a
+# ╟─8c481b4e-e62c-4ab5-9289-75ec0262db9a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
