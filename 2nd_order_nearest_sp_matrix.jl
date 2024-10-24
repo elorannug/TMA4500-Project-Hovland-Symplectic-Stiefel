@@ -182,7 +182,7 @@ function r_hess(M, p, X)
 end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-check_Hessian(M, cost_function, r_grad, r_hess)#, exactness_tol=1e-6)
+check_Hessian(M, cost_function, r_grad, r_hess; plot=true, error=:info, check_symmetry=false)#, exactness_tol=1e-6)
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -232,7 +232,7 @@ function r_hess_approx(M, p, X)
 end
 
 # ╔═╡ d64a5af1-0190-4cbb-a791-e44a5c5f1953
-check_Hessian(M, cost_function, r_grad, r_hess_approx)#; Hessian = r_hess_approx)
+check_Hessian(M, cost_function, r_grad, r_hess_approx; error=:info, check_symmetry=false, plot=true)#; Hessian = r_hess_approx)
 
 # ╔═╡ d25a8e78-b216-4e99-a29d-3a0fd898b8da
 md"""
@@ -253,7 +253,7 @@ We need to define the injectivity radius of the SpSt for the Armijo to work
 begin
 import ManifoldsBase: injectivity_radius
 function injectivity_radius(M::Manifolds.SymplecticStiefel{T, N}) where {T, N}
-    return 5  # This is good enough for now
+    return 5.0  # This is good enough for now
 end
 end
 
@@ -310,7 +310,7 @@ solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
 	return_state = true,
 	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 end
 
@@ -329,7 +329,7 @@ solver_og_tr_approx = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
 #(M, cost_function, r_grad, r_hess)
 
 # ╔═╡ 755f4c1c-153c-4f64-9caa-cc2e30e06c61
-isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_approx))
+isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_approx); error=:info)
 
 # ╔═╡ 8ab39b2a-6b4d-4ccc-a988-53654827b647
 isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_hess))
