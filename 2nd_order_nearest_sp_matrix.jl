@@ -6,7 +6,7 @@ using InteractiveUtils
 
 # ╔═╡ 136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 using Manopt, Manifolds, Distributions, Random, LinearAlgebra, 
-Plots, BenchmarkTools
+Plots, BenchmarkTools, Printf
 
 # ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
 md"""
@@ -18,13 +18,16 @@ JZ stands for Jensen & Zimmermann
 # ╔═╡ c09b766d-6643-433a-a84e-9416dd2b668d
 theme(:dark) # For darkmode plots
 
+# ╔═╡ af11ace2-3798-4c4d-a43a-46f0c099ab13
+seed = 41
+
 # ╔═╡ 9a2619b4-3130-465f-996e-127e634ce2d3
 md"""
 ### Define the $\text{SpSt}(2n,2k)$, where $n$ and $k$ are even.
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 2
+n = 4
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
 k = 1
@@ -39,15 +42,9 @@ md"""
 
 # ╔═╡ d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 begin
-	Random.seed!(42)
+	Random.seed!(seed)
 	rand_A = randn(2*n,2*k) 
 end;
-
-# ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
-A = rand_A/norm(rand_A)
-
-# ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
-is_point(M, A; error=:info)
 
 # ╔═╡ 6460d549-e79d-473e-82e9-92c261a02dd7
 md"""
@@ -59,10 +56,22 @@ random Hamiltonian matrix ``Ω \in \mathfrak{sp}(2n,F)`` with norm `σ`,
 and then transforming it to a symplectic matrix by applying the Cayley transform)
 """
 
-# ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
+# ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
+is_point(M, A; error=:info)
+
+# ╔═╡ 9281660e-6a48-4b2d-b792-13b8803e2a5e
 begin
-	Random.seed!(42)
-	U0 = rand(M)
+	@printf "["
+for i in 1:size(U0, 1)
+    for j in 1:size(U0, 2)
+        @printf("%.32f", U0[i, j])
+        if j < size(U0, 2)
+            @printf "  "
+        end
+    end
+	@printf "\n"
+end
+    @printf "]"
 end
 
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
@@ -101,7 +110,7 @@ function r_grad(M,p)
 end
 
 # ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
-check_gradient(M, cost_function, r_grad; plot=false)
+check_gradient(M, cost_function, r_grad; plot=false, error = :info)
 
 # ╔═╡ 30c6c236-86f1-4289-b717-e0d4d31a1403
 md"""
@@ -114,27 +123,27 @@ both variants."*
 """
 
 # ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
+# ╠═╡ disabled = true
+#=╠═╡
 function Ω(P, X) # Seems to work the same as MATLAB JZ
 	J = SymplecticElement(1)
 	invPTP = inv(P'*P) # Storing to not compute 3 times
 	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
 end
+  ╠═╡ =#
 
 # ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
-# ╠═╡ disabled = true
-#=╠═╡
 function Ω(p,X) # translated from MATLAB JZ
 	Q = p/(p'*p)
 	XQT = -symplectic_inverse(X*Q')
 	return X*Q' + XQT - (XQT*Q)*p'
 end
-  ╠═╡ =#
 
 # ╔═╡ cab5b270-2bfa-493b-9885-12b2d01a227c
-function Γ(p,X)
-	Ω_p = Ω(p, X)
-	ΩTp = Ω_p' * p
-	return -(Ω_p - Ω_p') * (X - ΩTp) - Ω_p' * ΩTp
+function Γ(p,η)
+	Ω_p = Ω(p, η) # good
+	ΩTp = Ω_p' * p # good
+	return -(Ω_p - Ω_p') * (η +#=this was -=# ΩTp) - Ω_p' * ΩTp  
 end
 
 # ╔═╡ bbd894c9-b269-4919-8af5-e0b03869a0ce
@@ -145,12 +154,39 @@ function two_imput_christoff(p,X,Y) # not in use. Incorporated into r_hess
 end
   ╠═╡ =#
 
+# ╔═╡ b5c87775-ba32-409b-8e78-a79ad271881b
+begin
+
+	varX = [0.4 0.23
+    3 23
+    3 23
+    3 23
+    3 23
+    ]
+	eg = euclid_grad_cost_function(U0)
+	eh = euclid_hessian_cost_function(U0, X)
+	rg = r_grad(M, U0)
+
+	println(norm(cost_function(M,U0)))
+	println(norm(eg))
+	println(norm(eh))
+	println(norm(X))
+	#println(norm(rg))
+end
+
+# ╔═╡ abbb41fb-d3a9-407b-a6b2-6a3a15ac7658
+setprecision(BigFloat, 113)
+
 # ╔═╡ 8d97e650-7584-49f3-9a76-4af9b0426b37
 function r_hess(M, p, X) 
 	eg = euclid_grad_cost_function(p)
 	eh = euclid_hessian_cost_function(p, X)
 	rg = r_grad(M, p)
 
+	#=println(norm(eg))
+	println(norm(eh))
+	println(norm(rg))=#
+	print("---\n")
 	# Minimal norm condition (enshures numerical stability)
 	minimal = 1
 	if norm(rg - X) < eps() # eps ≈ machine small, but not zero
@@ -178,11 +214,16 @@ function r_hess(M, p, X)
 	- (symplectic_inverse(eg * X') + symplectic_inverse(eh * p')) * p 
 	- symplectic_inverse(eg * p') * X
 	)
+	println(norm(Dgrad_f))
+	
+	println(norm(((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn))))
+	println(norm(Np^2*Γ(p,(rg + X)/Np)))
+	println(norm(Nn^2*Γ(p,(rg - X)/Nn)))
 	return Dgrad_f + 0.25*((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn))
 end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-check_Hessian(M, cost_function, r_grad, r_hess; plot=true, error=:info, check_symmetry=false)#, exactness_tol=1e-6)
+check_Hessian(M, cost_function, r_grad, r_hess#=, U0, X=#; plot=true, error=:info, check_symmetry=false)#, exactness_tol=1e-6)
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -421,6 +462,41 @@ begin # Approx Hess, TR-2
 	end
 end
 
+# ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
+A = rand_A/norm(rand_A)
+
+# ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
+begin
+	Random.seed!(seed)
+	U0 = rand(M)
+end
+
+# ╔═╡ 91dfd45c-a658-4d95-b1e8-34453090cc12
+# ╠═╡ disabled = true
+#=╠═╡
+begin
+	A = [
+	    0.2927  0.3440
+	    0.3254  0.3466
+	    0.0456  0.0566
+	    0.3281  0.3487
+	    0.2272  0.3439
+	    0.0350  0.1744
+	    0.1001  0.2875
+	    0.1965  0.0510
+	]
+	U0 = [-1.50835280569350471679967995441984  1.44811016664258151998012635885971
+	1.00828481053718577165057013189653  -0.29919980071474577831835972574481
+	0.46845294167179246658250235668675  -1.72336921563406986201982817874523
+	-0.36559294978277639964758805035672  0.50308079139646422195397690302343
+	0.21892228436644922684450875749462  -1.71767040855571551105640537571162
+	0.31776788367191294293334635767678  -0.91342865581348042791631769432570
+	-0.36680309588972281886753989965655  -0.08548276134862793640412093054692
+	-0.18157746944470815053662704485760  -0.36358588182425338741765585837129]
+	X = [-0.5065223769881723 0.8420883555520725; 0.032089759348237164 -0.4932420370950294; 0.7409883951402091 -0.3941959214694802; -0.1924697782337678 0.21994677172891908; 0.7643689465681343 -0.2792475667584258; 0.3855053888104501 -0.2407731481108792; 0.0773827859190266 0.15919402104081007; 0.18553779175069454 0.04534051646419934]
+end
+  ╠═╡ =#
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -431,6 +507,7 @@ Manifolds = "1cead3c2-87b3-11e9-0ccd-23c62b72b94e"
 ManifoldsBase = "3362f125-f0bb-47a3-aa74-596ffd7ef2fb"
 Manopt = "0fc0a36d-df90-57f3-8f93-d78a9fc72bb5"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
@@ -448,7 +525,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "341567d1dd3d3b80b42158635819ff0acaa30a79"
+project_hash = "f4652b45abe0bb91d25cdf1bc87b5b98e3b596ae"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -1864,6 +1941,7 @@ version = "1.4.1+1"
 # ╟─5da75c4a-504c-4fb8-a531-ace91b6836a9
 # ╠═136aef20-7c14-11ef-0f8a-2f66ffd8fe96
 # ╠═c09b766d-6643-433a-a84e-9416dd2b668d
+# ╠═af11ace2-3798-4c4d-a43a-46f0c099ab13
 # ╟─9a2619b4-3130-465f-996e-127e634ce2d3
 # ╠═ba92e87a-6ac3-4490-ab75-148cc0a25666
 # ╠═fd42108d-79bd-4db5-a1ce-1875341513c2
@@ -1874,6 +1952,8 @@ version = "1.4.1+1"
 # ╠═9a50fa8f-123d-4edb-9556-500da8ea2498
 # ╟─6460d549-e79d-473e-82e9-92c261a02dd7
 # ╠═30ceffac-5c28-4c53-9f3a-0375828ac2cb
+# ╠═9281660e-6a48-4b2d-b792-13b8803e2a5e
+# ╠═91dfd45c-a658-4d95-b1e8-34453090cc12
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
 # ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
@@ -1887,6 +1967,8 @@ version = "1.4.1+1"
 # ╠═71170916-48e8-42b1-a1f1-c0d55ae73fc5
 # ╠═cab5b270-2bfa-493b-9885-12b2d01a227c
 # ╠═bbd894c9-b269-4919-8af5-e0b03869a0ce
+# ╠═b5c87775-ba32-409b-8e78-a79ad271881b
+# ╠═abbb41fb-d3a9-407b-a6b2-6a3a15ac7658
 # ╠═8d97e650-7584-49f3-9a76-4af9b0426b37
 # ╠═2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
 # ╟─e3878383-0f27-4859-bd9e-165076a52da6
