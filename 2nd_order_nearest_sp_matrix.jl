@@ -19,7 +19,7 @@ JZ stands for Jensen & Zimmermann
 theme(:dark) # For darkmode plots
 
 # ╔═╡ af11ace2-3798-4c4d-a43a-46f0c099ab13
-seed = 41
+seed = 42
 
 # ╔═╡ 9a2619b4-3130-465f-996e-127e634ce2d3
 md"""
@@ -46,6 +46,12 @@ begin
 	rand_A = randn(2*n,2*k) 
 end;
 
+# ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
+A = rand_A/norm(rand_A)
+
+# ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
+is_point(M, A; error=:info)
+
 # ╔═╡ 6460d549-e79d-473e-82e9-92c261a02dd7
 md"""
 ### Generate random starting point on $\text{SpSt}$
@@ -56,10 +62,15 @@ random Hamiltonian matrix ``Ω \in \mathfrak{sp}(2n,F)`` with norm `σ`,
 and then transforming it to a symplectic matrix by applying the Cayley transform)
 """
 
-# ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
-is_point(M, A; error=:info)
+# ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
+begin
+	Random.seed!(seed)
+	U0 = rand(M)
+end
 
 # ╔═╡ 9281660e-6a48-4b2d-b792-13b8803e2a5e
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 	@printf "["
 for i in 1:size(U0, 1)
@@ -73,9 +84,68 @@ for i in 1:size(U0, 1)
 end
     @printf "]"
 end
+  ╠═╡ =#
+
+# ╔═╡ 5895c078-5f50-4783-9ecd-acdacc38ab5d
+# ╠═╡ disabled = true
+#=╠═╡
+begin # n = 2, k = 1
+	A = [-0.480444   0.470344
+  		0.304117  -0.104969
+  		0.318186   0.143638
+  		0.567337   0.0264584]
+	U0 = [-1.40663890210255781987314094294561  0.23371634267482957469930227034638
+		0.40603619258114187484665080773993  -0.55070185394803905509775177051779
+		1.09738409755748933527286226308206  -1.23250078660319939416467605042271
+		-0.44419512036050057268710133939749  -0.57282548568309843428636440876289]
+	X = [-0.45604098553023686424268134942395  1.00874277615952712139346658659633
+		0.49420549013378234359805674102972  -0.19475315178057600595806775345409
+		1.14370352044281964332128609385109  -0.57741159467602198862579143678886
+		0.34114544561118481658112955301476  0.44757702285017553212043139865273]
+end
+  ╠═╡ =#
+
+# ╔═╡ 91dfd45c-a658-4d95-b1e8-34453090cc12
+# ╠═╡ disabled = true
+#=╠═╡
+begin # n = 4, k = 1
+	A = [
+	    0.2927  0.3440
+	    0.3254  0.3466
+	    0.0456  0.0566
+	    0.3281  0.3487
+	    0.2272  0.3439
+	    0.0350  0.1744
+	    0.1001  0.2875
+	    0.1965  0.0510
+	]
+	U0 = [-1.50835280569350471679967995441984  1.44811016664258151998012635885971
+	1.00828481053718577165057013189653  -0.29919980071474577831835972574481
+	0.46845294167179246658250235668675  -1.72336921563406986201982817874523
+	-0.36559294978277639964758805035672  0.50308079139646422195397690302343
+	0.21892228436644922684450875749462  -1.71767040855571551105640537571162
+	0.31776788367191294293334635767678  -0.91342865581348042791631769432570
+	-0.36680309588972281886753989965655  -0.08548276134862793640412093054692
+	-0.18157746944470815053662704485760  -0.36358588182425338741765585837129]
+	X = [-0.5065223769881723 0.8420883555520725
+	0.032089759348237164 -0.4932420370950294
+	0.7409883951402091 -0.3941959214694802
+	-0.1924697782337678 0.21994677172891908
+	0.7643689465681343 -0.2792475667584258
+	0.3855053888104501 -0.2407731481108792
+	0.0773827859190266 0.15919402104081007
+	0.18553779175069454 0.04534051646419934]
+end;
+  ╠═╡ =#
 
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
 is_point(M, U0) # Not throwing an error, so it is in SpSt
+
+# ╔═╡ 02d74ff3-5281-43bf-b434-17ac75958866
+# ╠═╡ disabled = true
+#=╠═╡
+is_vector(M, U0, X)
+  ╠═╡ =#
 
 # ╔═╡ a8971fce-7b45-4a50-9c63-9d726b460a5f
 md"""
@@ -85,7 +155,7 @@ md"""
 # ╔═╡ 84713389-c089-4c1a-ab0b-bc504c4e59c3
 function cost_function(M, p::Matrix{Float64}) # Why must it include M?
 	# Implement some checks
-	return 0.5 * norm(p - A) ^ 2
+	return 0.5 * norm(p - A) ^ 2 # ⚠️ should be p - A? in the paper it is not (nor in the matlab code)
 end
 
 # ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
@@ -135,14 +205,15 @@ end
 # ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
 function Ω(p,X) # translated from MATLAB JZ
 	Q = p/(p'*p)
+	#println(Q)
 	XQT = -symplectic_inverse(X*Q')
 	return X*Q' + XQT - (XQT*Q)*p'
 end
 
 # ╔═╡ cab5b270-2bfa-493b-9885-12b2d01a227c
 function Γ(p,η)
-	Ω_p = Ω(p, η) # good
-	ΩTp = Ω_p' * p # good
+	Ω_p = Ω(p, η) 
+	ΩTp = Ω_p' * p 
 	return -(Ω_p - Ω_p') * (η +#=this was -=# ΩTp) - Ω_p' * ΩTp  
 end
 
@@ -155,6 +226,8 @@ end
   ╠═╡ =#
 
 # ╔═╡ b5c87775-ba32-409b-8e78-a79ad271881b
+# ╠═╡ disabled = true
+#=╠═╡
 begin
 
 	varX = [0.4 0.23
@@ -173,9 +246,7 @@ begin
 	println(norm(X))
 	#println(norm(rg))
 end
-
-# ╔═╡ abbb41fb-d3a9-407b-a6b2-6a3a15ac7658
-setprecision(BigFloat, 113)
+  ╠═╡ =#
 
 # ╔═╡ 8d97e650-7584-49f3-9a76-4af9b0426b37
 function r_hess(M, p, X) 
@@ -183,10 +254,7 @@ function r_hess(M, p, X)
 	eh = euclid_hessian_cost_function(p, X)
 	rg = r_grad(M, p)
 
-	#=println(norm(eg))
-	println(norm(eh))
-	println(norm(rg))=#
-	print("---\n")
+	#print("---\n")
 	# Minimal norm condition (enshures numerical stability)
 	minimal = 1
 	if norm(rg - X) < eps() # eps ≈ machine small, but not zero
@@ -208,23 +276,34 @@ function r_hess(M, p, X)
 	
 	XTp = X' * p 
 
+	#=
+	println(Nn)
+	println(Np)
+	println(XTp)
+	=#
+
 	Dgrad_f = (eh * (p' * p) 
 	+ eg * XTp 
 	+ eg * XTp' 
 	- (symplectic_inverse(eg * X') + symplectic_inverse(eh * p')) * p 
 	- symplectic_inverse(eg * p') * X
 	)
+	
+	#=
+	println(Dgrad_f)
+	println(Dgrad_f + 0.25*((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn)))
 	println(norm(Dgrad_f))
 	println(norm(Dgrad_f + 0.25*((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn))))
 	println(norm(((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn))))
 	println(norm(Np^2*Γ(p,(rg + X)/Np)))
 	println(norm(Nn^2*Γ(p,(rg - X)/Nn)))
-	
+	=#
 	return Dgrad_f + 0.25*((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn))
 end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-check_Hessian(M, cost_function, r_grad, r_hess, U0, X; plot=true, error=:info, check_symmetry=false)#, exactness_tol=1e-6)
+# ⚠️ It was using Cayley as default!
+check_Hessian(M, cost_function, r_grad, r_hess#=, U0, X=#; plot=true, error=:warn, check_symmetry=true, check_vector=true, retraction_method=ExponentialRetraction(), limits=(-5,0))
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -274,7 +353,7 @@ function r_hess_approx(M, p, X)
 end
 
 # ╔═╡ d64a5af1-0190-4cbb-a791-e44a5c5f1953
-check_Hessian(M, cost_function, r_grad, r_hess_approx; error=:info, check_symmetry=false, plot=true)#; Hessian = r_hess_approx)
+check_Hessian(M, cost_function, r_grad, r_hess_approx; error=:info, check_symmetry=true, plot=false)#; Hessian = r_hess_approx)
 
 # ╔═╡ d25a8e78-b216-4e99-a29d-3a0fd898b8da
 md"""
@@ -320,7 +399,7 @@ stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memo
 # ╔═╡ 5918c34b-c435-428f-bd18-5b156b5bb0bc
 md"""
 ### Running algorithms
-BZ p. 15:
+JZ p. 15:
 
 "The algorithms terminate when $∥\operatorname{grad}f(x_k)∥_{x_k} < 10^{−6}$, or when the step size $τ_k$ in R–SD or R–CG becomes smaller than $10^{-11}$."
 """
@@ -371,13 +450,31 @@ solver_og_tr_approx = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
 #(M, cost_function, r_grad, r_hess)
 
 # ╔═╡ 755f4c1c-153c-4f64-9caa-cc2e30e06c61
-isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_approx); error=:info)
+begin
+	#isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_approx); error=:info)
+	println("Difference between the SD and Hess approx: ", norm(get_solver_result(solver)-get_solver_result(solver_og_tr_approx)))
+end
 
 # ╔═╡ 8ab39b2a-6b4d-4ccc-a988-53654827b647
-isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_hess))
+begin
+	#isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_hess))
+	println("Difference between the SD and Hessian: ", norm(get_solver_result(solver)-get_solver_result(solver_og_tr_hess)))
+end
+
+# ╔═╡ 55d3d303-c6b5-4df3-bb2d-5b1b87a442d0
+begin
+	#isapprox(M, get_solver_result(solver_og_tr_approx), get_solver_result(solver_og_tr_hess))
+	println("Difference between Hessian and Hessian approx: ", norm(get_solver_result(solver_og_tr_approx)-get_solver_result(solver_og_tr_hess)))
+end
 
 # ╔═╡ 4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
-#solver_cubic = adaptive_regularization_with_cubics(M, cost_function, r_grad, r_hess, U0)
+# ╠═╡ disabled = true
+#=╠═╡
+begin
+	solver_cubic = adaptive_regularization_with_cubics(M, cost_function, r_grad, r_hess, U0; return_state = true)
+	println("Difference between TR and cubic: ", norm(get_solver_result(solver_cubic)-get_solver_result(solver_og_tr_hess)))
+end
+  ╠═╡ =#
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
@@ -417,7 +514,7 @@ begin
 end
 
 # ╔═╡ f2526a0a-f155-4e41-b9bd-1d824904907f
-run_diag = true
+run_diag = false
 
 # ╔═╡ 8c04cb67-1e83-4fce-a32e-9067790409cb
 md"""
@@ -462,51 +559,6 @@ begin # Approx Hess, TR-2
 		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0))
 	end
 end
-
-# ╔═╡ 91dfd45c-a658-4d95-b1e8-34453090cc12
-begin
-	A = [
-	    0.2927  0.3440
-	    0.3254  0.3466
-	    0.0456  0.0566
-	    0.3281  0.3487
-	    0.2272  0.3439
-	    0.0350  0.1744
-	    0.1001  0.2875
-	    0.1965  0.0510
-	]
-	U0 = [-1.50835280569350471679967995441984  1.44811016664258151998012635885971
-	1.00828481053718577165057013189653  -0.29919980071474577831835972574481
-	0.46845294167179246658250235668675  -1.72336921563406986201982817874523
-	-0.36559294978277639964758805035672  0.50308079139646422195397690302343
-	0.21892228436644922684450875749462  -1.71767040855571551105640537571162
-	0.31776788367191294293334635767678  -0.91342865581348042791631769432570
-	-0.36680309588972281886753989965655  -0.08548276134862793640412093054692
-	-0.18157746944470815053662704485760  -0.36358588182425338741765585837129]
-	X = [-0.5065223769881723 0.8420883555520725
-	0.032089759348237164 -0.4932420370950294
-	0.7409883951402091 -0.3941959214694802
-	-0.1924697782337678 0.21994677172891908
-	0.7643689465681343 -0.2792475667584258
-	0.3855053888104501 -0.2407731481108792
-	0.0773827859190266 0.15919402104081007
-	0.18553779175069454 0.04534051646419934]
-end
-
-# ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
-# ╠═╡ disabled = true
-#=╠═╡
-begin
-	Random.seed!(seed)
-	U0 = rand(M)
-end
-  ╠═╡ =#
-
-# ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
-# ╠═╡ disabled = true
-#=╠═╡
-A = rand_A/norm(rand_A)
-  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1964,8 +2016,10 @@ version = "1.4.1+1"
 # ╟─6460d549-e79d-473e-82e9-92c261a02dd7
 # ╠═30ceffac-5c28-4c53-9f3a-0375828ac2cb
 # ╠═9281660e-6a48-4b2d-b792-13b8803e2a5e
+# ╠═5895c078-5f50-4783-9ecd-acdacc38ab5d
 # ╠═91dfd45c-a658-4d95-b1e8-34453090cc12
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
+# ╠═02d74ff3-5281-43bf-b434-17ac75958866
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
 # ╠═84713389-c089-4c1a-ab0b-bc504c4e59c3
 # ╠═1787795e-46c1-4d89-8388-0b1753b61fd2
@@ -1979,7 +2033,6 @@ version = "1.4.1+1"
 # ╠═cab5b270-2bfa-493b-9885-12b2d01a227c
 # ╠═bbd894c9-b269-4919-8af5-e0b03869a0ce
 # ╠═b5c87775-ba32-409b-8e78-a79ad271881b
-# ╠═abbb41fb-d3a9-407b-a6b2-6a3a15ac7658
 # ╠═8d97e650-7584-49f3-9a76-4af9b0426b37
 # ╠═2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
 # ╟─e3878383-0f27-4859-bd9e-165076a52da6
@@ -1999,8 +2052,9 @@ version = "1.4.1+1"
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═715fb2bf-5f2c-4e68-ac9e-80056152146a
 # ╠═97db13d5-9e70-41be-84e7-866d26558b90
-# ╠═755f4c1c-153c-4f64-9caa-cc2e30e06c61
-# ╠═8ab39b2a-6b4d-4ccc-a988-53654827b647
+# ╟─755f4c1c-153c-4f64-9caa-cc2e30e06c61
+# ╟─8ab39b2a-6b4d-4ccc-a988-53654827b647
+# ╠═55d3d303-c6b5-4df3-bb2d-5b1b87a442d0
 # ╠═4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
