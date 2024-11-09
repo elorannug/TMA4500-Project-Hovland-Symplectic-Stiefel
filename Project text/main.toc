@@ -1,0 +1,13 @@
+\babel@toc {british}{}\relax 
+\contentsline {section}{List of Figures}{i}{section*.2}%
+\contentsline {section}{List of Tables}{i}{section*.3}%
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
+\contentsline {section}{\numberline {2}Example Section}{1}{section.2}%
+\contentsline {section}{\numberline {3}Theory}{1}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Basic definitions}{1}{subsection.3.1}%
+\contentsline {section}{\numberline {4}Conclusion}{2}{section.4}%
+\contentsline {section}{Bibliography}{3}{section*.5}%
+\contentsline {section}{Appendix}{4}{section*.6}%
+\contentsline {subsection}{\numberline {A}Hello World Example}{4}{subsection.Alph0.1}%
+\contentsline {subsection}{\numberline {B}Flow Chart Example}{4}{subsection.Alph0.2}%
+\contentsline {subsection}{\numberline {C}Sub-figures Example}{5}{subsection.Alph0.3}%
