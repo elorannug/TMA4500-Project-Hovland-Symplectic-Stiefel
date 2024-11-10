@@ -1,0 +1,33 @@
+\subsection{Right-invariant framework}
+% BZ: This metric is invariant under the group action of Sp(2k, R)
+% from the right and induces therefore a Riemannian metric on the symplectic subspaces
+% that will be considered in Subsection 4.2.
+
+% Right-invariant metric
+(many of the usual SpSt metrics do not have geodesics, therefore...)(We need a proper metric for $\mathrm{SpSt}(2n, 2k)$ in the sense that we need a metric that allows us to perform optimization on this manifold. To this end we need a metric that makes it possible to derive geodesics, as opposed to (BZ sources). The following metric defined in BZ fulfils our criteria.) 
+
+The goal for this section is to use a right-invariant metric defined on the symplectic group to define an appropriate metric on the symplectic Stiefel manifold. Define the point-wise right-invariant metric on $\mathrm{Sp}(2n,\mathbb{R})$ as the mapping $g_{p}:T_{p}\mathrm{Sp}(2n,\mathbb{R})\times T_{p}\mathrm{Sp}(2n,\mathbb{R})\xrightarrow{}\mathbb{R}$, 
+\begin{equation}\label{eq:sp_metric}
+    g_{p}(X_{1},X_{2}):=\frac{1}{2}\operatorname{tr}((X_{1}M^{+})^{T}X_{2}M^{+}),\quad X_{1},X_{2}\in T_{p}\mathrm{Sp}(2n,\mathbb{R}).
+\end{equation}
+It is right-invariant in the sense that
+$g_{pq}(X_{1}q,X_{2}q)=\tfrac{1}{2}\mathrm{tr}((X_{1}qq^{+}p^{+})^{T}X_{2}qq^{+}p^{+})=g_{p}(X_{1},X_{2})$ for all $p\in \mathrm{Sp}(2n,\mathbb{R})$.
+
+
+We will now use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(2n, 2k)$ through \ref{eq:sp_metric}. Split $T_{p}\mathrm{Sp}(2n,\mathbb{R})$ into to parts: the horizontal- and vertical part, with respect to $g^\mathrm{Sp}_{p}$ and $\pi$: % TODO: Define \pi! BZ (3.2)
+
+\begin{equation}\label{eq:spst_split}
+    T_{p}\mathrm{Sp}(2n,\mathbb{R})=\operatorname{Ver}^{\pi}_{p}\oplus \operatorname{Hor}^{\pi}_{p}\mathrm{Sp}(2n,\mathbb{R}).
+\end{equation}
+% TODO: Define Ver and Hor in a smart way
+
+The point-wise right-invariant Riemannian metric on $\mathrm{SpSt}(2n, 2k)$ is defined as the mapping $g_{p}:T_{p}\mathrm{SpSt}(2n, 2k)\times T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, $g_{p}(X_{1},X_{2}):=g^{\mathrm{Sp}}_{p}((X_{1})^{\mathrm{hor}}_{p},(X_{2})^{\mathrm{hor}}_{p})$. More explicitly
+
+\begin{equation}\label{eq:spst_metric}
+    g_{p}(X_{1},X_{2})=\operatorname{tr}\left(X_{1}^{T}\left(I_{2n}- \frac{1}{2}J_{2n}^{T}p(p^{T}p)^{-1}p^{T}J_{2n}\right)X_{2}(p^{T}p)^{-1}\right),
+\end{equation}
+for $X_{1},X_{2}\in T_{p}\mathrm{SpSt}(2n, 2k)$. For this metric, $\pi$ denotes a Riemannian submersion.
+
+Now that we have chosen a metric, we can justify a choice for a Riemannian gradient. Given a function $f:\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, the Riemannian gradient with respect to $g_{p}$ is given by
+$$\operatorname{grad}f(p)=\nabla f(p)p^{T}p+J_{2n}p(\nabla f(p))^{T}J_{2n}p,$$
+where $\nabla f(p)$ is the Euclidean gradient of a smooth extension around $p\in \mathrm{SpSt}(2n, 2k)$ in $\mathbb{R}^{2n\times2k}$ at $p$. We can see that this is the Riemannian gradient by the following two observations:  
