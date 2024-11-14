@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  10 NOV 2024 19:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  14 NOV 2024 09:47
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1022,15 +1022,6 @@ Package: fancyhdr 2024/07/23 v4.3.1 Extensive control of page headers and footer
 \f@nch@O@olf=\skip94
 \f@nch@O@orf=\skip95
 ))
-
-LaTeX Warning: \include should only be used after \begin{document} on input line 8.
-
-(custom_structures.tex
-\c@definition=\count513
-\c@theorem=\count514
-\c@lemma=\count515
-)
-Package hyperref Info: Option `colorlinks' set `true' on input line 24.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > main.aex <nul: /p x=^%~$PATH:i>> main.aex)...executed.
 
 runsystem(del main.aex)...executed.
@@ -1039,27 +1030,27 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'british'.
- (main.aux)
+ (main.aux (custom_structures.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
 Package biblatex Info: Trying to load language 'british'...
 Package biblatex Info: ... file 'british.lbx' found.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/lbx\british.lbx
@@ -1077,8 +1068,8 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (main.bbl)
-Package biblatex Info: Reference section=0 on input line 27.
-Package biblatex Info: Reference segment=0 on input line 27.
+Package biblatex Info: Reference section=0 on input line 26.
+Package biblatex Info: Reference segment=0 on input line 26.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
@@ -1086,16 +1077,16 @@ Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count516
+\scratchcounter=\count513
 \scratchdimen=\dimen312
 \scratchbox=\box108
-\nofMPsegments=\count517
-\nofMParguments=\count518
+\nofMPsegments=\count514
+\nofMParguments=\count515
 \everyMPshowfont=\toks54
-\MPscratchCnt=\count519
+\MPscratchCnt=\count516
 \MPscratchDim=\dimen313
-\MPnumerator=\count520
-\makeMPintoPDFobject=\count521
+\MPnumerator=\count517
+\makeMPintoPDFobject=\count518
 \everyMPtoPDFconversion=\toks55
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1103,7 +1094,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 27.
+Package hyperref Info: Link coloring ON on input line 26.
  (main.out) (main.out)
 \@outlinefile=\write8
 \openout8 = `main.out'.
@@ -1121,15 +1112,15 @@ File: translations-basic-dictionary-english.trsl (english translation file `tran
 )
 \symgns@font=\mathgroup9
 LaTeX Font Info:    Overwriting symbol font `gns@font' in version `bold'
-(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 27.
-Package gensymb Info: Math companion symbols declared on input line 27.
-LaTeX Info: Redefining \degree on input line 27.
-LaTeX Info: Redefining \celsius on input line 27.
-Package gensymb Info: Using text companion symbols for \degree, \celsius and \perthousand on input line 27.
-LaTeX Info: Redefining \ohm on input line 27.
-Package gensymb Info: Using \textohm for \ohm on input line 27.
-LaTeX Info: Redefining \micro on input line 27.
-Package gensymb Info: Using \textmu for \micro on input line 27.
+(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 26.
+Package gensymb Info: Math companion symbols declared on input line 26.
+LaTeX Info: Redefining \degree on input line 26.
+LaTeX Info: Redefining \celsius on input line 26.
+Package gensymb Info: Using text companion symbols for \degree, \celsius and \perthousand on input line 26.
+LaTeX Info: Redefining \ohm on input line 26.
+Package gensymb Info: Using \textohm for \ohm on input line 26.
+LaTeX Info: Redefining \micro on input line 26.
+Package gensymb Info: Using \textmu for \micro on input line 26.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1165,7 +1156,13 @@ Package gensymb Info: Using \textmu for \micro on input line 27.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-(./title.tex
+\openout2 = `custom_structures.aux'.
+
+(custom_structures.tex
+\c@definition=\count519
+\c@theorem=\count520
+\c@lemma=\count521
+) (./title.tex
 <./Images/NTNU_logo.png, id=58, 426.393pt x 110.5731pt>
 File: ./Images/NTNU_logo.png Graphic file (type png)
 <use ./Images/NTNU_logo.png>
@@ -1174,6 +1171,9 @@ Package pdftex.def Info: ./Images/NTNU_logo.png  used on input line 9.
 
 
 [1
+
+
+
 
 {C:/Users/rannu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./Images/NTNU_logo.png>]) (main.toc
 LaTeX Font Info:    Trying to load font information for U+msa on input line 7.
@@ -1224,32 +1224,32 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 \openout4 = `main.pyg'.
 
  (_minted-main/rrt.pygstyle) (_minted-main/0239009554F04A2D64E7CE0FA479EC16CF33289265490CC72470AF6FAFE9A294.pygtex) (_minted-main/tango.pygstyle) (_minted-main/868D2CEF153EF770AD02055B822E2AC30E80DCA43A093B4D43738573363C1507.pygtex)
-<Images/Sub-figures_Example/cavity_100_streamlines.png, id=132, 386.6445pt x 386.6445pt>
+<Images/Sub-figures_Example/cavity_100_streamlines.png, id=133, 386.6445pt x 386.6445pt>
 File: Images/Sub-figures_Example/cavity_100_streamlines.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_100_streamlines.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_100_streamlines.png  used on input line 53.
 (pdftex.def)             Requested size: 192.0548pt x 192.05333pt.
-<Images/Sub-figures_Example/cavity_100_streamlines_ghia.png, id=133, 253.54726pt x 257.763pt>
+<Images/Sub-figures_Example/cavity_100_streamlines_ghia.png, id=134, 253.54726pt x 257.763pt>
 File: Images/Sub-figures_Example/cavity_100_streamlines_ghia.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_100_streamlines_ghia.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_100_streamlines_ghia.png  used on input line 57.
 (pdftex.def)             Requested size: 188.21252pt x 191.35127pt.
-<Images/Sub-figures_Example/cavity_400_streamlines.png, id=136, 387.24675pt x 384.2355pt>
+<Images/Sub-figures_Example/cavity_400_streamlines.png, id=137, 387.24675pt x 384.2355pt>
 File: Images/Sub-figures_Example/cavity_400_streamlines.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_400_streamlines.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_400_streamlines.png  used on input line 62.
 (pdftex.def)             Requested size: 192.0548pt x 190.56358pt.
-<Images/Sub-figures_Example/cavity_400_streamlines_ghia.png, id=137, 252.945pt x 258.9675pt>
+<Images/Sub-figures_Example/cavity_400_streamlines_ghia.png, id=138, 252.945pt x 258.9675pt>
 File: Images/Sub-figures_Example/cavity_400_streamlines_ghia.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_400_streamlines_ghia.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_400_streamlines_ghia.png  used on input line 66.
 (pdftex.def)             Requested size: 186.93611pt x 191.39189pt.
-<Images/Sub-figures_Example/cavity_1000_streamlines.png, id=140, 385.44pt x 385.44pt>
+<Images/Sub-figures_Example/cavity_1000_streamlines.png, id=141, 385.44pt x 385.44pt>
 File: Images/Sub-figures_Example/cavity_1000_streamlines.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_1000_streamlines.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_1000_streamlines.png  used on input line 71.
 (pdftex.def)             Requested size: 192.0548pt x 192.05493pt.
-<Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png, id=141, 250.536pt x 257.16075pt>
+<Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png, id=142, 250.536pt x 257.16075pt>
 File: Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png  used on input line 75.
@@ -1258,7 +1258,7 @@ Package pdftex.def Info: Images/Sub-figures_Example/cavity_1000_streamlines_ghia
 
 [4]
 
-[5 <./Images/Sub-figures_Example/cavity_100_streamlines.png> <./Images/Sub-figures_Example/cavity_100_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_400_streamlines.png> <./Images/Sub-figures_Example/cavity_400_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_1000_streamlines.png> <./Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png>] (main.aux)
+[5 <./Images/Sub-figures_Example/cavity_100_streamlines.png> <./Images/Sub-figures_Example/cavity_100_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_400_streamlines.png> <./Images/Sub-figures_Example/cavity_400_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_1000_streamlines.png> <./Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png>] (main.aux (custom_structures.aux))
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-10-09>
@@ -1272,17 +1272,17 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42446 strings out of 473702
- 893631 string characters out of 5719438
- 1736218 words of memory out of 5000000
- 64763 multiletter control sequences out of 15000+600000
+ 42462 strings out of 473702
+ 894444 string characters out of 5719438
+ 1738631 words of memory out of 5000000
+ 64774 multiletter control sequences out of 15000+600000
  573683 words of font info for 92 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  117i,12n,121p,821b,2365s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (7 pages, 962353 bytes).
+Output written on main.pdf (7 pages, 962388 bytes).
 PDF statistics:
- 264 PDF objects out of 1000 (max. 8388607)
- 34 named destinations out of 1000 (max. 500000)
+ 265 PDF objects out of 1000 (max. 8388607)
+ 35 named destinations out of 1000 (max. 500000)
  157 words of extra memory for PDF output out of 10000 (max. 10000000)
 
