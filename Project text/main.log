@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  14 NOV 2024 09:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  18 NOV 2024 19:48
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -993,35 +993,54 @@ Package: amsthm 2020/05/29 v2.20.6
 Package: textcomp 2024/04/24 v2.1b Standard LaTeX package
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/gensymb\gensymb.sty
 Package: gensymb 2022/10/17 v1.0.2 (KJH)
+) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/cancel\cancel.sty
+Package: cancel 2013/04/12 v2.2 Cancel math terms
+) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/mathtools\mathtools.sty
+Package: mathtools 2024/10/04 v1.31 mathematical typesetting tools
+ (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/mathtools\mhsetup.sty
+Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
+)
+\g_MT_multlinerow_int=\count510
+\l_MT_multwidth_dim=\dimen304
+\origjot=\skip87
+\l_MT_shortvdotswithinadjustabove_dim=\dimen305
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen306
+\l_MT_above_intertext_sep=\dimen307
+\l_MT_below_intertext_sep=\dimen308
+\l_MT_above_shortintertext_sep=\dimen309
+\l_MT_below_shortintertext_sep=\dimen310
+\xmathstrut@box=\box108
+\xmathstrut@dim=\dimen311
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count510
-\Gm@cntv=\count511
-\c@Gm@tempcnt=\count512
-\Gm@bindingoffset=\dimen304
-\Gm@wd@mp=\dimen305
-\Gm@odd@mp=\dimen306
-\Gm@even@mp=\dimen307
-\Gm@layoutwidth=\dimen308
-\Gm@layoutheight=\dimen309
-\Gm@layouthoffset=\dimen310
-\Gm@layoutvoffset=\dimen311
+\Gm@cnth=\count511
+\Gm@cntv=\count512
+\c@Gm@tempcnt=\count513
+\Gm@bindingoffset=\dimen312
+\Gm@wd@mp=\dimen313
+\Gm@odd@mp=\dimen314
+\Gm@even@mp=\dimen315
+\Gm@layoutwidth=\dimen316
+\Gm@layoutheight=\dimen317
+\Gm@layouthoffset=\dimen318
+\Gm@layoutvoffset=\dimen319
 \Gm@dimlist=\toks53
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg)) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
 Package: fancyhdr 2024/07/23 v4.3.1 Extensive control of page headers and footers
-\f@nch@headwidth=\skip87
-\f@nch@O@elh=\skip88
-\f@nch@O@erh=\skip89
-\f@nch@O@olh=\skip90
-\f@nch@O@orh=\skip91
-\f@nch@O@elf=\skip92
-\f@nch@O@erf=\skip93
-\f@nch@O@olf=\skip94
-\f@nch@O@orf=\skip95
+\f@nch@headwidth=\skip88
+\f@nch@O@elh=\skip89
+\f@nch@O@erh=\skip90
+\f@nch@O@olh=\skip91
+\f@nch@O@orh=\skip92
+\f@nch@O@elf=\skip93
+\f@nch@O@erf=\skip94
+\f@nch@O@olf=\skip95
+\f@nch@O@orf=\skip96
 ))
+Package hyperref Info: Option `colorlinks' set `true' on input line 22.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > main.aex <nul: /p x=^%~$PATH:i>> main.aex)...executed.
 
 runsystem(del main.aex)...executed.
@@ -1077,16 +1096,16 @@ Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count513
-\scratchdimen=\dimen312
-\scratchbox=\box108
-\nofMPsegments=\count514
-\nofMParguments=\count515
+\scratchcounter=\count514
+\scratchdimen=\dimen320
+\scratchbox=\box109
+\nofMPsegments=\count515
+\nofMParguments=\count516
 \everyMPshowfont=\toks54
-\MPscratchCnt=\count516
-\MPscratchDim=\dimen313
-\MPnumerator=\count517
-\makeMPintoPDFobject=\count518
+\MPscratchCnt=\count517
+\MPscratchDim=\dimen321
+\MPnumerator=\count518
+\makeMPintoPDFobject=\count519
 \everyMPtoPDFconversion=\toks55
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -1159,9 +1178,10 @@ Package gensymb Info: Using \textmu for \micro on input line 26.
 \openout2 = `custom_structures.aux'.
 
 (custom_structures.tex
-\c@definition=\count519
-\c@theorem=\count520
-\c@lemma=\count521
+\c@definition=\count520
+\c@theorem=\count521
+\c@lemma=\count522
+\c@proposition=\count523
 ) (./title.tex
 <./Images/NTNU_logo.png, id=58, 426.393pt x 110.5731pt>
 File: ./Images/NTNU_logo.png Graphic file (type png)
@@ -1210,11 +1230,17 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has b
 <to be read again> 
                    \relax 
 l.14     \end{enumerate}
-                         [1 <./Images/CylinderImage.jpg>]) (Sections/./Theory_subsections/Right_invariant_framework.tex))
+                         [1 <./Images/CylinderImage.jpg>]) (Sections/./Theory_subsections/Right_invariant_framework.tex
 
-[2]
+LaTeX Warning: Citation 'BZ' on page 2 undefined on input line 42.
 
-[3] (Appendices/example_appendix.tex
+
+
+[2]))
+
+[3]
+
+[4] (Appendices/example_appendix.tex
 \openout4 = `main.pyg'.
 
  (_minted-main/default.pygstyle) (_minted-main/09FC4B4F4A2EDC1333E71B2C44602EBBDF97739B2961B3817F8BCA31ADDB253B.pygtex
@@ -1224,47 +1250,56 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 \openout4 = `main.pyg'.
 
  (_minted-main/rrt.pygstyle) (_minted-main/0239009554F04A2D64E7CE0FA479EC16CF33289265490CC72470AF6FAFE9A294.pygtex) (_minted-main/tango.pygstyle) (_minted-main/868D2CEF153EF770AD02055B822E2AC30E80DCA43A093B4D43738573363C1507.pygtex)
-<Images/Sub-figures_Example/cavity_100_streamlines.png, id=133, 386.6445pt x 386.6445pt>
+<Images/Sub-figures_Example/cavity_100_streamlines.png, id=153, 386.6445pt x 386.6445pt>
 File: Images/Sub-figures_Example/cavity_100_streamlines.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_100_streamlines.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_100_streamlines.png  used on input line 53.
 (pdftex.def)             Requested size: 192.0548pt x 192.05333pt.
-<Images/Sub-figures_Example/cavity_100_streamlines_ghia.png, id=134, 253.54726pt x 257.763pt>
+<Images/Sub-figures_Example/cavity_100_streamlines_ghia.png, id=154, 253.54726pt x 257.763pt>
 File: Images/Sub-figures_Example/cavity_100_streamlines_ghia.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_100_streamlines_ghia.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_100_streamlines_ghia.png  used on input line 57.
 (pdftex.def)             Requested size: 188.21252pt x 191.35127pt.
-<Images/Sub-figures_Example/cavity_400_streamlines.png, id=137, 387.24675pt x 384.2355pt>
+<Images/Sub-figures_Example/cavity_400_streamlines.png, id=157, 387.24675pt x 384.2355pt>
 File: Images/Sub-figures_Example/cavity_400_streamlines.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_400_streamlines.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_400_streamlines.png  used on input line 62.
 (pdftex.def)             Requested size: 192.0548pt x 190.56358pt.
-<Images/Sub-figures_Example/cavity_400_streamlines_ghia.png, id=138, 252.945pt x 258.9675pt>
+<Images/Sub-figures_Example/cavity_400_streamlines_ghia.png, id=158, 252.945pt x 258.9675pt>
 File: Images/Sub-figures_Example/cavity_400_streamlines_ghia.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_400_streamlines_ghia.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_400_streamlines_ghia.png  used on input line 66.
 (pdftex.def)             Requested size: 186.93611pt x 191.39189pt.
-<Images/Sub-figures_Example/cavity_1000_streamlines.png, id=141, 385.44pt x 385.44pt>
+<Images/Sub-figures_Example/cavity_1000_streamlines.png, id=161, 385.44pt x 385.44pt>
 File: Images/Sub-figures_Example/cavity_1000_streamlines.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_1000_streamlines.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_1000_streamlines.png  used on input line 71.
 (pdftex.def)             Requested size: 192.0548pt x 192.05493pt.
-<Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png, id=142, 250.536pt x 257.16075pt>
+<Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png, id=162, 250.536pt x 257.16075pt>
 File: Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png Graphic file (type png)
 <use Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png>
 Package pdftex.def Info: Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png  used on input line 75.
 (pdftex.def)             Requested size: 186.93611pt x 191.88124pt.
 )
 
-[4]
+[5]
 
-[5 <./Images/Sub-figures_Example/cavity_100_streamlines.png> <./Images/Sub-figures_Example/cavity_100_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_400_streamlines.png> <./Images/Sub-figures_Example/cavity_400_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_1000_streamlines.png> <./Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png>] (main.aux (custom_structures.aux))
+[6 <./Images/Sub-figures_Example/cavity_100_streamlines.png> <./Images/Sub-figures_Example/cavity_100_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_400_streamlines.png> <./Images/Sub-figures_Example/cavity_400_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_1000_streamlines.png> <./Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png>] (main.aux (custom_structures.aux))
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-10-09>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: B9249CA48BD3F9B8150DB63E98E99F16;1638.
+
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                main
+(biblatex)                and rerun LaTeX afterwards.
+
 runsystem(del main.pyg)...executed.
 
 Package logreq Info: Writing requests to 'main.run.xml'.
@@ -1272,17 +1307,17 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42462 strings out of 473702
- 894444 string characters out of 5719438
- 1738631 words of memory out of 5000000
- 64774 multiletter control sequences out of 15000+600000
+ 43078 strings out of 473702
+ 905998 string characters out of 5719438
+ 1764951 words of memory out of 5000000
+ 65365 multiletter control sequences out of 15000+600000
  573683 words of font info for 92 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,12n,121p,821b,2365s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (7 pages, 962388 bytes).
+ 117i,18n,121p,821b,2365s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/latxfont/line10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (8 pages, 986303 bytes).
 PDF statistics:
- 265 PDF objects out of 1000 (max. 8388607)
- 35 named destinations out of 1000 (max. 500000)
+ 298 PDF objects out of 1000 (max. 8388607)
+ 50 named destinations out of 1000 (max. 500000)
  157 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -8,7 +8,7 @@
 
 The goal for this section is to use a right-invariant metric defined on the symplectic group to define an appropriate metric on the symplectic Stiefel manifold. Define the point-wise right-invariant metric on $\mathrm{Sp}(2n,\mathbb{R})$ as the mapping $g_{p}:T_{p}\mathrm{Sp}(2n,\mathbb{R})\times T_{p}\mathrm{Sp}(2n,\mathbb{R})\xrightarrow{}\mathbb{R}$, 
 \begin{equation}\label{eq:sp_metric}
-    g_{p}(X_{1},X_{2}):=\frac{1}{2}\operatorname{tr}((X_{1}M^{+})^{T}X_{2}M^{+}),\quad X_{1},X_{2}\in T_{p}\mathrm{Sp}(2n,\mathbb{R}).
+    g_{p}(X_{1},X_{2})\coloneqq\frac{1}{2}\operatorname{tr}((X_{1}M^{+})^{T}X_{2}M^{+}),\quad X_{1},X_{2}\in T_{p}\mathrm{Sp}(2n,\mathbb{R}).
 \end{equation}
 It is right-invariant in the sense that
 $g_{pq}(X_{1}q,X_{2}q)=\tfrac{1}{2}\mathrm{tr}((X_{1}qq^{+}p^{+})^{T}X_{2}qq^{+}p^{+})=g_{p}(X_{1},X_{2})$ for all $p\in \mathrm{Sp}(2n,\mathbb{R})$.
@@ -21,21 +21,72 @@ We will now use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(
 \end{equation}
 % TODO: Define Ver and Hor in a smart way
 
-The point-wise right-invariant Riemannian metric on $\mathrm{SpSt}(2n, 2k)$ is defined as the mapping $g_{p}:T_{p}\mathrm{SpSt}(2n, 2k)\times T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, $g_{p}(X_{1},X_{2}):=g^{\mathrm{Sp}}_{p}((X_{1})^{\mathrm{hor}}_{p},(X_{2})^{\mathrm{hor}}_{p})$. More explicitly
+The point-wise right-invariant Riemannian metric on $\mathrm{SpSt}(2n, 2k)$ is defined as the mapping $g_{p}:T_{p}\mathrm{SpSt}(2n, 2k)\times T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, $g_{p}(X_{1},X_{2})\coloneqq g^{\mathrm{Sp}}_{p}((X_{1})^{\mathrm{hor}}_{p},(X_{2})^{\mathrm{hor}}_{p})$. More explicitly
 
 \begin{equation}\label{eq:spst_metric}
     g_{p}(X_{1},X_{2})=\operatorname{tr}\left(X_{1}^{T}\left(I_{2n}- \frac{1}{2}J_{2n}^{T}p(p^{T}p)^{-1}p^{T}J_{2n}\right)X_{2}(p^{T}p)^{-1}\right),
 \end{equation}
 for $X_{1},X_{2}\in T_{p}\mathrm{SpSt}(2n, 2k)$. For this metric, $\pi$ denotes a Riemannian submersion.
 
-Now that we have chosen a metric, we can justify a choice for a Riemannian gradient. Given a function $f:\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, the Riemannian gradient with respect to $g_{p}$ is given by
-\begin{equation}\label{eq:rie_grad}
-    \operatorname{grad}f(p)=\nabla f(p)p^{T}p+J_{2n}p(\nabla f(p))^{T}J_{2n}p,
-\end{equation}
+%%% Riemannian gradient
+Now that we have chosen a metric, we can justify a choice for a Riemannian gradient. 
+\begin{proposition}
+    Given a function $f:\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, the \text{Riemannian gradient} with respect to $g_{p}$ is given by
+    \begin{equation}\label{eq:rie_grad}
+        \operatorname{grad}f(p)=\nabla f(p)p^{T}p+J_{2n}p(\nabla f(p))^{T}J_{2n}p,
+    \end{equation}
+    
+    where $\nabla f(p)$ is the Euclidean gradient of a smooth extension around $p\in \mathrm{SpSt}(2n, 2k)$ in $\mathbb{R}^{2n\times2k}$ at $p$.
+\end{proposition}
+\begin{proof}
+    We can see that this is the Riemannian gradient by the following two observations stated in \cite{BZ}, which we verify here.
 
-where $\nabla f(p)$ is the Euclidean gradient of a smooth extension around $p\in \mathrm{SpSt}(2n, 2k)$ in $\mathbb{R}^{2n\times2k}$ at $p$. We can see that this is the Riemannian gradient by the following two observations:  
+    Firstly, gradient must be in $T_{p}\mathrm{SpSt}(2n, 2k)$, which means by ref ?? that $0=p^{+}\operatorname{grad}f(p)+(\operatorname{grad}f(p))^{+}p$ so 
+    \begin{align}
+    &p^{\mathrm{T}}J\nabla f(p)p^{\mathrm{T}}p+p^{\mathrm{T}}JJp(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp\\
+    &= -p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp-p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp=0
+    \end{align}
+    ! Or should I mark where I did the simplification for clarity:
+    \begin{align}
+    &p^{\mathrm{T}}J\nabla f(p)p^{\mathrm{T}}p+p^{\mathrm{T}}\cancelto{-I_{2n}}{JJ}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}\cancelto{I_{2n}}{J^{\mathrm{T}}J}p\\
+    &= -p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp-p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp=0
+    \end{align}
+    where we have used $JJ=-J^{\mathrm{T}}J=-I_{2n}$ and $J^{\mathrm{T}}=-J$.
+    
+    Secondly, the gradient also has to satisfy $g_{p}(\operatorname{grad}f(p),X)=\operatorname{d}f_p(X)=\mathrm{tr}((\nabla f(p))^\mathrm{T}X)$ for all $X\in T_{p}\mathrm{SpSt}(2n, 2k)$:
+    $$g_{p}(\operatorname{grad}f(p),X)=\mathrm{tr}\big((p^{\mathrm{T}}p (\nabla f(p))^{\mathrm{T}}+p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p)p ^{\mathrm{T}}J ^{\mathrm{T}})(I_{2n}- \tfrac{1}{2}G)X(p ^{\mathrm{T}}p)^{-1}\big),$$
+    where $G \coloneqq J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}J$. Expanding this expression we obtain
+    \begin{align}
+    &\mathrm{tr}\big(\cancel{p ^{\mathrm{T}}p}(\nabla f(p)) ^{\mathrm{T}}X\cancel{(p ^{\mathrm{T}}p)^{-1}}\big)- \tfrac{1}{2}\mathrm{tr}\big(\cancel{p ^{\mathrm{T}}p}(\nabla f(p)) ^{\mathrm{T}}GX\cancel{(p ^{\mathrm{T}}p)^{-1}}\big)\\
+    &+\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}} \nabla f(p)p ^{\mathrm{T}}J ^{\mathrm{T}}X (p ^{\mathrm{T}}p)^{-1}\big)- \tfrac{1}{2}\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p)p ^{\mathrm{T}}J ^{\mathrm{T}}GX(p ^{\mathrm{T}}p)^{-1}\big),
+    \end{align}
+    where the cancellations used the fact that the trace is invariant under circular shifts. Noting that the first term is by definition $\operatorname{d}f_{p}(X)$, and inserting the definition of $G$, the expression becomes
+    \begin{align}
+    &\operatorname{d}f_{p}(X)- \tfrac{1}{2} \mathrm{tr}\big((\nabla f(p)) ^{\mathrm{T}}J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}JX\big)+\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p) p ^{\mathrm{T}}J ^{\mathrm{T}}X(p ^{\mathrm{T}}p)^{-1}\big)\\
+    &- \tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p)p ^{\mathrm{T}}\cancelto{-I_{2n}}{J ^{\mathrm{T}}J ^{\mathrm{T}}}p(p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}\cancelto{-J ^{\mathrm{T}}}{J}X(p ^{\mathrm{T}}p)^{-1}\big).
+    \end{align}
+    We notice that after cancelling $p ^{\mathrm{T}}p(p ^{\mathrm{T}})p^{-1}$ in the last term, the trace is equal to the second to last term. Now focusing on the second term: utilizing both the fact that for any matrix, $A$, (a) $\mathrm{tr}(A)=\mathrm{tr}(A ^{\mathrm{T}})$, (b) the cyclic property of the trace, and (c) $J=-J ^{\mathrm{T}}$, we get that 
+    \begin{align}
+    \tfrac{1}{2} \mathrm{tr}\big((\nabla f(p)) ^{\mathrm{T}}J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}JX\big)&\overset{\text{(1)}}{=}\tfrac{1}{2} \mathrm{tr}\big(X ^{\mathrm{T}}J ^{\mathrm{T}}p (p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}J \nabla f(p)\big)\\
+    &\overset{(2),(3)}{=}-\tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}} \nabla f(p)X ^{\mathrm{T}}J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}\big)
+    \end{align}
+    Inserting this into our expression we end up with:
+    \begin{align}
+    & \operatorname{d}f_{p}(X)+\tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J \nabla f(p)\underbrace{X ^{\mathrm{T}}J ^{\mathrm{T}}p}_{=-X ^{\mathrm{T}}Jp}(p ^{\mathrm{T}}p)^{-1}\big)+\tfrac{1}{2}\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p) \underbrace{p ^{\mathrm{T}}J ^{\mathrm{T}}X}_{=-p^ {\mathrm{T}}JX}(p ^{\mathrm{T}}p)^{-1}\big)=\operatorname{d}f_{p}(X),
+    \end{align}
+    where the last two terms cancel by the tangent space condition ref ?? $p ^{\mathrm{T}}JX?-X ^{\mathrm{T}}Jp$.
+\end{proof}
+
+
+
 
 ---
 
 (Christoffel symbols)
 
+\begin{align}
+    &p^{\mathrm{T}}J\nabla f(p)p^{\mathrm{T}}p+p^{\mathrm{T}}JJp(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp\\
+    &= -p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp
+\end{align}
+
+%%% Riemannian Hessian TODO: På Obsidian
