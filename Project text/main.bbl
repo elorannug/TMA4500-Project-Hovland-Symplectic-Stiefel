@@ -19,47 +19,83 @@
 
 \refsection{0}
   \datalist[entry]{nyt/global//global/global/global}
-    \entry{ghia_1982}{article}{}{}
-      \name{author}{3}{}{%
-        {{un=0,uniquepart=base,hash=ae624d922375a4dd3ca9895b88a36f0b}{%
-           family={Ghia},
-           familyi={G\bibinitperiod},
-           given={U.},
-           giveni={U\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=5a3ebc3007a3461e82fd301cc47b028a}{%
-           family={Ghia},
-           familyi={G\bibinitperiod},
-           given={K.\bibnamedelimi N.},
-           giveni={K\bibinitperiod\bibinitdelim N\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=939f2c02931e4438b32abf2639507c91}{%
-           family={Shin},
-           familyi={S\bibinitperiod},
-           given={C.\bibnamedelimi T.},
-           giveni={C\bibinitperiod\bibinitdelim T\bibinitperiod},
+    \entry{Boothby}{incollection}{}{}
+      \name{editor}{1}{}{%
+        {{un=0,uniquepart=base,hash=9b12f79e614e88ff6c34b2a0f614a42d}{%
+           family={Boothby},
+           familyi={B\bibinitperiod},
+           given={William\bibnamedelima M.},
+           giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod},
            givenun=0}}%
       }
-      \strng{namehash}{ac1475424ad3de7957ad17b55d44317d}
-      \strng{fullhash}{2f309e0af031967bd4d0d591f2e38bd6}
-      \strng{fullhashraw}{2f309e0af031967bd4d0d591f2e38bd6}
-      \strng{bibnamehash}{2f309e0af031967bd4d0d591f2e38bd6}
-      \strng{authorbibnamehash}{2f309e0af031967bd4d0d591f2e38bd6}
-      \strng{authornamehash}{ac1475424ad3de7957ad17b55d44317d}
-      \strng{authorfullhash}{2f309e0af031967bd4d0d591f2e38bd6}
-      \strng{authorfullhashraw}{2f309e0af031967bd4d0d591f2e38bd6}
-      \field{sortinit}{G}
-      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{fullhash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{fullhashraw}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{bibnamehash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{editorbibnamehash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{editornamehash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{editorfullhash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{editorfullhashraw}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{An Introduction to Differentiable Manifolds and Riemannian Geometry}
+      \field{issn}{0079-8169}
+      \field{series}{Pure and Applied Mathematics}
+      \field{title}{V Tensors and Tensor Fields on Manifolds}
+      \field{volume}{63}
+      \field{year}{1975}
+      \field{pages}{174\bibrangedash 225}
+      \range{pages}{52}
+      \verb{doi}
+      \verb https://doi.org/10.1016/S0079-8169(08)61028-4
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0079816908610284
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0079816908610284
+      \endverb
+    \endentry
+    \entry{Lee2012}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=36896354ee3aedc1a13d683ea773634e}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={John\bibnamedelima M.},
+           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {New York, NY}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{fullhash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{fullhashraw}{36896354ee3aedc1a13d683ea773634e}
+      \strng{bibnamehash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{authorbibnamehash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{authornamehash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{authorfullhash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{authorfullhashraw}{36896354ee3aedc1a13d683ea773634e}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
       \field{extradatescope}{labelyear}
       \field{labeldatesource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{journaltitle}{Journal of Computational Physics}
-      \field{title}{High-Re Solutions for Incompressible Flow Using the Navier-Stokes Equations and a Multigrid Method}
-      \field{volume}{48}
-      \field{year}{1982}
-      \field{pages}{387\bibrangedash 411}
-      \range{pages}{25}
+      \field{edition}{2}
+      \field{isbn}{978-1-4419-9982-5}
+      \field{title}{Introduction to Smooth Manifolds}
+      \field{year}{2012}
     \endentry
     \entry{imt_software_wiki}{online}{}{}
       \name{author}{1}{}{%
@@ -97,36 +133,9 @@
       \verb https://www.ntnu.no/wiki/display/imtsoftware/LaTeX
       \endverb
     \endentry
-    \entry{sagan_1993}{book}{}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=17d6616424502bba556b6b98ee30e858}{%
-           family={Sagan},
-           familyi={S\bibinitperiod},
-           given={Carl},
-           giveni={C\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Presidio Press}%
-      }
-      \strng{namehash}{17d6616424502bba556b6b98ee30e858}
-      \strng{fullhash}{17d6616424502bba556b6b98ee30e858}
-      \strng{fullhashraw}{17d6616424502bba556b6b98ee30e858}
-      \strng{bibnamehash}{17d6616424502bba556b6b98ee30e858}
-      \strng{authorbibnamehash}{17d6616424502bba556b6b98ee30e858}
-      \strng{authornamehash}{17d6616424502bba556b6b98ee30e858}
-      \strng{authorfullhash}{17d6616424502bba556b6b98ee30e858}
-      \strng{authorfullhashraw}{17d6616424502bba556b6b98ee30e858}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{Brocas brain: reflections on the romance of science}
-      \field{year}{1993}
-    \endentry
   \enddatalist
+  \missing{BZ}
+  \missing{symplectic_inverse}
 \endrefsection
 \endinput
 

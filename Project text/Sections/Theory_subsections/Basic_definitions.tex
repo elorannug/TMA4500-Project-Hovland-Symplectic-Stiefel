@@ -1,27 +1,43 @@
 \subsection{Basic definitions}
+% TODO: Give intro to section. What will be covered?
+This section is designed to be a reference work to ensure that the reader has the necessary background to understand the optimization algorithms we will be studying. 
+
+The optimization algorithm we will be studying is defined on a \textit{Riemannian manifold}. This is because the algorithms we will use are designed to utilize first and second order information, and we need to define what these concepts mean on a manifold. 
 
 
 % manifolds
 % J Lee smooth manifolds definition
 
+% ⚠️ This is too basic!
 
-\begin{definition}[Smooth manifold]
-    Given a topological space $\mathcal{M}$, it is a topological manifold of dimension $n$ if
-    \begin{enumerate}
-        \item $\mathcal{M}$ is a Hausdorff space: for every pair of $p,q\in \mathcal{M}$, we can always find to disjoint subsets of $\mathcal{M}$, $U$ and $V$, such that $p\in U$ and $q\in V$.
-        \item $\mathcal{M}$ is second-countable: the topology of $\mathcal{M}$ has a countable basis.
-        \item $\mathcal{M}$ is locally Euclidean of dimension n: for each $p$ we have an open subset $U \subseteq \mathcal{M}$ containing $p$, and an open subset $\hat{U}\in \mathbb{R}^{n}$ such that there exists a homeomorphism $\phi:U \xrightarrow{}\hat{U}$.
-    \end{enumerate}
-    If we in addition have a notion of smoothness, meaning that the notion of differentiability is well-defined, we call $\mathcal{M}$ a smooth manifold.
-\end{definition}
+% \begin{definition}[Smooth manifold]
+%     Given a topological space $\mathcal{M}$, it is a topological manifold of dimension $n$ if
+%     \begin{enumerate}
+%         \item $\mathcal{M}$ is a Hausdorff space: for every pair of $p,q\in \mathcal{M}$, we can always find to disjoint subsets of $\mathcal{M}$, $U$ and $V$, such that $p\in U$ and $q\in V$.
+%         \item $\mathcal{M}$ is second-countable: the topology of $\mathcal{M}$ has a countable basis.
+%         \item $\mathcal{M}$ is locally Euclidean of dimension n: for each $p$ we have an open subset $U \subseteq \mathcal{M}$ containing $p$, and an open subset $\hat{U}\in \mathbb{R}^{n}$ such that there exists a homeomorphism $\phi:U \xrightarrow{}\hat{U}$.
+%     \end{enumerate}
+%     If we in addition have a notion of smoothness, meaning that the notion of differentiability is well-defined, we call $\mathcal{M}$ a smooth manifold.
+% \end{definition}
 
 % R manifolds
+\subsubsection{Riemannian manifolds}
+% Definition from WM Boothby page 191
+As defined in [\cite{Boothby}] A smooth manifold (see [\cite{Lee2012}] smooth for definition) $\mathcal{M}$ is a \textit{Riemannian manifold} if we can define a field of symmetric, positive definite, bilinear forms $g$, called the \textit{Riemannian metric}. By field we mean that $g_p$ is defined on the tangent space $T_p\mathcal{M}$ at each point $p\in \mathcal{M}$.
+
 
 % TODO: Forklar at J_2n blir forenklet til J hvis det er klart fra konteksten
 
 % TODO: Is this a paper? ⚠️
 For the rest of this paper we denote $\mathcal{M}$ as being a Riemannian manifold.
 % optimization on R manif
+
+
+% TODO: "Symplectic identity" J_2n
+
+% TODO: Symplectic inverse
+
+
 
 
 

@@ -1,0 +1,64 @@
+\subsection{Riemannian gradient}
+%%% Riemannian gradient
+Now that we have chosen a metric, we can justify a choice for a Riemannian gradient. 
+\begin{proposition}
+    Given a function $f:\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, the \text{Riemannian gradient} with respect to $g_{p}$ is given by
+    \begin{equation}\label{eq:rie_grad}
+        \operatorname{grad}f(p)=\nabla f(p)p^{T}p+J_{2n}p(\nabla f(p))^{T}J_{2n}p,
+    \end{equation}
+    where $\nabla f(p)$ is the Euclidean gradient of a smooth extension around $p\in \mathrm{SpSt}(2n, 2k)$ in $\mathbb{R}^{2n\times2k}$ at $p$.
+\end{proposition}
+\begin{proof}
+    We can see that this is the Riemannian gradient by the following two observations stated in \cite{BZ}, which we verify ourselves below.
+
+    Firstly, gradient must be in $T_{p}\mathrm{SpSt}(2n, 2k)$, which means by ref ?? that $0=p^{+}\operatorname{grad}f(p)+(\operatorname{grad}f(p))^{+}p$ so 
+    \begin{equation}
+        \begin{split}
+        &p^{\mathrm{T}}J\nabla f(p)p^{\mathrm{T}}p+p^{\mathrm{T}}JJp(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp\\
+        &= -p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp-p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp=0
+        \end{split}
+    \end{equation}
+    ! Or should I mark where I did the simplification for clarity:
+    \begin{equation}
+        \begin{split}
+        &p^{\mathrm{T}}J\nabla f(p)p^{\mathrm{T}}p+p^{\mathrm{T}}\cancelto{-I_{2n}}{JJ}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}\cancelto{I_{2n}}{J^{\mathrm{T}}J}p\\
+        &= -p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp-p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp=0
+        \end{split}
+    \end{equation}
+    where we have used $JJ=-J^{\mathrm{T}}J=-I_{2n}$ and $J^{\mathrm{T}}=-J$.
+    
+    Secondly, the gradient also has to satisfy $g_{p}(\operatorname{grad}f(p),X)=\operatorname{d}f_p(X)=\mathrm{tr}((\nabla f(p))^\mathrm{T}X)$ for all $X\in T_{p}\mathrm{SpSt}(2n, 2k)$:
+    \begin{equation}
+        g_{p}(\operatorname{grad}f(p),X)=\mathrm{tr}\big((p^{\mathrm{T}}p (\nabla f(p))^{\mathrm{T}}+p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p)p ^{\mathrm{T}}J ^{\mathrm{T}})(I_{2n}- \tfrac{1}{2}G)X(p ^{\mathrm{T}}p)^{-1}\big),
+    \end{equation}
+    where $G \coloneqq J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}J$. Expanding this expression we obtain
+    \begin{equation}
+        \begin{split}
+        g_{p}(\operatorname{grad}f(p),X)&=\mathrm{tr}\big(\cancel{p ^{\mathrm{T}}p}(\nabla f(p)) ^{\mathrm{T}}X\cancel{(p ^{\mathrm{T}}p)^{-1}}\big)- \tfrac{1}{2}\mathrm{tr}\big(\cancel{p ^{\mathrm{T}}p}(\nabla f(p)) ^{\mathrm{T}}GX\cancel{(p ^{\mathrm{T}}p)^{-1}}\big)\\
+        &+\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}} \nabla f(p)p ^{\mathrm{T}}J ^{\mathrm{T}}X (p ^{\mathrm{T}}p)^{-1}\big)- \tfrac{1}{2}\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p)p ^{\mathrm{T}}J ^{\mathrm{T}}GX(p ^{\mathrm{T}}p)^{-1}\big),
+        \end{split}
+    \end{equation}
+    where the cancellations used the fact that the trace is invariant under circular shifts. Noting that the first term is by definition $\operatorname{d}f_{p}(X)$, and inserting the definition of $G$, the expression becomes
+    \begin{equation}
+        \begin{split}
+        g_{p}(\operatorname{grad}f(p),X)&=\operatorname{d}f_{p}(X)- \tfrac{1}{2} \mathrm{tr}\big((\nabla f(p)) ^{\mathrm{T}}J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}JX\big)\\
+        &+\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p) p ^{\mathrm{T}}J ^{\mathrm{T}}X(p ^{\mathrm{T}}p)^{-1}\big)\\
+        &- \tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p)p ^{\mathrm{T}}\cancelto{-I_{2n}}{J ^{\mathrm{T}}J ^{\mathrm{T}}}p(p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}\cancelto{-J ^{\mathrm{T}}}{J}X(p ^{\mathrm{T}}p)^{-1}\big).
+        \end{split}
+    \end{equation}
+    We notice that after cancelling $p ^{\mathrm{T}}p(p ^{\mathrm{T}})p^{-1}$ in the last term, the trace is equal to the second to last term. Now focusing on the second term: utilizing both the fact that for any matrix, $A$, (a) $\mathrm{tr}(A)=\mathrm{tr}(A ^{\mathrm{T}})$, (b) the cyclic property of the trace, and (c) $J=-J ^{\mathrm{T}}$, we get that 
+    \begin{equation}
+        \begin{split}
+        \tfrac{1}{2} \mathrm{tr}\big((\nabla f(p)) ^{\mathrm{T}}J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}JX\big)&\overset{\text{(a)}}{=}\tfrac{1}{2} \mathrm{tr}\big(X ^{\mathrm{T}}J ^{\mathrm{T}}p (p ^{\mathrm{T}}p)^{-1}p ^{\mathrm{T}}J \nabla f(p)\big)\\
+        &\overset{(b),(c)}{=}-\tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}} \nabla f(p)X ^{\mathrm{T}}J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}\big)
+        \end{split}
+    \end{equation}
+    Inserting this into our expression we end up with:
+    \begin{equation}
+        \begin{split}
+        g_{p}(\operatorname{grad}f(p),X)&= \operatorname{d}f_{p}(X)+\tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J \nabla f(p)\underbrace{X ^{\mathrm{T}}J ^{\mathrm{T}}p}_{=-X ^{\mathrm{T}}Jp}(p ^{\mathrm{T}}p)^{-1}\big)\\
+        &+\tfrac{1}{2}\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p) \underbrace{p ^{\mathrm{T}}J ^{\mathrm{T}}X}_{=-p^ {\mathrm{T}}JX}(p ^{\mathrm{T}}p)^{-1}\big)=\operatorname{d}f_{p}(X),
+        \end{split}
+    \end{equation}
+    where the last two terms cancel by the tangent space condition ref ?? $p ^{\mathrm{T}}JX=-X ^{\mathrm{T}}Jp$.
+\end{proof}

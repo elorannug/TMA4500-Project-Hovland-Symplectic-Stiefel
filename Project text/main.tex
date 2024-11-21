@@ -6,20 +6,20 @@
 % \addbibresource{references.bib}
 
 % Darkmode 🕚 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Uncomment for darkmode                                        %
-    \definecolor{background}{RGB}{25,25,25}  % Dark gray background %
-    \definecolor{textcolor}{RGB}{220,220,220} % Light gray text     %
-    \definecolor{linkcolor}{RGB}{255,165,0}   % Orange links        %
-                                                                    % 
-    \pagecolor{background} % Background color                       %
-    \color{textcolor}      % Text color                             %
-                                                                    %
-    \hypersetup{                                                    %
-        colorlinks=true,                                            %   
-        linkcolor=linkcolor,                                        %   
-        urlcolor=linkcolor,                                         %
-        citecolor=linkcolor                                         %
-    }                                                               %
+    % % Uncomment for darkmode                                        %
+    % \definecolor{background}{RGB}{25,25,25}  % Dark gray background %
+    % \definecolor{textcolor}{RGB}{220,220,220} % Light gray text     %
+    % \definecolor{linkcolor}{RGB}{255,165,0}   % Orange links        %
+    %                                                                 % 
+    % \pagecolor{background} % Background color                       %
+    % \color{textcolor}      % Text color                             %
+    %                                                                 %
+    % \hypersetup{                                                    %
+    %     colorlinks=true,                                            %   
+    %     linkcolor=linkcolor,                                        %   
+    %     urlcolor=linkcolor,                                         %
+    %     citecolor=linkcolor                                         %
+    % }                                                               %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Beginning of document
@@ -46,13 +46,9 @@
 \import{./Sections/}{Introduction}
 
 % Example section added from an external tex-file, here located in ./Sections/
-\import{./Sections/}{Example_section}
+% \import{./Sections/}{Example_section}
 
 \import{./Sections/}{Theory}
-
-% Example section added directly into the main-file
-\section{Conclusion}
-\textit{But the fact that some geniuses were laughed at does not imply that all who are laughed at are geniuses. They laughed at Columbus, they laughed at Fulton, they laughed at the Wright Brothers. But they also laughed at Bozo the Clown} -  \textcite{sagan_1993}.
 
 % Printing bibliography
 \newpage
@@ -60,8 +56,8 @@
 \printbibliography[heading = bibintoc, title = Bibliography]    % 'bibintoc' inserts our bibliography into the table of contents
 
 % Inserting appendix with separate settings
-\addappendix
-\import{./Appendices/}{example_appendix}
+% \addappendix
+% \import{./Appendices/}{example_appendix}
 
 % End of document
 \end{document}

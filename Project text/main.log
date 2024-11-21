@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  18 NOV 2024 19:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  21 NOV 2024 19:10
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1040,7 +1040,6 @@ Package: fancyhdr 2024/07/23 v4.3.1 Extensive control of page headers and footer
 \f@nch@O@olf=\skip95
 \f@nch@O@orf=\skip96
 ))
-Package hyperref Info: Option `colorlinks' set `true' on input line 22.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > main.aex <nul: /p x=^%~$PATH:i>> main.aex)...executed.
 
 runsystem(del main.aex)...executed.
@@ -1086,7 +1085,22 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
- (main.bbl)
+ (main.bbl
+
+Package biblatex Warning: The following entry could not be found
+(biblatex)                in the database:
+(biblatex)                BZ
+(biblatex)                Please verify the spelling and rerun
+(biblatex)                LaTeX afterwards.
+
+
+Package biblatex Warning: The following entry could not be found
+(biblatex)                in the database:
+(biblatex)                symplectic_inverse
+(biblatex)                Please verify the spelling and rerun
+(biblatex)                LaTeX afterwards.
+
+)
 Package biblatex Info: Reference section=0 on input line 26.
 Package biblatex Info: Reference segment=0 on input line 26.
 Package caption Info: Begin \AtBeginDocument code.
@@ -1183,7 +1197,7 @@ Package gensymb Info: Using \textmu for \micro on input line 26.
 \c@lemma=\count522
 \c@proposition=\count523
 ) (./title.tex
-<./Images/NTNU_logo.png, id=58, 426.393pt x 110.5731pt>
+<./Images/NTNU_logo.png, id=54, 426.393pt x 110.5731pt>
 File: ./Images/NTNU_logo.png Graphic file (type png)
 <use ./Images/NTNU_logo.png>
 Package pdftex.def Info: ./Images/NTNU_logo.png  used on input line 9.
@@ -1196,11 +1210,11 @@ Package pdftex.def Info: ./Images/NTNU_logo.png  used on input line 9.
 
 
 {C:/Users/rannu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./Images/NTNU_logo.png>]) (main.toc
-LaTeX Font Info:    Trying to load font information for U+msa on input line 7.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 7.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ))
@@ -1217,107 +1231,53 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 
-[1] (Sections/Introduction.tex) (Sections/Example_section.tex
-<Images/CylinderImage.jpg, id=95, 278.87238pt x 180.675pt>
-File: Images/CylinderImage.jpg Graphic file (type jpg)
-<use Images/CylinderImage.jpg>
-Package pdftex.def Info: Images/CylinderImage.jpg  used on input line 14.
-(pdftex.def)             Requested size: 213.39566pt x 138.26003pt.
-) (Sections/Theory.tex (Sections/./Theory_subsections/Basic_definitions.tex
+[1] (Sections/Introduction.tex) (Sections/Theory.tex (Sections/./Theory_subsections/Basic_definitions.tex) (Sections/./Theory_subsections/Symplectic_group.tex
+
+LaTeX Warning: Citation 'symplectic_inverse' on page 1 undefined on input line 6.
+
+LaTeX Font Info:    Trying to load font information for U+euf on input line 10.
+(C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\ueuf.fd
+File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
+)) (Sections/./Theory_subsections/SymplecticStiefel.tex) (Sections/./Theory_subsections/Right_invariant_framework.tex
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.14     \end{enumerate}
-                         [1 <./Images/CylinderImage.jpg>]) (Sections/./Theory_subsections/Right_invariant_framework.tex
+l.10 
+      [1]) (Sections/./Theory_subsections/Riemannian_gradient.tex
 
-LaTeX Warning: Citation 'BZ' on page 2 undefined on input line 42.
+LaTeX Warning: Citation 'BZ' on page 2 undefined on input line 12.
 
 
 
-[2]))
+[2]) (Sections/./Theory_subsections/Riemannian_hessian.tex))
 
 [3]
 
-[4] (Appendices/example_appendix.tex
-\openout4 = `main.pyg'.
-
- (_minted-main/default.pygstyle) (_minted-main/09FC4B4F4A2EDC1333E71B2C44602EBBDF97739B2961B3817F8BCA31ADDB253B.pygtex
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 2.
-)
-\openout4 = `main.pyg'.
-
- (_minted-main/rrt.pygstyle) (_minted-main/0239009554F04A2D64E7CE0FA479EC16CF33289265490CC72470AF6FAFE9A294.pygtex) (_minted-main/tango.pygstyle) (_minted-main/868D2CEF153EF770AD02055B822E2AC30E80DCA43A093B4D43738573363C1507.pygtex)
-<Images/Sub-figures_Example/cavity_100_streamlines.png, id=153, 386.6445pt x 386.6445pt>
-File: Images/Sub-figures_Example/cavity_100_streamlines.png Graphic file (type png)
-<use Images/Sub-figures_Example/cavity_100_streamlines.png>
-Package pdftex.def Info: Images/Sub-figures_Example/cavity_100_streamlines.png  used on input line 53.
-(pdftex.def)             Requested size: 192.0548pt x 192.05333pt.
-<Images/Sub-figures_Example/cavity_100_streamlines_ghia.png, id=154, 253.54726pt x 257.763pt>
-File: Images/Sub-figures_Example/cavity_100_streamlines_ghia.png Graphic file (type png)
-<use Images/Sub-figures_Example/cavity_100_streamlines_ghia.png>
-Package pdftex.def Info: Images/Sub-figures_Example/cavity_100_streamlines_ghia.png  used on input line 57.
-(pdftex.def)             Requested size: 188.21252pt x 191.35127pt.
-<Images/Sub-figures_Example/cavity_400_streamlines.png, id=157, 387.24675pt x 384.2355pt>
-File: Images/Sub-figures_Example/cavity_400_streamlines.png Graphic file (type png)
-<use Images/Sub-figures_Example/cavity_400_streamlines.png>
-Package pdftex.def Info: Images/Sub-figures_Example/cavity_400_streamlines.png  used on input line 62.
-(pdftex.def)             Requested size: 192.0548pt x 190.56358pt.
-<Images/Sub-figures_Example/cavity_400_streamlines_ghia.png, id=158, 252.945pt x 258.9675pt>
-File: Images/Sub-figures_Example/cavity_400_streamlines_ghia.png Graphic file (type png)
-<use Images/Sub-figures_Example/cavity_400_streamlines_ghia.png>
-Package pdftex.def Info: Images/Sub-figures_Example/cavity_400_streamlines_ghia.png  used on input line 66.
-(pdftex.def)             Requested size: 186.93611pt x 191.39189pt.
-<Images/Sub-figures_Example/cavity_1000_streamlines.png, id=161, 385.44pt x 385.44pt>
-File: Images/Sub-figures_Example/cavity_1000_streamlines.png Graphic file (type png)
-<use Images/Sub-figures_Example/cavity_1000_streamlines.png>
-Package pdftex.def Info: Images/Sub-figures_Example/cavity_1000_streamlines.png  used on input line 71.
-(pdftex.def)             Requested size: 192.0548pt x 192.05493pt.
-<Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png, id=162, 250.536pt x 257.16075pt>
-File: Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png Graphic file (type png)
-<use Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png>
-Package pdftex.def Info: Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png  used on input line 75.
-(pdftex.def)             Requested size: 186.93611pt x 191.88124pt.
-)
-
-[5]
-
-[6 <./Images/Sub-figures_Example/cavity_100_streamlines.png> <./Images/Sub-figures_Example/cavity_100_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_400_streamlines.png> <./Images/Sub-figures_Example/cavity_400_streamlines_ghia.png> <./Images/Sub-figures_Example/cavity_1000_streamlines.png> <./Images/Sub-figures_Example/cavity_1000_streamlines_ghia.png>] (main.aux (custom_structures.aux))
+[4] (main.aux (custom_structures.aux))
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-10-09>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: B9249CA48BD3F9B8150DB63E98E99F16;1638.
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                main
-(biblatex)                and rerun LaTeX afterwards.
-
-runsystem(del main.pyg)...executed.
-
+(rerunfilecheck)             Checksum: BC484388B7413EA6E68EC343E27CCE68;1717.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 43078 strings out of 473702
- 905998 string characters out of 5719438
- 1764951 words of memory out of 5000000
- 65365 multiletter control sequences out of 15000+600000
- 573683 words of font info for 92 fonts, out of 8000000 for 9000
+ 42657 strings out of 473702
+ 895378 string characters out of 5719438
+ 1764150 words of memory out of 5000000
+ 65000 multiletter control sequences out of 15000+600000
+ 567963 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,18n,121p,821b,2365s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmitt10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/latxfont/line10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (8 pages, 986303 bytes).
+ 117i,25n,121p,821b,2365s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/latxfont/line10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (6 pages, 278527 bytes).
 PDF statistics:
- 298 PDF objects out of 1000 (max. 8388607)
- 50 named destinations out of 1000 (max. 500000)
- 157 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 226 PDF objects out of 1000 (max. 8388607)
+ 39 named destinations out of 1000 (max. 500000)
+ 114 words of extra memory for PDF output out of 10000 (max. 10000000)
 
