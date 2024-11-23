@@ -1,17 +1,32 @@
 \subsection{The Symplectic group}
-We define the real symplectic group as
-\begin{equation}
+The symplectic group is the space overarching the Symplectic Stiefel manifold, \todo{Why do we need sp? We will use quotient properties to map stuff to Spst}and we will look at this space first. To be able to define the symplectic group we first need some preliminary definitions. Define the \textit{symplectic identity} as the following block matrix,
+\begin{equation*}
+    J_{2n}\coloneqq\begin{bmatrix}
+        0 & I_{n} \\
+        -I_{n} & 0
+    \end{bmatrix},
+\end{equation*}
+where $I_{n}$ denotes the $n\times n$ identity matrix. $J_{2n}$ has som properties we will take advantage of frequently:
+\begin{equation}\label{eq:J_2n_properties}
+    J_{2n} ^{\mathrm{T}}=-J_{2n}=J_{2n}^{-1}
+\end{equation}
+In addition, define the \textit{Symplectic inverse} of a matrix $p\in \mathbb{R}^{2n\times2l}$ as
+The symplectic group is a quotient space of the general linear group, where it is defined as the set of matrices which define the symplectic structure in the following sense.We define the real symplectic group as
+\begin{equation}\label{eq:sp_def}
     \mathrm{Sp}(2n)\coloneqq \{p\in \mathbb{R}^{2n\times2n}:p^{+}p=I_{2n}\},
 \end{equation}
 where $p^{+}$ is the symplectic inverse of $p$, as defined in \cite{symplectic_inverse}. 
+\begin{equation}\label{eq:symplectic_inverse}
+    p^{+}\coloneqq J_{2k}^{\mathrm{T}}p ^{\mathrm{T}}J_{2n}
+\end{equation}
 
 The Lie algebra of $\mathrm{Sp}(2n)$ is the symplectic groups' tangent space at the identity. It is given by 
-\begin{equation}
+\begin{equation}\label{eq:sp_Lie_algebra}
     \mathfrak{sp}(2n)\coloneqq \{\Omega\in \mathbb{R}^{2n\times2n}:\Omega^{+}=-\Omega\},
 \end{equation}
 where $H$ is called the Hamiltonian matrix ref ??. %TODO: Do I want to define this?
 Now we can define the tangent space of $\mathrm{Sp}(2n)$ at a point $p$ as
-\begin{equation}
+\begin{equation}\label{eq:sp_tangent_space}
     T_{p}\mathrm{Sp}(2n)=\{p\Omega,\Omega p\in \mathbb{R}^{2n\times2n}:\Omega\in\mathfrak{sp}(2n)\}.
 \end{equation}
 

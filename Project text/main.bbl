@@ -18,65 +18,129 @@
 
 
 \refsection{0}
-  \datalist[entry]{nyt/global//global/global/global}
-    \entry{Boothby}{incollection}{}{}
-      \name{editor}{1}{}{%
-        {{un=0,uniquepart=base,hash=9b12f79e614e88ff6c34b2a0f614a42d}{%
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{Boothby1975}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=9b12f79e614e88ff6c34b2a0f614a42d}{%
            family={Boothby},
            familyi={B\bibinitperiod},
            given={William\bibnamedelima M.},
-           giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod},
-           givenun=0}}%
+           giveni={W\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
-        {Elsevier}%
+        {Elsevier Science (USA)}%
       }
       \strng{namehash}{9b12f79e614e88ff6c34b2a0f614a42d}
       \strng{fullhash}{9b12f79e614e88ff6c34b2a0f614a42d}
       \strng{fullhashraw}{9b12f79e614e88ff6c34b2a0f614a42d}
       \strng{bibnamehash}{9b12f79e614e88ff6c34b2a0f614a42d}
-      \strng{editorbibnamehash}{9b12f79e614e88ff6c34b2a0f614a42d}
-      \strng{editornamehash}{9b12f79e614e88ff6c34b2a0f614a42d}
-      \strng{editorfullhash}{9b12f79e614e88ff6c34b2a0f614a42d}
-      \strng{editorfullhashraw}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{authorbibnamehash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{authornamehash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{authorfullhash}{9b12f79e614e88ff6c34b2a0f614a42d}
+      \strng{authorfullhashraw}{9b12f79e614e88ff6c34b2a0f614a42d}
       \field{sortinit}{B}
       \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{editor}
+      \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{An Introduction to Differentiable Manifolds and Riemannian Geometry}
-      \field{issn}{0079-8169}
-      \field{series}{Pure and Applied Mathematics}
-      \field{title}{V Tensors and Tensor Fields on Manifolds}
+      \field{title}{An Introduction to Differentiable Manifolds and Riemannian Geometry}
       \field{volume}{63}
       \field{year}{1975}
-      \field{pages}{174\bibrangedash 225}
-      \range{pages}{52}
+      \field{dateera}{ce}
       \verb{doi}
       \verb https://doi.org/10.1016/S0079-8169(08)61028-4
       \endverb
+    \endentry
+    \entry{Boumal2023}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=1ebc350bb93479783f979fe521a9494b}{%
+           family={Boumal},
+           familyi={B\bibinitperiod},
+           given={Nicolas},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{1ebc350bb93479783f979fe521a9494b}
+      \strng{fullhash}{1ebc350bb93479783f979fe521a9494b}
+      \strng{fullhashraw}{1ebc350bb93479783f979fe521a9494b}
+      \strng{bibnamehash}{1ebc350bb93479783f979fe521a9494b}
+      \strng{authorbibnamehash}{1ebc350bb93479783f979fe521a9494b}
+      \strng{authornamehash}{1ebc350bb93479783f979fe521a9494b}
+      \strng{authorfullhash}{1ebc350bb93479783f979fe521a9494b}
+      \strng{authorfullhashraw}{1ebc350bb93479783f979fe521a9494b}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{An introduction to optimization on smooth manifolds}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1017/9781009166164
+      \endverb
       \verb{urlraw}
-      \verb https://www.sciencedirect.com/science/article/pii/S0079816908610284
+      \verb https://www.nicolasboumal.net/book
       \endverb
       \verb{url}
-      \verb https://www.sciencedirect.com/science/article/pii/S0079816908610284
+      \verb https://www.nicolasboumal.net/book
       \endverb
     \endentry
-    \entry{Lee2012}{book}{}{}
+    \entry{Edelman1998}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=01a6ca61fcd12a3a071ec49304df57f8}{%
+           family={Edelman},
+           familyi={E\bibinitperiod},
+           given={Alan},
+           giveni={A\bibinitperiod}}}%
+        {{hash=3b5e13c13c838b8593a861c95efb2db6}{%
+           family={Arias},
+           familyi={A\bibinitperiod},
+           given={Tomás\bibnamedelima A.},
+           giveni={T\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=c0d827e192c490d585dc4f22b57b6ab4}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Steven\bibnamedelima T.},
+           giveni={S\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Society for Industrial & Applied Mathematics (SIAM)}%
+      }
+      \strng{namehash}{c0029157af969b6c7e1c43855cf1afb4}
+      \strng{fullhash}{0b3335efaf0268f3c9249228b8acbf3f}
+      \strng{fullhashraw}{0b3335efaf0268f3c9249228b8acbf3f}
+      \strng{bibnamehash}{0b3335efaf0268f3c9249228b8acbf3f}
+      \strng{authorbibnamehash}{0b3335efaf0268f3c9249228b8acbf3f}
+      \strng{authornamehash}{c0029157af969b6c7e1c43855cf1afb4}
+      \strng{authorfullhash}{0b3335efaf0268f3c9249228b8acbf3f}
+      \strng{authorfullhashraw}{0b3335efaf0268f3c9249228b8acbf3f}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{SIAM Journal on Matrix Analysis and Applications}
+      \field{title}{The Geometry of Algorithms with Orthogonality Constraints}
+      \field{volume}{20}
+      \field{year}{1998}
+      \verb{doi}
+      \verb 10.1137/s0895479895290954
+      \endverb
+      \verb{eprint}
+      \verb arXiv:physics/9806030v1
+      \endverb
+    \endentry
+    \entry{Lee2012:1}{book}{}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=36896354ee3aedc1a13d683ea773634e}{%
+        {{hash=36896354ee3aedc1a13d683ea773634e}{%
            family={Lee},
            familyi={L\bibinitperiod},
            given={John\bibnamedelima M.},
-           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{location}{1}{%
-        {New York, NY}%
+           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
-        {Springer}%
+        {Springer New York, NY}%
       }
       \strng{namehash}{36896354ee3aedc1a13d683ea773634e}
       \strng{fullhash}{36896354ee3aedc1a13d683ea773634e}
@@ -88,23 +152,23 @@
       \strng{authorfullhashraw}{36896354ee3aedc1a13d683ea773634e}
       \field{sortinit}{L}
       \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{edition}{2}
-      \field{isbn}{978-1-4419-9982-5}
       \field{title}{Introduction to Smooth Manifolds}
       \field{year}{2012}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1007/978-1-4419-9982-5
+      \endverb
     \endentry
     \entry{imt_software_wiki}{online}{}{}
       \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=178c5578ed7109d0caf64717be9612fc}{%
+        {{hash=178c5578ed7109d0caf64717be9612fc}{%
            family={NTNU},
            familyi={N\bibinitperiod},
            given={Department\bibnamedelimb of\bibnamedelimb Marine\bibnamedelima Technology},
-           giveni={D\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim T\bibinitperiod},
-           givenun=0}}%
+           giveni={D\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
       }
       \strng{namehash}{178c5578ed7109d0caf64717be9612fc}
       \strng{fullhash}{178c5578ed7109d0caf64717be9612fc}
@@ -116,8 +180,6 @@
       \strng{authorfullhashraw}{178c5578ed7109d0caf64717be9612fc}
       \field{sortinit}{N}
       \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{url}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{IMT Software Wiki - LaTeX}

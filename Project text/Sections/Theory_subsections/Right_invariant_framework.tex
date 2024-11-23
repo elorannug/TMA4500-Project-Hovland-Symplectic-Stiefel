@@ -4,14 +4,14 @@
 % that will be considered in Subsection 4.2.
 
 % Right-invariant metric
-(many of the usual SpSt metrics do not have geodesics, therefore...)(We need a proper metric for $\mathrm{SpSt}(2n, 2k)$ in the sense that we need a metric that allows us to perform optimization on this manifold. To this end we need a metric that makes it possible to derive geodesics, as opposed to (BZ sources). The following metric defined in BZ fulfils our criteria.) 
+\todo[inline]{many of the usual SpSt metrics do not have geodesics, therefore... We need a proper metric for $\mathrm{SpSt}(2n, 2k)$ in the sense that we need a metric that allows us to perform optimization on this manifold. To this end we need a metric that makes it possible to derive geodesics, as opposed to (BZ sources). The following metric defined in BZ fulfils our criteria.}
 
 The goal for this section is to use the right-invariant metric defined on the symplectic group to define an appropriate metric on the symplectic Stiefel manifold. To achieve this we will use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(2n, 2k)$ through \ref{eq:sp_metric}. Split $T_{p}\mathrm{Sp}(2n,\mathbb{R})$ into to parts: the horizontal- and vertical part, with respect to $g^\mathrm{Sp}_{p}$ and $\pi$: % TODO: Define \pi! BZ (3.2)
 
 \begin{equation}\label{eq:spst_split}
-    T_{p}\mathrm{Sp}(2n,\mathbb{R})=\operatorname{Ver}^{\pi}_{p}\oplus \operatorname{Hor}^{\pi}_{p}\mathrm{Sp}(2n,\mathbb{R}).
+    T_{p}\mathrm{Sp}(2n)=\operatorname{Ver}^{\pi}_{p}\mathrm{Sp}(2n)\oplus \operatorname{Hor}^{\pi}_{p}\mathrm{Sp}(2n).
 \end{equation}
-% TODO: Define Ver and Hor in a smart way
+\todo[inline]{Define $\operatorname{Ver}^{\pi}_{p}\mathrm{Sp}(2n)$ and $\operatorname{Hor}^{\pi}_{p}\mathrm{Sp}(2n)$ in a smart way. Maybe just a reference if I do not have the space.}
 
 The point-wise right-invariant Riemannian metric on $\mathrm{SpSt}(2n, 2k)$ is defined as the mapping $g_{p}:T_{p}\mathrm{SpSt}(2n, 2k)\times T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, $g_{p}(X_{1},X_{2})\coloneqq g^{\mathrm{Sp}}_{p}((X_{1})^{\mathrm{hor}}_{p},(X_{2})^{\mathrm{hor}}_{p})$. More explicitly
 
@@ -25,9 +25,7 @@ for $X_{1},X_{2}\in T_{p}\mathrm{SpSt}(2n, 2k)$. For this metric, $\pi$ denotes 
 
 
 
----
 
-(Christoffel symbols)
 
 \begin{align}
     &p^{\mathrm{T}}J\nabla f(p)p^{\mathrm{T}}p+p^{\mathrm{T}}JJp(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}p(\nabla f(p))^{\mathrm{T}}Jp+p^{\mathrm{T}}J^{\mathrm{T}}\nabla f(p)p^{\mathrm{T}}J^{\mathrm{T}}Jp\\

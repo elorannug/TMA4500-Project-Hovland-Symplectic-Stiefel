@@ -1,4 +1,5 @@
 % Author - Jon Arnt Kårstad, NTNU IV-IMT
+% Modified by Ole Gunnar Røsholt Hovland
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{packages}[2021/04/20 Packages]
@@ -17,6 +18,7 @@
 % Main matter
 % Mathematics
 % Page setup
+% Other tools
 % -----------------------
 
 % --- Appendices ---
@@ -31,7 +33,8 @@
 
 % --- Bibliography & References---  
 \usepackage[backend = biber,    % Recommended backend for sorting bibliography
-            style = authoryear-comp,    % Close to the 'Harvard' referencing style
+            %style = authoryear-comp,    % Close to the 'Harvard' referencing style
+            style = numeric, % Changed by Ole Gunnar
             urldate = long,     % Long: 24th Mar. 1997 | Short: 24/03/1997
             maxcitenames = 2,   % Number of authors in cite before replaced with 'Author#1 et al.'
             ]{biblatex}
@@ -135,3 +138,7 @@
 \renewcommand{\headrulewidth}{0.1ex}
 \renewcommand{\footrulewidth}{0.1ex}
 \fancyfoot[C]{\thepage}
+
+% --- Other tools ---
+\usepackage{todonotes} % Add to-do notes in the document
+\usepackage{cleveref} % Clever references, e.g. \cref{label} will produce "equation (1)" or "figure 1" depending on what is referenced
