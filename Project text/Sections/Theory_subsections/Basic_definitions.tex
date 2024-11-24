@@ -20,13 +20,44 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
 %     If we in addition have a notion of smoothness, meaning that the notion of differentiability is well-defined, we call $\mathcal{M}$ a smooth manifold.
 % \end{definition}
 
+\begin{definition}[Tangent Space]\label{def:tangent_space}
+    
+\end{definition}
+
 % R manifolds
-\begin{definition}[Riemannian manifold]
+\begin{definition}[Riemannian manifold]\label{def:riemannian_manifold}
     As defined in \cite[def~2.6,~p.~179]{Boothby1975}: a \textup{smooth manifold} $\mathcal{M}$, defined as in \cite[p.~13]{Lee2012:1},  is a \textup{Riemannian manifold} if we can define a field of symmetric, positive definite, bilinear forms $g$, called the \textit{Riemannian metric}. By field we mean that $g_p$ is defined on the tangent space $T_p\mathcal{M}$ at each point $p\in \mathcal{M}$, as defined in \cite[def~2.1,~p.~178]{Boothby1975}. We will assume that $g$ is smooth, meaning that it is od class $\mathcal{C}^\infty$.
 \end{definition}
 
-\begin{definition}[Quotient space]\label{def:quotient_space}
-    
+\begin{definition}[Quotient manifold]\label{def:quotient_manifold}
+    % Absil, Mahony, Sepulchre p.27
+    We define the definition of quotient manifold as in \todo{ref}\ref[p.~27]{Absil, Mahony, Sepulchre} Let $\mathcal{M}$ be a manifold equipped with the operation $\sim$ called the \textup{equivalence relation}. The equivalence relation has the following properties:
+    \begin{enumerate}
+        \item (reflexive) $p\sim p$ for all $p\in \mathcal{M}$,
+        \item (symmetric) $p \sim q$ if and only if $q\sim p$ for all $q,p\in \mathcal{M}$, and
+        \item (transitive) given $p\sim q$ and $q\sim r$ this implies that $p\sim r$ for all $p,q,r\in \mathcal{M}$.
+    \end{enumerate}
+    Given the set $[p]\coloneqq \{q\in \mathcal{M}:q\sim p\}$ called the \textup{equivalence class} of all points equivalent to $p$, the set
+    \begin{equation*}
+        \mathcal{M}/\sim \coloneqq \{[p]:p\in \mathcal{M}\}
+    \end{equation*}
+    is called the \textup{quotient of }$\mathcal{M}$\textup{ by }$\sim$. It is the set of all equivalence classes of $\sim$ in $\mathcal{M}$. The mapping $\pi:\mathcal{M}\xrightarrow{}\mathcal{M}/\sim$ called the \textup{natural-} or \textup{canonical projection}, defined by $p\mapsto[p]$ . 
+\end{definition}
+
+\begin{definition}[Horizontal \& Vertical Space]\label{def:horizontal_vertical_space}
+    \todo[inline]{Add citation}
+    % Absil, Mahony, Sepulchre
+    Given a Riemannian manifold $\overline{\mathcal{M}}$ with Riemannian metric $\overline{g}$, denote a quotient manifold of $\overline{\mathcal{M}}$ as $\mathcal{M}=\overline{\mathcal{M}}/\sim$. 
+    %page 43 for V space
+    For a point $p\in \mathcal{M}$, the equivalence class $[p]=\pi^{-1}(p)$ induces an embedded submanifold of $\overline{\mathcal{M}}$ ( see def ??), hence it admits a tangent space,
+    \begin{equation*}
+        \mathcal{V}_{\overline{p}}=T_{\overline{p}}(\pi^{-1}(p))
+    \end{equation*}
+    named the *vertical space* at $\overline{p}$. Canonically chosen as the orthogonal complement of $\mathcal{V}_{\overline{p}}$ in $T_{\overline{p}}\overline{\mathcal{M}}$, the horizontal space is defined as %  p.48
+    \begin{equation*}
+        \mathcal{H}_{\overline{p}}\coloneqq \mathcal{V}_{\overline{p}}^\perp=\{Y_{\overline{p}}\in T_{\overline{p}}\overline{\mathcal{M}}:\overline{g}(Y_{\overline{p}},Z_{\overline{p}})=0\quad\forall\quad Z_{\overline{p}}\in \mathcal{V}_{\overline{p}} \}.
+    \end{equation*}
+    The horizontal lift at $\overline{p}\in\pi^{-1}(p)$ of a tangent vector $X_{p}\in T_{p}\mathcal{M}$ is the unique tangent vector $X_{\overline{p}}\in \mathcal{H}_{\overline{p}}$ that satisfies $\mathrm{D}\pi(\overline{p})[{\overline{p}}_{\overline{p}}]=X_p$. Note that given the horizontal space on $\overline{\mathcal{M}}$, $\mathcal{H}_{\overline{p}}\oplus \mathcal{V}_{\overline{p}}=T_{\overline{p}}\mathcal{M}$, where $\oplus$ denotes the \todo{define w sum! i wrote it in obsidian in the H and V space file!}Whitney sum. 
 \end{definition}
 
 \begin{definition}[General Linear group]\label{def:general_linear_group}
