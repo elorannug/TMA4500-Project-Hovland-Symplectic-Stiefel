@@ -26,7 +26,7 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
 
 % R manifolds
 \begin{definition}[Riemannian manifold]\label{def:riemannian_manifold}
-    As defined in \cite[def~2.6,~p.~179]{Boothby1975}: a \textup{smooth manifold} $\mathcal{M}$, defined as in \cite[p.~13]{Lee2012:1},  is a \textup{Riemannian manifold} if we can define a field of symmetric, positive definite, bilinear forms $g$, called the \textit{Riemannian metric}. By field we mean that $g_p$ is defined on the tangent space $T_p\mathcal{M}$ at each point $p\in \mathcal{M}$, as defined in \cite[def~2.1,~p.~178]{Boothby1975}. We will assume that $g$ is smooth, meaning that it is od class $\mathcal{C}^\infty$.
+    As defined in \cite[def~2.6,~p.~179]{Boothby1975}: a \textup{smooth manifold} $\mathcal{M}$, as defined in \cite[p.~13]{Lee2012:1},  is a \textup{Riemannian manifold} if we can define a field of symmetric, positive definite, bilinear forms $g(\cdot,\cdot)$, called the \textit{Riemannian metric}. By field we mean that $g_p$ is defined on the tangent space $T_p\mathcal{M}$ at each point $p\in \mathcal{M}$ \cite[def~2.1,~p.~178]{Boothby1975}. We will assume that $g$ is smooth, meaning that it is of class $\mathcal{C}^\infty$.
 \end{definition}
 
 \begin{definition}[Quotient manifold]\label{def:quotient_manifold}
@@ -45,19 +45,17 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
 \end{definition}
 
 \begin{definition}[Horizontal \& Vertical Space]\label{def:horizontal_vertical_space}
-    \todo[inline]{Add citation}
-    % Absil, Mahony, Sepulchre
     Given a Riemannian manifold $\overline{\mathcal{M}}$ with Riemannian metric $\overline{g}$, denote a quotient manifold of $\overline{\mathcal{M}}$ as $\mathcal{M}=\overline{\mathcal{M}}/\sim$. 
     %page 43 for V space
-    For a point $p\in \mathcal{M}$, the equivalence class $[p]=\pi^{-1}(p)$ induces an embedded submanifold of $\overline{\mathcal{M}}$ ( see def ??), hence it admits a tangent space,
+    Following the definitions in Absil et al. \cite[p.~43]{AbsilMahonySepulchre2008}, for a point $p\in \mathcal{M}$, the equivalence class $[p]=\pi^{-1}(p)$ induces an embedded submanifold of $\overline{\mathcal{M}}$ (see \Cref{def:quotient_manifold}), hence it admits a tangent space,
     \begin{equation*}
         \mathcal{V}_{\overline{p}}=T_{\overline{p}}(\pi^{-1}(p))
     \end{equation*}
-    named the *vertical space* at $\overline{p}$. Canonically chosen as the orthogonal complement of $\mathcal{V}_{\overline{p}}$ in $T_{\overline{p}}\overline{\mathcal{M}}$, the horizontal space is defined as %  p.48
+    named the \textup{vertical space} at $\overline{p}$. Canonically chosen as the orthogonal complement of $\mathcal{V}_{\overline{p}}$ in $T_{\overline{p}}\overline{\mathcal{M}}$, the \textup{horizontal space} \cite[p.~48]{AbsilMahonySepulchre2008} is defined as %  p.48
     \begin{equation*}
         \mathcal{H}_{\overline{p}}\coloneqq \mathcal{V}_{\overline{p}}^\perp=\{Y_{\overline{p}}\in T_{\overline{p}}\overline{\mathcal{M}}:\overline{g}(Y_{\overline{p}},Z_{\overline{p}})=0\quad\forall\quad Z_{\overline{p}}\in \mathcal{V}_{\overline{p}} \}.
     \end{equation*}
-    The horizontal lift at $\overline{p}\in\pi^{-1}(p)$ of a tangent vector $X_{p}\in T_{p}\mathcal{M}$ is the unique tangent vector $X_{\overline{p}}\in \mathcal{H}_{\overline{p}}$ that satisfies $\mathrm{D}\pi(\overline{p})[{\overline{p}}_{\overline{p}}]=X_p$. Note that given the horizontal space on $\overline{\mathcal{M}}$, $\mathcal{H}_{\overline{p}}\oplus \mathcal{V}_{\overline{p}}=T_{\overline{p}}\mathcal{M}$, where $\oplus$ denotes the \todo{define w sum! i wrote it in obsidian in the H and V space file!}Whitney sum. 
+    The \textup{horizontal lift} at $\overline{p}\in\pi^{-1}(p)$ of a tangent vector $X_{p}\in T_{p}\mathcal{M}$ is the unique tangent vector $X_{\overline{p}}\in \mathcal{H}_{\overline{p}}$ that satisfies $\mathrm{D}\pi(\overline{p})[{X}_{\overline{p}}]=X_p$. Note that given the horizontal space on $\overline{\mathcal{M}}$, $\mathcal{H}_{\overline{p}}\oplus \mathcal{V}_{\overline{p}}=T_{\overline{p}}\mathcal{M}$, where $\oplus$ denotes the \todo{define w sum! i wrote it in obsidian in the H and V space file!}Whitney sum. 
 \end{definition}
 
 \begin{definition}[General Linear group]\label{def:general_linear_group}
@@ -66,6 +64,36 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
 
 \begin{definition}[Orthogonal group]\label{def:orthogonal_group}
     The \textup{real Orthogonal group} is defined as the set of all orthogonal matrices in $\mathbb{R}^{n\times n}$, denoted by $\mathrm{O}(n)$. \cite[p.~3]{Edelman1998}
+\end{definition}
+
+\begin{definition}[Riemannian connection]\label{def:riemannian_connection}
+    The \textup{Riemanian connection}, also known as the \textup{Levi-Civita connection}, is the unique affine connection which is torsion free, and metric compatible \cite[Def.~6.4]{Tu2017}. In Appendix A of \cite{JensenZimmermann2024}, denoting $\mathfrak{X}(\mathcal{M})$ as the space of smooth vector fiels on $\mathcal{M}$, it is defined as the unique $\mathbb{R}$-bilinear smooth map on $\mathcal{M}$ with riemannian metric $\langle \cdot, \cdot\rangle_{p}$
+    \begin{equation*}
+        \nabla:\mathfrak{X}(\mathcal{M})\times \mathfrak{X}(\mathcal{M})\xrightarrow{}\mathfrak{X}(\mathcal{M}),\quad (X,Y)\mapsto \nabla_{X}Y,
+    \end{equation*}
+    such that the following properties hold. Given $X,Y,Z\in \mathfrak{X}(\mathcal{M})$, and $f\in \mathcal{C}^{\infty}(M)$, $\nabla_{X}Y$has the following properties:
+    \begin{enumerate}
+        \item (first argument linearity) $\nabla_{fX}Y=f \nabla_{X}Y$, 
+        \item \todo{In JZ this was stated wrongly}(Leibnitz) $\nabla_{X}(fY)=(Xf)Y+f \nabla_{X}Y$, 
+        \item (torsion free) $\nabla_{X}Y-\nabla_{Y}X=[X,Y]$, where $[\cdot,\cdot]$ is the \todo{citation}Lie bracket, and
+        \item (metric compatibility) $Z \langle X,Y\rangle=\langle \nabla_{Z}X,Y\rangle+\langle X,\nabla_{Z}Y\rangle$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}[Christoffel symbols]\label{def:christoffel_symbols}
+    
+\end{definition}
+
+\begin{definition}[]\label{def:}
+    
+\end{definition}
+
+\begin{definition}[]\label{def:}
+    
+\end{definition}
+
+\begin{definition}[]\label{def:}
+    
 \end{definition}
     
 
