@@ -1,6 +1,33 @@
 \subsection{Riemannian Hessian}
 (Christoffel symbols)
+\todo[inline]{Define the remaining preliminaries for Hessian. Make an intro to section}
+
+\todo[inline]{loosly following Appendix A in Jz}
+For two smooth vector fields, $\mathcal{X}(p),\mathcal{Y}(p)\in \mathfrak{X}(\mathcal{M})$ \todo{add definition of smooth v fields defined in local coords} defined as in \ref, the covariant derivative (\ref) written in local coordinates becomes
+\begin{equation*}
+    \nabla_{\mathcal{X}}\mathcal{Y}=\sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}\alpha_{i}\partial_{i}(\beta_{j})\partial_{j}+\alpha_{i}\beta_{j}\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}.
+\end{equation*}
+In preparation for the Hessian, we include \cite[p.~96]{Tu2017} to restrict the covariant derivative further. We want to define the covariant derivative of a vector field along a curve $c(t)$. $c(t)$ is the smooth curve, $c:I\xrightarrow{}\mathcal{M},$ $t\mapsto(\gamma_{1}(t), \dots, \gamma_{n}(t))$, where $I \coloneqq [a,b]\subseteq \mathbb{R}$. Since we have an affine connection on $\mathcal{M}$, the following unique map exists:
+\begin{equation*}
+    \frac{D}{\mathrm{d}t}:\Gamma(T \mathcal{M}|_{c(t)})\xrightarrow{}\Gamma(T \mathcal{M}|_{c(t)}),
+\end{equation*}
+where $\Gamma(T \mathcal{M}|_{c(t)})$ denotes the the vectorspace of all smooth vector fields along $c(t)$. If $V\in \Gamma(T \mathcal{M}|_{c(t)})$ is induced by $\mathcal{X}$, meaning $V(t)=\mathcal{X}|_{c(t)}$, then
+\begin{equation*}
+    \frac{DV}{\mathrm{d}t}(t)=\nabla_{\dot{c}(t)}\mathcal{X}=\dot{\alpha}(t)+\Gamma(\alpha(t), \dot{\gamma}(t)),\quad \Gamma(u,v)=\begin{bmatrix}u ^{\mathrm{T}}\Gamma^{1}v \\ \vdots \\ u ^{\mathrm{T}}\Gamma^{n}v\end{bmatrix}.
+\end{equation*}
+$\Gamma(u,v)$ is called the $\mathit{Christoffel~function}$. \todo{i fealt JZ was unclear. Is this corredct?}If $\dot{c}(t)$ is a \todo{refs}geodesic, the expression above reduces to 
+\begin{equation*}
+    \ddot{\gamma}(t)=-\Gamma(\dot{\gamma}(t),\dot{\gamma}(t)),
+\end{equation*}
+since by definition $\tfrac{D}{\mathrm{D}t}\dot{\gamma}(t)=0$ and $\dot{\alpha}(t)=\dot{\gamma}(t)$. Importantly, once we have found the Christoffel symbols throug \ref above, we can still use them for curves that are not geodesics. This is because they only depend on the Riemannian metric, and the local coordinates. To do this, we recover the Christoffel function for two different inputs
+\begin{equation*}
+    \mathrm{A.4~in~JZ}
+\end{equation*}
+\todo[inline]{i do not undestand the last part above. }
+
 
 With our metric \ref{eq:spst_metric} the Hessian at $p$ of a smooth function $f:\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$ is the endomorphism $\operatorname{Hess}f(p):T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}T_{p}\mathrm{SpSt}(2n, 2k)$. It is defined as
-$$\operatorname{Hess}f(p)[X]=\left.\frac{d}{dt}\operatorname{grad}f(c(t))\right|_{t=0}+\Gamma(\operatorname{grad}f(p),X),$$
+\begin{equation*}
+    \operatorname{Hess}f(p)[X]=\left.\frac{d}{dt}\operatorname{grad}f(c(t))\right|_{t=0}+\Gamma(\operatorname{grad}f(p),X),
+\end{equation*}
 where $\operatorname{grad}f(\cdot)$ is as in \ref{eq:rie_grad}. Define an arbitrary curve $c(t)\in \mathrm{SpSt}(2n, 2k)$ such that $c(0)=p$ and $c'(0)=X$ % Curve definition should be somewhere else

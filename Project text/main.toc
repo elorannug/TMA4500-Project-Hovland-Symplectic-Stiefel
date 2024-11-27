@@ -9,4 +9,4 @@
 \contentsline {subsection}{\numberline {2.4}Right-invariant framework}{3}{subsection.2.4}%
 \contentsline {subsection}{\numberline {2.5}Riemannian gradient of the Symplectic Stiefel manifold}{4}{subsection.2.5}%
 \contentsline {subsection}{\numberline {2.6}Riemannian Hessian}{5}{subsection.2.6}%
-\contentsline {section}{Bibliography}{6}{section*.24}%
+\contentsline {section}{Bibliography}{7}{section*.31}%

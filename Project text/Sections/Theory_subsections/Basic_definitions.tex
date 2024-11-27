@@ -81,7 +81,10 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
 \end{definition}
 
 \begin{definition}[Christoffel symbols]\label{def:christoffel_symbols}
-    
+    The method we will employ to completely describe a connection (as defined in \Cref{def:riemannian_connection}) locally is to describe them through $\textup{Christoffel symbols}$. Following the definition of \cite[p.~100]{Tu2017}, let $\nabla$ be an affine connection on $\mathcal{M}$. Denote a \todo{do i need a source to define this?}coordinate vector field on the coordinate open set $(U,p^{1},\dots,p^{n})\subseteq\mathcal{M}$ by $\partial_{i}\coloneqq \partial/\partial p^i$. In this coordinate frame there exist the numbers called Christoffel symbols, $\Gamma_{ij}^{k}$, defined through the following
+    \begin{equation*}
+        \nabla_{\partial_{i}}\partial_{j}=\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}=\mathbf{\Gamma}_{ij}^{\mathrm{T}}\mathbf{\partial}.    
+    \end{equation*}
 \end{definition}
 
 \begin{definition}[]\label{def:}

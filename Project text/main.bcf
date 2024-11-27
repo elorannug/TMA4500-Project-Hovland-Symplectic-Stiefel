@@ -2383,9 +2383,11 @@
     <bcf:citekey order="9" intorder="1">Edelman1998</bcf:citekey>
     <bcf:citekey order="10" intorder="1">Tu2017</bcf:citekey>
     <bcf:citekey order="11" intorder="1">JensenZimmermann2024</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">symplectic_inverse</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">BendokatZimmermann2021</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">BZ</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">Tu2017</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">symplectic_inverse</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">BendokatZimmermann2021</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">BZ</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">Tu2017</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
