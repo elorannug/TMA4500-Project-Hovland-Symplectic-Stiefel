@@ -6,7 +6,10 @@
 \contentsline {subsection}{\numberline {2.1}Basic definitions}{1}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}The Symplectic group}{2}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}The Symplectic Stiefel manifold}{3}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Right-invariant framework}{3}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.4}Right-invariant framework}{4}{subsection.2.4}%
 \contentsline {subsection}{\numberline {2.5}Riemannian gradient of the Symplectic Stiefel manifold}{4}{subsection.2.5}%
 \contentsline {subsection}{\numberline {2.6}Riemannian Hessian}{5}{subsection.2.6}%
-\contentsline {section}{Bibliography}{7}{section*.31}%
+\contentsline {section}{\numberline {3}Algorithms}{6}{section.3}%
+\contentsline {section}{\numberline {4}Numerical Experiments}{6}{section.4}%
+\contentsline {section}{\numberline {5}Conclusion}{6}{section.5}%
+\contentsline {section}{Bibliography}{7}{section*.34}%

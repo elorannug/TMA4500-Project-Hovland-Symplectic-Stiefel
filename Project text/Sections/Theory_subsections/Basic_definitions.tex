@@ -20,6 +20,14 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
 %     If we in addition have a notion of smoothness, meaning that the notion of differentiability is well-defined, we call $\mathcal{M}$ a smooth manifold.
 % \end{definition}
 
+\begin{definition}[General Linear group]\label{def:general_linear_group}
+    The \textup{real General Linear group} is defined as the set of all invertible matrices in $\mathbb{R}^{n\times n}$, denoted by $\mathrm{GL}(n)$. \cite[Example~9.11]{Boumal2023}
+\end{definition}
+
+\begin{definition}[Orthogonal group]\label{def:orthogonal_group}
+    The \textup{real Orthogonal group} is defined as the set of all orthogonal matrices in $\mathbb{R}^{n\times n}$, denoted by $\mathrm{O}(n)$. \cite[p.~3]{Edelman1998}
+\end{definition}
+
 \begin{definition}[Tangent Space]\label{def:tangent_space}
     
 \end{definition}
@@ -29,9 +37,19 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
     As defined in \cite[def~2.6,~p.~179]{Boothby1975}: a \textup{smooth manifold} $\mathcal{M}$, as defined in \cite[p.~13]{Lee2012:1},  is a \textup{Riemannian manifold} if we can define a field of symmetric, positive definite, bilinear forms $g(\cdot,\cdot)$, called the \textit{Riemannian metric}. By field we mean that $g_p$ is defined on the tangent space $T_p\mathcal{M}$ at each point $p\in \mathcal{M}$ \cite[def~2.1,~p.~178]{Boothby1975}. We will assume that $g$ is smooth, meaning that it is of class $\mathcal{C}^\infty$.
 \end{definition}
 
+
+\begin{definition}[Vector field on Riemannian manifold]\label{def:vector_field_on_manifold}
+    Following Appendix A of \cite{JensenZimmermann2024}, a smooth vector field $\mathcal{X}:\mathcal{M}\xrightarrow{}T \mathcal{M},~p\mapsto \mathcal{X}(p)\in T_{p}\mathcal{M}$ on a Riemannian manifold $\mathcal{M}$ can be expressed through local coordinates as 
+    \begin{equation*}
+        \mathcal{X}(p)=\sum\limits_{i=1}^{n}\alpha_{i}\partial_{i}\eqqcolon \mathbf{\alpha}^{\mathrm{T}}\mathbf{\partial},
+    \end{equation*}
+    where $\mathbf{\alpha}\in \mathbb{R}^{n}$, and $\mathbf{\partial}$ is the canonical basis of $T_{p}\mathcal{M}$.
+    
+\end{definition}
+
 \begin{definition}[Quotient manifold]\label{def:quotient_manifold}
     % Absil, Mahony, Sepulchre p.27
-    We define the definition of quotient manifold as in \todo{ref}\ref[p.~27]{Absil, Mahony, Sepulchre} Let $\mathcal{M}$ be a manifold equipped with the operation $\sim$ called the \textup{equivalence relation}. The equivalence relation has the following properties:
+    We define the definition of quotient manifold as in \cite[p.~27]{AbsilMahonySepulchre2008} Let $\mathcal{M}$ be a manifold equipped with the operation $\sim$ called the \textup{equivalence relation}. The equivalence relation has the following properties:
     \begin{enumerate}
         \item (reflexive) $p\sim p$ for all $p\in \mathcal{M}$,
         \item (symmetric) $p \sim q$ if and only if $q\sim p$ for all $q,p\in \mathcal{M}$, and
@@ -39,7 +57,7 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
     \end{enumerate}
     Given the set $[p]\coloneqq \{q\in \mathcal{M}:q\sim p\}$ called the \textup{equivalence class} of all points equivalent to $p$, the set
     \begin{equation*}
-        \mathcal{M}/\sim \coloneqq \{[p]:p\in \mathcal{M}\}
+        \mathcal{M}/\sim \coloneqq \{[p] \;|\; p\in \mathcal{M}\}
     \end{equation*}
     is called the \textup{quotient of }$\mathcal{M}$\textup{ by }$\sim$. It is the set of all equivalence classes of $\sim$ in $\mathcal{M}$. The mapping $\pi:\mathcal{M}\xrightarrow{}\mathcal{M}/\sim$ called the \textup{natural-} or \textup{canonical projection}, defined by $p\mapsto[p]$ . 
 \end{definition}
@@ -53,21 +71,13 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
     \end{equation*}
     named the \textup{vertical space} at $\overline{p}$. Canonically chosen as the orthogonal complement of $\mathcal{V}_{\overline{p}}$ in $T_{\overline{p}}\overline{\mathcal{M}}$, the \textup{horizontal space} \cite[p.~48]{AbsilMahonySepulchre2008} is defined as %  p.48
     \begin{equation*}
-        \mathcal{H}_{\overline{p}}\coloneqq \mathcal{V}_{\overline{p}}^\perp=\{Y_{\overline{p}}\in T_{\overline{p}}\overline{\mathcal{M}}:\overline{g}(Y_{\overline{p}},Z_{\overline{p}})=0\quad\forall\quad Z_{\overline{p}}\in \mathcal{V}_{\overline{p}} \}.
+        \mathcal{H}_{\overline{p}}\coloneqq \mathcal{V}_{\overline{p}}^\perp=\{Y_{\overline{p}}\in T_{\overline{p}}\overline{\mathcal{M}} \;|\; \overline{g}(Y_{\overline{p}},Z_{\overline{p}})=0\quad\forall\quad Z_{\overline{p}}\in \mathcal{V}_{\overline{p}} \}.
     \end{equation*}
     The \textup{horizontal lift} at $\overline{p}\in\pi^{-1}(p)$ of a tangent vector $X_{p}\in T_{p}\mathcal{M}$ is the unique tangent vector $X_{\overline{p}}\in \mathcal{H}_{\overline{p}}$ that satisfies $\mathrm{D}\pi(\overline{p})[{X}_{\overline{p}}]=X_p$. Note that given the horizontal space on $\overline{\mathcal{M}}$, $\mathcal{H}_{\overline{p}}\oplus \mathcal{V}_{\overline{p}}=T_{\overline{p}}\mathcal{M}$, where $\oplus$ denotes the \todo{define w sum! i wrote it in obsidian in the H and V space file!}Whitney sum. 
 \end{definition}
 
-\begin{definition}[General Linear group]\label{def:general_linear_group}
-    The \textup{real General Linear group} is defined as the set of all invertible matrices in $\mathbb{R}^{n\times n}$, denoted by $\mathrm{GL}(n)$. \cite[Example~9.11]{Boumal2023}
-\end{definition}
-
-\begin{definition}[Orthogonal group]\label{def:orthogonal_group}
-    The \textup{real Orthogonal group} is defined as the set of all orthogonal matrices in $\mathbb{R}^{n\times n}$, denoted by $\mathrm{O}(n)$. \cite[p.~3]{Edelman1998}
-\end{definition}
-
 \begin{definition}[Riemannian connection]\label{def:riemannian_connection}
-    The \textup{Riemanian connection}, also known as the \textup{Levi-Civita connection}, is the unique affine connection which is torsion free, and metric compatible \cite[Def.~6.4]{Tu2017}. In Appendix A of \cite{JensenZimmermann2024}, denoting $\mathfrak{X}(\mathcal{M})$ as the space of smooth vector fiels on $\mathcal{M}$, it is defined as the unique $\mathbb{R}$-bilinear smooth map on $\mathcal{M}$ with riemannian metric $\langle \cdot, \cdot\rangle_{p}$
+    The \textup{Riemanian connection}, also known as the \textup{Levi-Civita connection}, is the unique affine connection which is torsion free, and metric compatible \cite[Def.~6.4]{Tu2017}. In Appendix A of \cite{JensenZimmermann2024}, denoting $\mathfrak{X}(\mathcal{M})$ as the space of smooth vector fields on $\mathcal{M}$, it is defined as the unique $\mathbb{R}$-bilinear smooth map on $\mathcal{M}$ with riemannian metric $\langle \cdot, \cdot\rangle_{p}$
     \begin{equation*}
         \nabla:\mathfrak{X}(\mathcal{M})\times \mathfrak{X}(\mathcal{M})\xrightarrow{}\mathfrak{X}(\mathcal{M}),\quad (X,Y)\mapsto \nabla_{X}Y,
     \end{equation*}
@@ -83,12 +93,14 @@ The optimization algorithm we will be studying is defined on a \textit{Riemannia
 \begin{definition}[Christoffel symbols]\label{def:christoffel_symbols}
     The method we will employ to completely describe a connection (as defined in \Cref{def:riemannian_connection}) locally is to describe them through $\textup{Christoffel symbols}$. Following the definition of \cite[p.~100]{Tu2017}, let $\nabla$ be an affine connection on $\mathcal{M}$. Denote a \todo{do i need a source to define this?}coordinate vector field on the coordinate open set $(U,p^{1},\dots,p^{n})\subseteq\mathcal{M}$ by $\partial_{i}\coloneqq \partial/\partial p^i$. In this coordinate frame there exist the numbers called Christoffel symbols, $\Gamma_{ij}^{k}$, defined through the following
     \begin{equation*}
-        \nabla_{\partial_{i}}\partial_{j}=\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}=\mathbf{\Gamma}_{ij}^{\mathrm{T}}\mathbf{\partial}.    
+        \nabla_{\partial_{i}}\partial_{j}=\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}\eqqcolon\mathbf{\Gamma}_{ij}^{\mathrm{T}}\mathbf{\partial}.    
     \end{equation*}
 \end{definition}
 
-\begin{definition}[]\label{def:}
-    
+\begin{definition}[Retraction]\label{def:retraction}
+    Following \cite[Def.~3.47]{Boumal2023}, a retraction on a smooth manifold $\mathcal{M}$ is a smooth map,
+    $$\mathcal{R}:T \mathcal{M}\xrightarrow{}\mathcal{M},\quad(p,X)\mapsto \mathcal{R}_{p}(X)$$
+    such that every curve generated from $c(t)=\mathcal{R}_{p}(tX)$ satisfies $c(0)=p$ and $\dot{c}(0)=X$. Equivalently the conditions can be stated as in \cite[p.~40]{Boumal2023} without the use of curves. For all $p\in \mathcal{M}$, $\mathcal{R}_{p}(0)=p$, and $\operatorname{D}\mathcal{R}_{p}(0):T_{p}\mathcal{M}\xrightarrow{}T_{p}\mathcal{M}$, $\operatorname{D}\mathcal{R}_{p}(0)[X]=X$ is the identify map. 
 \end{definition}
 
 \begin{definition}[]\label{def:}
