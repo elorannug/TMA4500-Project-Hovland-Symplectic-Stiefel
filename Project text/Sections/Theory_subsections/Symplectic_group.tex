@@ -1,5 +1,5 @@
 \subsection{The Symplectic group}
-The real \textit{symplectic group} is the space overarching the Symplectic Stiefel manifold, \todo{Why do we need sp? We will use quotient properties to map stuff to Spst}and we will look at this space first. To be able to define the symplectic group we first need some preliminary definitions. Define the \textit{symplectic identity} as the following block matrix,
+The real \textit{symplectic group} is the space overarching the symplectic Stiefel manifold, \todo{Why do we need sp? We will use quotient properties to map stuff to Spst}and we will look at this space first. To be able to define the symplectic group we first need some preliminary definitions. Define the \textit{symplectic identity} as the following block matrix,
 \begin{equation*}
     J_{2n}\coloneqq\begin{bmatrix}
         0_{n} & I_{n} \\
@@ -10,13 +10,13 @@ where $I_{n}$ denotes the $n\times n$ identity matrix. $J_{2n}$ has some propert
 \begin{equation}\label{eq:J_2n_properties}
     J_{2n} ^{\mathrm{T}}=-J_{2n}=J_{2n}^{-1}
 \end{equation}
-The symplectic group is a quotient space of the general linear group (defined in \Cref{def:general_linear_group}). It is defined as the set of matrices which define the symplectic structure in the following sense. We define the real symplectic group as
+The symplectic group is defined as the set of matrices which define the symplectic structure in the following sense. We define the real symplectic group as %is a quotient space of the general linear group (defined in \Cref{def:general_linear_group}). 
 \begin{equation}\label{eq:sp_def}
     \mathrm{Sp}(2n)\coloneqq \{p\in \mathbb{R}^{2n\times2n} \;|\; p^{+}p=I_{2n}\},
 \end{equation}
-where $p^{+}$ is the \textit{symplectic inverse} of $p$, as defined as
+where $^{+}$ is defined as the \textit{symplectic inverse} of any matrix $q\in\mathbb{R}^{2n\times2k}$ such that 
 \begin{equation}\label{eq:symplectic_inverse}
-    p^{+}\coloneqq J_{2k}^{\mathrm{T}}p ^{\mathrm{T}}J_{2n}.
+    q^{+}\coloneqq J_{2k}^{\mathrm{T}}q ^{\mathrm{T}}J_{2n}.
 \end{equation}
 The Lie algebra of $\mathrm{Sp}(2n)$ is the symplectic groups' tangent space at the identity. It is given by 
 \begin{equation}\label{eq:sp_Lie_algebra}

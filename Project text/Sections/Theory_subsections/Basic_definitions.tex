@@ -14,7 +14,7 @@ This section is designed to be a reference work to set notation, and to ensure t
 
 \begin{definition}[Quotient manifold]\label{def:quotient_manifold}
     % Absil, Mahony, Sepulchre p.27
-    We define the definition of quotient manifold as in \cite[p.~27]{AbsilMahonySepulchre2008} Let $\mathcal{M}$ be a manifold equipped with the operation $\sim$ called the \textup{equivalence relation}. The equivalence relation has the following properties:
+    We define the definition of quotient manifold as in \cite[p.~27]{AbsilMahonySepulchre2008}. Let $\mathcal{M}$ be a manifold equipped with the operation $\sim$ called the \textup{equivalence relation}. The equivalence relation has the following properties:
     \begin{enumerate}
         \item (reflexive) $p\sim p$ for all $p\in \mathcal{M}$,
         \item (symmetric) $p \sim q$ if and only if $q\sim p$ for all $q,p\in \mathcal{M}$, and
@@ -22,7 +22,7 @@ This section is designed to be a reference work to set notation, and to ensure t
     \end{enumerate}
     Given the set $[p]\coloneqq \{q\in \mathcal{M}:q\sim p\}$ called the \textup{equivalence class} of all points equivalent to $p$, the set
     \begin{equation*}
-        \mathcal{M}/\sim \coloneqq \{[p] \;|\; p\in \mathcal{M}\}
+        \mathcal{M}/\sim~ \coloneqq \{[p] \;|\; p\in \mathcal{M}\}
     \end{equation*}
     is called the \textup{quotient of }$\mathcal{M}$\textup{ by }$\sim$. It is the set of all equivalence classes of $\sim$ in $\mathcal{M}$. The mapping $\pi:\mathcal{M}\xrightarrow{}\mathcal{M}/\sim$ called the \textup{natural-} or \textup{canonical projection}, defined by $p\mapsto[p]$ . 
 \end{definition}
@@ -30,11 +30,11 @@ This section is designed to be a reference work to set notation, and to ensure t
 \begin{definition}[Tangent Space]\label{def:tangent_space}
     Following \cite[Def.~8.33]{Boumal2023}, for a point $p$ on a smooth manifold $\mathcal{M}$, denote the set of smooth curves \cite[Def.~8.5]{Boumal2023} passing through $p$ at $t=0$ as $C_{p}$. This means that $\alpha(0)=p$ for all $\alpha\in C_{p}$. For $\alpha, \beta\in C_{p}$ we say that they are equivalent if 
     \begin{equation*}
-        (\phi\circ \alpha)'(0)=(\phi\circ \beta)'(0)
+        (\phi\circ \alpha)'(0)=(\phi\circ \beta)'(0),
     \end{equation*}
     meaning their derivatives match in a \textup{coordinate chart} (defined as in \cite[p.~4]{Lee2012:1}) if their derivatives in the coordinate chart at zero are equal. Denote this equivalence relation as $\alpha\sim \beta$. It has analogous properties to the equivalence relation in \Cref{def:quotient_manifold}. The equivalence class is defined as $[\alpha]=\left\{\beta\in C_{p} \;\middle|\; \alpha\sim \beta\right\}$. Every equivalence class is called a \textup{tangent vector} to $\mathcal{M}$ at $p$. The \textup{tangent space} at $p$ is the quotient set
     \begin{equation*}
-        T_{p}\mathcal{M}=C_{p}/\sim=\left\{[\alpha] \;\middle|\; \alpha\in C_{p}\right\}.
+        T_{p}\mathcal{M}=C_{p}/\sim~=\left\{[\alpha] \;\middle|\; \alpha\in C_{p}\right\}.
     \end{equation*}  
 \end{definition}
 
@@ -62,7 +62,7 @@ This section is designed to be a reference work to set notation, and to ensure t
     \begin{equation*}
         \mathcal{H}_{\overline{p}}\coloneqq \mathcal{V}_{\overline{p}}^\perp=\{Y_{\overline{p}}\in T_{\overline{p}}\overline{\mathcal{M}} \;|\; \overline{g}(Y_{\overline{p}},Z_{\overline{p}})=0\quad\forall\quad Z_{\overline{p}}\in \mathcal{V}_{\overline{p}} \}.
     \end{equation*}
-    The \textup{horizontal lift} at $\overline{p}\in\pi^{-1}(p)$ of a tangent vector $X_{p}\in T_{p}\mathcal{M}$ is the unique tangent vector $X_{\overline{p}}\in \mathcal{H}_{\overline{p}}$ that satisfies $\mathrm{D}\pi(\overline{p})[{X}_{\overline{p}}]=X_p$. Note that given the horizontal space on $\overline{\mathcal{M}}$, $\mathcal{H}_{\overline{p}}\oplus \mathcal{V}_{\overline{p}}=T_{\overline{p}}\mathcal{M}$, where $\oplus$ denotes the \todo{define w sum! i wrote it in obsidian in the H and V space file!}Whitney sum. 
+    The \textup{horizontal lift} at $\overline{p}\in\pi^{-1}(p)$ of a tangent vector $X_{p}\in T_{p}\mathcal{M}$ is the unique tangent vector $X_{\overline{p}}\in \mathcal{H}_{\overline{p}}$ that satisfies $\mathrm{D}\pi(\overline{p})[{X}_{\overline{p}}]=X_p$. Note that given the horizontal space on $\overline{\mathcal{M}}$, $\mathcal{H}_{\overline{p}}\oplus \mathcal{V}_{\overline{p}}=T_{\overline{p}}\mathcal{M}$, where $\oplus$ denotes the \todo{define or ref w sum? i wrote it in obsidian in the H and V space file.}Whitney sum. 
 \end{definition}
 
 \begin{definition}[Riemannian connection]\label{def:riemannian_connection}

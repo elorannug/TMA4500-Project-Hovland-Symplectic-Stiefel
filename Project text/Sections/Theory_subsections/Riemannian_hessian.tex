@@ -1,13 +1,11 @@
-\subsection{Riemannian Hessian}
-(Christoffel symbols)
-\todo[inline]{Define the remaining preliminaries for Hessian. Make an intro to section}
+\subsection{Riemannian Hessian of the Symplectic Stiefel manifold}
+\todo[inline]{Define the remaining preliminaries for Hessian. Make an intro to section. loosly following Appendix A in Jz}
 
-\todo[inline]{loosly following Appendix A in Jz}
 For two smooth vector fields, $\mathcal{X}(p)=\mathbf{\alpha}^{\mathrm{T}}\mathbf{\partial}$ and $\mathcal{Y}(p)=\mathbf{\beta}^{\mathrm{T}}\mathbf{\partial}$ defined as in \Cref{def:vector_field_on_manifold}, the covariant derivative (defined through the Riemannian connection by \cref{def:riemannian_connection}) written in local coordinates is
 \begin{equation*}
     \nabla_{\mathcal{X}}\mathcal{Y}=\sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}\alpha_{i}\partial_{i}(\beta_{j})\partial_{j}+\alpha_{i}\beta_{j}\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}.
 \end{equation*}
-In preparation for the Hessian, we include \cite[p.~96]{Tu2017} to restrict the covariant derivative further. We want to define the covariant derivative of a vector field along a curve $c(t)$. $c(t)$ is the smooth curve, $c:I\xrightarrow{}\mathcal{M},$ $t\mapsto(\gamma_{1}(t), \dots, \gamma_{n}(t))$, where $I \coloneqq [a,b]\subseteq \mathbb{R}$. Since we have an affine connection on $\mathcal{M}$, the following unique map exists:
+In preparation for the Hessian, we include the description of the covariant derivative from \cite[p.~96]{Tu2017} to restrict the covariant derivative further. We want to define the covariant derivative of a vector field along a curve $c(t)$. $c(t)$ is the smooth curve, $c:I\xrightarrow{}\mathcal{M},$ $t\mapsto(\gamma_{1}(t), \dots, \gamma_{n}(t))$, where $I \coloneqq [a,b]\subseteq \mathbb{R}$. Since we have an affine connection on $\mathcal{M}$, the following unique map exists:
 \begin{equation*}
     \frac{D}{\mathrm{d}t}:\Gamma(T \mathcal{M}|_{c(t)})\xrightarrow{}\Gamma(T \mathcal{M}|_{c(t)}),
 \end{equation*}
@@ -19,7 +17,7 @@ $\Gamma(u,v)$ is called the $\textit{Christoffel function}$. \todo{i felt JZ was
 \begin{equation}\label{eq:christoffel_symbols_through_geodesic}
     \ddot{\gamma}(t)=-\Gamma(\dot{\gamma}(t),\dot{\gamma}(t)),
 \end{equation}
-since by definition $\tfrac{D}{\mathrm{D}t}\dot{\gamma}(t)=0$ and $\dot{\alpha}(t)=\dot{\gamma}(t)$. Importantly, once we have found the Christoffel symbols through \eqref{eq:christoffel_symbols_through_geodesic}, we can still use them for curves that are not geodesics. This is because the Christoffel symbols only depend on the Riemannian metric, and the local coordinates. To do this, we recover the Christoffel function for two different inputs through polarization \cite[p.~312]{Edelman1998} 
+since by definition geodesics must satisfy $\tfrac{D}{\mathrm{D}t}\dot{\gamma}(t)=0$ and $\dot{\alpha}(t)=\dot{\gamma}(t)$. Importantly, once we have found the Christoffel symbols through \eqref{eq:christoffel_symbols_through_geodesic}, we can still use them for curves that are not geodesics. This is because the Christoffel symbols only depend on the Riemannian metric, and the local coordinates. To do this, we recover the Christoffel function for two different inputs through polarization \cite[p.~312]{Edelman1998} 
 \begin{equation*}
     \Gamma(X,Y)=\frac{1}{4}\big(\Gamma(X+Y,X+Y)-\Gamma(X-Y,X-Y)\big),
 \end{equation*}

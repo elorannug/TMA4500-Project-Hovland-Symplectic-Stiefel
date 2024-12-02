@@ -85,7 +85,6 @@
       \field{eprinttype}{arXiv}
       \field{title}{The real symplectic Stiefel and Grassmann manifolds: metrics, geodesics and applications}
       \field{year}{2021}
-      \true{nocite}
       \verb{eprint}
       \verb arXiv:2108.12447v1
       \endverb
@@ -331,7 +330,6 @@
     \endentry
   \enddatalist
   \missing{BZ}
-  \missing{symplectic_inverse}
 \endrefsection
 \endinput
 
