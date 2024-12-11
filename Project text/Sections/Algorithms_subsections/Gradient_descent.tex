@@ -1,0 +1,30 @@
+\subsection{Gradient descent}
+
+\todo[inline]{Armijo line search bou23, p.58}%https://manoptjl.org/stable/plans/stepsize/#Manopt.ArmijoLinesearch
+
+
+
+
+% source https://epubs.siam.org/doi/epdf/10.1137/20M1348522
+
+% [14] B. Gao, N. T. Son, P.-A. Absil, and T. Stykel, Riemannian optimization on the symplectic
+% Stiefel manifold, SIAM Journal on Optimization, 31 (2021), pp. 1546–1575, https://doi.
+% org/10.1137/20M1348522.
+\begin{algorithm}[H]
+    \caption{Riemannian Gradient descent}\label{alg:grad_descent}
+    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, parameters $\beta, \gamma \in(0,1)$, steplength range $0<\gamma_{\text{min}}<\gamma_{\text{max}}$, initial step size $\gamma_{0}=f(p_{0})$, maximum number of iterations $N\in \mathbb{N}$, step parameters $h_{\text{min}}<h_{\text{max}}\in \mathbb{Z}$, tolerance parameters $\epsilon, \epsilon_{x}, \epsilon_{f}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with gradient $\operatorname*{grad}_{f}$ where $\langle \cdot,\cdot \rangle$ denotes the Euclidean inner product.
+    \begin{algorithmic}[1]
+        \For{$0\leq k\leq N$}
+        \State $X_{k}=-\operatorname{grad}f(X_{k})$
+        \State $\gamma_{k}=\operatorname{max}(\gamma_{\text{min}},(\gamma_{k}, \gamma_{\text{max}}))$
+        \State Armijo, $t_{k}=\dots$
+        \State $p_{k+1}=\mathcal{R}_{p_{k}}(t_{k}X_{k})$
+        \If{$\lvert \lvert \operatorname{grad}f(p_{k}) \rvert  \rvert_{\text{F}}<\epsilon$}
+        \If{$\frac{\lvert f(p_{k})-f(p_{k+1}) \rvert}{\lvert f(p_{k})+1 \rvert}<\epsilon_{f}$ and $\frac{\lvert \lvert p_{k}-p_{k+1} \rvert  \rvert _{\text{F}}}{\sqrt{ 2n }}<\epsilon_{x}$}
+        \State Break
+        \EndIf
+        \EndIf
+        \EndFor
+    \end{algorithmic}
+    \textbf{Output:} Iterates $p_{k}$
+\end{algorithm}

@@ -20,11 +20,11 @@ This section is designed to be a reference work to set notation, and to ensure t
         \item (symmetric) $p \sim q$ if and only if $q\sim p$ for all $q,p\in \mathcal{M}$, and
         \item (transitive) given $p\sim q$ and $q\sim r$ this implies that $p\sim r$ for all $p,q,r\in \mathcal{M}$.
     \end{enumerate}
-    Given the set $[p]\coloneqq \{q\in \mathcal{M}:q\sim p\}$ called the \textup{equivalence class} of all points equivalent to $p$, the set
+    Given the set $[p]\coloneqq \{q\in \mathcal{M}\colon q\sim p\}$ called the \textup{equivalence class} of all points equivalent to $p$, the set
     \begin{equation*}
         \mathcal{M}/\sim~ \coloneqq \{[p] \;|\; p\in \mathcal{M}\}
     \end{equation*}
-    is called the \textup{quotient of }$\mathcal{M}$\textup{ by }$\sim$. It is the set of all equivalence classes of $\sim$ in $\mathcal{M}$. The mapping $\pi:\mathcal{M}\xrightarrow{}\mathcal{M}/\sim$ called the \textup{natural-} or \textup{canonical projection}, defined by $p\mapsto[p]$ . 
+    is called the \textup{quotient of }$\mathcal{M}$\textup{ by }$\sim$. It is the set of all equivalence classes of $\sim$ in $\mathcal{M}$. The mapping $\pi\colon \mathcal{M}\xrightarrow{}\mathcal{M}/\sim$ called the \textup{natural-} or \textup{canonical projection}, defined by $p\mapsto[p]$ . 
 \end{definition}
 
 \begin{definition}[Tangent Space]\label{def:tangent_space}
@@ -32,7 +32,7 @@ This section is designed to be a reference work to set notation, and to ensure t
     \begin{equation*}
         (\phi\circ \alpha)'(0)=(\phi\circ \beta)'(0),
     \end{equation*}
-    meaning their derivatives match in a \textup{coordinate chart} (defined as in \cite[p.~4]{Lee2012:1}) if their derivatives in the coordinate chart at zero are equal. Denote this equivalence relation as $\alpha\sim \beta$. It has analogous properties to the equivalence relation in \Cref{def:quotient_manifold}. The equivalence class is defined as $[\alpha]=\left\{\beta\in C_{p} \;\middle|\; \alpha\sim \beta\right\}$. Every equivalence class is called a \textup{tangent vector} to $\mathcal{M}$ at $p$. The \textup{tangent space} at $p$ is the quotient set
+    meaning their derivatives match in a \textup{coordinate chart} (defined as in \cite[p.~4]{Lee2012:1}) if their derivatives in the coordinate chart at zero are equal. Denote this equivalence relation as $\alpha\sim \beta$. It has analogous properties to the equivalence relation in Definition \ref{def:quotient_manifold}. The equivalence class is defined as $[\alpha]=\left\{\beta\in C_{p} \;\middle|\; \alpha\sim \beta\right\}$. Every equivalence class is called a \textup{tangent vector} to $\mathcal{M}$ at $p$. The \textup{tangent space} at $p$ is the quotient set
     \begin{equation*}
         T_{p}\mathcal{M}=C_{p}/\sim~=\left\{[\alpha] \;\middle|\; \alpha\in C_{p}\right\}.
     \end{equation*}  
@@ -45,7 +45,7 @@ This section is designed to be a reference work to set notation, and to ensure t
 
 
 \begin{definition}[Vector field on Riemannian manifold]\label{def:vector_field_on_manifold}
-    Following Appendix A of \cite{JensenZimmermann2024}, a smooth vector field $\mathcal{X}:\mathcal{M}\xrightarrow{}T \mathcal{M},~p\mapsto \mathcal{X}(p)\in T_{p}\mathcal{M}$ on a Riemannian manifold $\mathcal{M}$ can be expressed through local coordinates as 
+    Following Appendix A of \cite{JensenZimmermann2024}, a smooth vector field $\mathcal{X}\colon \mathcal{M}\xrightarrow{}T \mathcal{M},~p\mapsto \mathcal{X}(p)\in T_{p}\mathcal{M}$ on a Riemannian manifold $\mathcal{M}$ can be expressed through local coordinates as 
     \begin{equation*}
         \mathcal{X}(p)=\sum\limits_{i=1}^{n}\alpha_{i}\partial_{i}\eqqcolon \mathbf{\alpha}^{\mathrm{T}}\mathbf{\partial},
     \end{equation*}
@@ -54,7 +54,7 @@ This section is designed to be a reference work to set notation, and to ensure t
 \end{definition}
 
 \begin{definition}[Horizontal \& Vertical Space]\label{def:horizontal_vertical_space}
-    Using \Cref{def:quotient_manifold}, given a Riemannian manifold $\overline{\mathcal{M}}$ with Riemannian metric $\overline{g}$, denote a quotient manifold of $\overline{\mathcal{M}}$ as $\mathcal{M}=\overline{\mathcal{M}}/\sim$. Following the definitions in Absil et al. \cite[p.~43]{AbsilMahonySepulchre2008}, for a point $p\in \mathcal{M}$, the equivalence class $[p]=\pi^{-1}(p)$ induces an embedded submanifold of $\overline{\mathcal{M}}$ (see \Cref{def:quotient_manifold}), hence it admits a tangent space,
+    Using Definition \ref{def:quotient_manifold}, given a Riemannian manifold $\overline{\mathcal{M}}$ with Riemannian metric $\overline{g}$, denote a quotient manifold of $\overline{\mathcal{M}}$ as $\mathcal{M}=\overline{\mathcal{M}}/\sim$. Following the definitions in Absil et al. \cite[p.~43]{AbsilMahonySepulchre2008}, for a point $p\in \mathcal{M}$, the equivalence class $[p]=\pi^{-1}(p)$ induces an embedded submanifold of $\overline{\mathcal{M}}$ (see Definition \ref{def:quotient_manifold}), hence it admits a tangent space,
     \begin{equation*}
         \mathcal{V}_{\overline{p}}=T_{\overline{p}}(\pi^{-1}(p))
     \end{equation*}
@@ -68,7 +68,7 @@ This section is designed to be a reference work to set notation, and to ensure t
 \begin{definition}[Riemannian connection]\label{def:riemannian_connection}
     The \textup{Riemanian connection}, also known as the \textup{Levi-Civita connection}, is the unique affine connection which is torsion free, and metric compatible \cite[Def.~6.4]{Tu2017}. In Appendix A of \cite{JensenZimmermann2024}, denoting $\mathfrak{X}(\mathcal{M})$ as the space of smooth vector fields on $\mathcal{M}$, it is defined as the unique $\mathbb{R}$-bilinear smooth map on $\mathcal{M}$ with riemannian metric $\langle \cdot, \cdot\rangle_{p}$
     \begin{equation*}
-        \nabla:\mathfrak{X}(\mathcal{M})\times \mathfrak{X}(\mathcal{M})\xrightarrow{}\mathfrak{X}(\mathcal{M}),\quad (X,Y)\mapsto \nabla_{X}Y,
+        \nabla\colon \mathfrak{X}(\mathcal{M})\times \mathfrak{X}(\mathcal{M})\xrightarrow{}\mathfrak{X}(\mathcal{M}),\quad (X,Y)\mapsto \nabla_{X}Y,
     \end{equation*}
     such that the following properties hold. Given $X,Y,Z\in \mathfrak{X}(\mathcal{M})$, and $f\in \mathcal{C}^{\infty}(M)$, $\nabla_{X}Y$has the following properties:
     \begin{enumerate}
@@ -80,7 +80,7 @@ This section is designed to be a reference work to set notation, and to ensure t
 \end{definition}
 
 \begin{definition}[Christoffel symbols]\label{def:christoffel_symbols}
-    The method we will employ to completely describe a connection (as defined in \Cref{def:riemannian_connection}) locally is to describe them through $\textup{Christoffel symbols}$. Following the definition of \cite[p.~100]{Tu2017}, let $\nabla$ be an affine connection on $\mathcal{M}$. Denote a \todo{do i need a source to define this?}coordinate vector field on the coordinate open set $(U,p^{1},\dots,p^{n})\subseteq\mathcal{M}$ by $\partial_{i}\coloneqq \partial/\partial p^i$. In this coordinate frame there exist the numbers called Christoffel symbols, $\Gamma_{ij}^{k}$, defined through the following
+    The method we will employ to completely describe a connection (as defined in Definition \ref{def:riemannian_connection}) locally is to describe them through $\textup{Christoffel symbols}$. Following the definition of \cite[p.~100]{Tu2017}, let $\nabla$ be an affine connection on $\mathcal{M}$. Denote a \todo{do i need a source to define this?}coordinate vector field on the coordinate open set $(U,p^{1},\dots,p^{n})\subseteq\mathcal{M}$ by $\partial_{i}\coloneqq \partial/\partial p^i$. In this coordinate frame there exist the numbers called Christoffel symbols, $\Gamma_{ij}^{k}$, defined through the following
     \begin{equation*}
         \nabla_{\partial_{i}}\partial_{j}=\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}\eqqcolon\mathbf{\Gamma}_{ij}^{\mathrm{T}}\mathbf{\partial}.    
     \end{equation*}
@@ -88,8 +88,8 @@ This section is designed to be a reference work to set notation, and to ensure t
 
 \begin{definition}[Retraction]\label{def:retraction}
     Following \cite[Def.~3.47]{Boumal2023}, a retraction on a smooth manifold $\mathcal{M}$ is a smooth map,
-    $$\mathcal{R}:T \mathcal{M}\xrightarrow{}\mathcal{M},\quad(p,X)\mapsto \mathcal{R}_{p}(X)$$
-    such that every curve generated from $c(t)=\mathcal{R}_{p}(tX)$ satisfies $c(0)=p$ and $\dot{c}(0)=X$. Equivalently the conditions can be stated as in \cite[p.~40]{Boumal2023} without the use of curves. For all $p\in \mathcal{M}$, $\mathcal{R}_{p}(0)=p$, and $\operatorname{D}\mathcal{R}_{p}(0):T_{p}\mathcal{M}\xrightarrow{}T_{p}\mathcal{M}$, $\operatorname{D}\mathcal{R}_{p}(0)[X]=X$ is the identify map. 
+    $$\mathcal{R}\colon T \mathcal{M}\xrightarrow{}\mathcal{M},\quad(p,X)\mapsto \mathcal{R}_{p}(X)$$
+    such that every curve generated from $c(t)=\mathcal{R}_{p}(tX)$ satisfies $c(0)=p$ and $\dot{c}(0)=X$. Equivalently the conditions can be stated as in \cite[p.~40]{Boumal2023} without the use of curves. For all $p\in \mathcal{M}$, $\mathcal{R}_{p}(0)=p$, and $\operatorname{D}\mathcal{R}_{p}(0)\colon T_{p}\mathcal{M}\xrightarrow{}T_{p}\mathcal{M}$, $\operatorname{D}\mathcal{R}_{p}(0)[X]=X$ is the identify map. 
 \end{definition}
 
 \begin{definition}[]\label{def:}

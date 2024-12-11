@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  11 DEC 2024 19:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  11 DEC 2024 17:43
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/rannu/OneDrive - NTNU/Desktop/vsJULIA/Specialization project/TMA4500-Project-Hovland-Symplectic-Stiefel/Project text/main.tex"
-(c:/Users/rannu/OneDrive - NTNU/Desktop/vsJULIA/Specialization project/TMA4500-Project-Hovland-Symplectic-Stiefel/Project text/main.tex
+**"c:/Users/rannu/OneDrive - NTNU/Desktop/vsJULIA/Specialization project/TMA4500-Project-Hovland-Symplectic-Stiefel/Project text/testmain.tex"
+(c:/Users/rannu/OneDrive - NTNU/Desktop/vsJULIA/Specialization project/TMA4500-Project-Hovland-Symplectic-Stiefel/Project text/testmain.tex
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-10-09>
 (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -23,17 +23,49 @@ File: size10.clo 2024/06/29 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen141
-) (packages.sty
+) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count270
+\float@exts=\toks17
+\float@box=\box52
+\@float@everytoks=\toks18
+\@floatcapt=\box53
+) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks19
+\c@algorithm=\count271
+) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count272
+\c@ALG@rem=\count273
+\c@ALG@nested=\count274
+\ALG@tlm=\skip51
+\ALG@thistlm=\skip52
+\c@ALG@Lnr=\count275
+\c@ALG@blocknr=\count276
+\c@ALG@storecount=\count277
+\c@ALG@tmpcounter=\count278
+\ALG@tmplength=\skip53
+)
+
+LaTeX Warning: You have requested file `',
+               but the file provides `packages'.
+
 Package: packages 2021/04/20 Packages
- (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
+(C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
-\inpenc@prehook=\toks17
-\inpenc@posthook=\toks18
+\inpenc@prehook=\toks20
+\inpenc@posthook=\toks21
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/appendix\appendix.sty
 Package: appendix 2020/02/08 v1.2c extra appendix facilities
-\c@@pps=\count270
-\c@@ppsavesec=\count271
-\c@@ppsaveapp=\count272
+\c@@pps=\count279
+\c@@ppsavesec=\count280
+\c@@ppsaveapp=\count281
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.sty
 Package: biblatex 2024/03/21 v3.20 programmable bibliographies (PK/MW)
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
@@ -50,82 +82,80 @@ Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count273
+\etb@tempcnta=\count282
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks19
+\KV@toks@=\toks22
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 )) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count274
+\lrq@indent=\count283
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/logreq\logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
-)) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/base\ifthen.sty
-Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
-) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+)) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-\c@tabx@nest=\count275
-\c@listtotal=\count276
-\c@listcount=\count277
-\c@liststart=\count278
-\c@liststop=\count279
-\c@citecount=\count280
-\c@citetotal=\count281
-\c@multicitecount=\count282
-\c@multicitetotal=\count283
-\c@instcount=\count284
-\c@maxnames=\count285
-\c@minnames=\count286
-\c@maxitems=\count287
-\c@minitems=\count288
-\c@citecounter=\count289
-\c@maxcitecounter=\count290
-\c@savedcitecounter=\count291
-\c@uniquelist=\count292
-\c@uniquename=\count293
-\c@refsection=\count294
-\c@refsegment=\count295
-\c@maxextratitle=\count296
-\c@maxextratitleyear=\count297
-\c@maxextraname=\count298
-\c@maxextradate=\count299
-\c@maxextraalpha=\count300
-\c@abbrvpenalty=\count301
-\c@highnamepenalty=\count302
-\c@lownamepenalty=\count303
-\c@maxparens=\count304
-\c@parenlevel=\count305
-\blx@tempcnta=\count306
-\blx@tempcntb=\count307
-\blx@tempcntc=\count308
-\c@blx@maxsection=\count309
-\blx@maxsegment@0=\count310
-\blx@notetype=\count311
-\blx@parenlevel@text=\count312
-\blx@parenlevel@foot=\count313
-\blx@sectionciteorder@0=\count314
-\blx@sectionciteorderinternal@0=\count315
-\blx@entrysetcounter=\count316
-\blx@biblioinstance=\count317
-\labelnumberwidth=\skip51
-\labelalphawidth=\skip52
-\biblabelsep=\skip53
-\bibitemsep=\skip54
-\bibnamesep=\skip55
-\bibinitsep=\skip56
-\bibparsep=\skip57
-\bibhang=\skip58
+\c@tabx@nest=\count284
+\c@listtotal=\count285
+\c@listcount=\count286
+\c@liststart=\count287
+\c@liststop=\count288
+\c@citecount=\count289
+\c@citetotal=\count290
+\c@multicitecount=\count291
+\c@multicitetotal=\count292
+\c@instcount=\count293
+\c@maxnames=\count294
+\c@minnames=\count295
+\c@maxitems=\count296
+\c@minitems=\count297
+\c@citecounter=\count298
+\c@maxcitecounter=\count299
+\c@savedcitecounter=\count300
+\c@uniquelist=\count301
+\c@uniquename=\count302
+\c@refsection=\count303
+\c@refsegment=\count304
+\c@maxextratitle=\count305
+\c@maxextratitleyear=\count306
+\c@maxextraname=\count307
+\c@maxextradate=\count308
+\c@maxextraalpha=\count309
+\c@abbrvpenalty=\count310
+\c@highnamepenalty=\count311
+\c@lownamepenalty=\count312
+\c@maxparens=\count313
+\c@parenlevel=\count314
+\blx@tempcnta=\count315
+\blx@tempcntb=\count316
+\blx@tempcntc=\count317
+\c@blx@maxsection=\count318
+\blx@maxsegment@0=\count319
+\blx@notetype=\count320
+\blx@parenlevel@text=\count321
+\blx@parenlevel@foot=\count322
+\blx@sectionciteorder@0=\count323
+\blx@sectionciteorderinternal@0=\count324
+\blx@entrysetcounter=\count325
+\blx@biblioinstance=\count326
+\labelnumberwidth=\skip54
+\labelalphawidth=\skip55
+\biblabelsep=\skip56
+\bibitemsep=\skip57
+\bibnamesep=\skip58
+\bibinitsep=\skip59
+\bibparsep=\skip60
+\bibhang=\skip61
 \blx@bcfin=\read2
 \blx@bcfout=\write3
 \blx@langwohyphens=\language79
-\c@mincomprange=\count318
-\c@maxcomprange=\count319
-\c@mincompwidth=\count320
+\c@mincomprange=\count327
+\c@maxcomprange=\count328
+\c@mincompwidth=\count329
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-dm.def
@@ -135,88 +165,88 @@ Package biblatex Info: Trying to load biblatex style data model...
 Package biblatex Info: ... file 'numeric.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count321
-\c@savedafterword=\count322
-\c@annotator=\count323
-\c@savedannotator=\count324
-\c@author=\count325
-\c@savedauthor=\count326
-\c@bookauthor=\count327
-\c@savedbookauthor=\count328
-\c@commentator=\count329
-\c@savedcommentator=\count330
-\c@editor=\count331
-\c@savededitor=\count332
-\c@editora=\count333
-\c@savededitora=\count334
-\c@editorb=\count335
-\c@savededitorb=\count336
-\c@editorc=\count337
-\c@savededitorc=\count338
-\c@foreword=\count339
-\c@savedforeword=\count340
-\c@holder=\count341
-\c@savedholder=\count342
-\c@introduction=\count343
-\c@savedintroduction=\count344
-\c@namea=\count345
-\c@savednamea=\count346
-\c@nameb=\count347
-\c@savednameb=\count348
-\c@namec=\count349
-\c@savednamec=\count350
-\c@translator=\count351
-\c@savedtranslator=\count352
-\c@shortauthor=\count353
-\c@savedshortauthor=\count354
-\c@shorteditor=\count355
-\c@savedshorteditor=\count356
-\c@labelname=\count357
-\c@savedlabelname=\count358
-\c@institution=\count359
-\c@savedinstitution=\count360
-\c@lista=\count361
-\c@savedlista=\count362
-\c@listb=\count363
-\c@savedlistb=\count364
-\c@listc=\count365
-\c@savedlistc=\count366
-\c@listd=\count367
-\c@savedlistd=\count368
-\c@liste=\count369
-\c@savedliste=\count370
-\c@listf=\count371
-\c@savedlistf=\count372
-\c@location=\count373
-\c@savedlocation=\count374
-\c@organization=\count375
-\c@savedorganization=\count376
-\c@origlocation=\count377
-\c@savedoriglocation=\count378
-\c@origpublisher=\count379
-\c@savedorigpublisher=\count380
-\c@publisher=\count381
-\c@savedpublisher=\count382
-\c@language=\count383
-\c@savedlanguage=\count384
-\c@origlanguage=\count385
-\c@savedoriglanguage=\count386
-\c@pageref=\count387
-\c@savedpageref=\count388
-\shorthandwidth=\skip59
-\shortjournalwidth=\skip60
-\shortserieswidth=\skip61
-\shorttitlewidth=\skip62
-\shortauthorwidth=\skip63
-\shorteditorwidth=\skip64
-\locallabelnumberwidth=\skip65
-\locallabelalphawidth=\skip66
-\localshorthandwidth=\skip67
-\localshortjournalwidth=\skip68
-\localshortserieswidth=\skip69
-\localshorttitlewidth=\skip70
-\localshortauthorwidth=\skip71
-\localshorteditorwidth=\skip72
+\c@afterword=\count330
+\c@savedafterword=\count331
+\c@annotator=\count332
+\c@savedannotator=\count333
+\c@author=\count334
+\c@savedauthor=\count335
+\c@bookauthor=\count336
+\c@savedbookauthor=\count337
+\c@commentator=\count338
+\c@savedcommentator=\count339
+\c@editor=\count340
+\c@savededitor=\count341
+\c@editora=\count342
+\c@savededitora=\count343
+\c@editorb=\count344
+\c@savededitorb=\count345
+\c@editorc=\count346
+\c@savededitorc=\count347
+\c@foreword=\count348
+\c@savedforeword=\count349
+\c@holder=\count350
+\c@savedholder=\count351
+\c@introduction=\count352
+\c@savedintroduction=\count353
+\c@namea=\count354
+\c@savednamea=\count355
+\c@nameb=\count356
+\c@savednameb=\count357
+\c@namec=\count358
+\c@savednamec=\count359
+\c@translator=\count360
+\c@savedtranslator=\count361
+\c@shortauthor=\count362
+\c@savedshortauthor=\count363
+\c@shorteditor=\count364
+\c@savedshorteditor=\count365
+\c@labelname=\count366
+\c@savedlabelname=\count367
+\c@institution=\count368
+\c@savedinstitution=\count369
+\c@lista=\count370
+\c@savedlista=\count371
+\c@listb=\count372
+\c@savedlistb=\count373
+\c@listc=\count374
+\c@savedlistc=\count375
+\c@listd=\count376
+\c@savedlistd=\count377
+\c@liste=\count378
+\c@savedliste=\count379
+\c@listf=\count380
+\c@savedlistf=\count381
+\c@location=\count382
+\c@savedlocation=\count383
+\c@organization=\count384
+\c@savedorganization=\count385
+\c@origlocation=\count386
+\c@savedoriglocation=\count387
+\c@origpublisher=\count388
+\c@savedorigpublisher=\count389
+\c@publisher=\count390
+\c@savedpublisher=\count391
+\c@language=\count392
+\c@savedlanguage=\count393
+\c@origlanguage=\count394
+\c@savedoriglanguage=\count395
+\c@pageref=\count396
+\c@savedpageref=\count397
+\shorthandwidth=\skip62
+\shortjournalwidth=\skip63
+\shortserieswidth=\skip64
+\shorttitlewidth=\skip65
+\shortauthorwidth=\skip66
+\shorteditorwidth=\skip67
+\locallabelnumberwidth=\skip68
+\locallabelalphawidth=\skip69
+\localshorthandwidth=\skip70
+\localshortjournalwidth=\skip71
+\localshortserieswidth=\skip72
+\localshorttitlewidth=\skip73
+\localshortauthorwidth=\skip74
+\localshorteditorwidth=\skip75
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\blx-compat.def
@@ -226,19 +256,19 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex\biblatex.def
 File: biblatex.def 2024/03/21 v3.20 biblatex compatibility (PK/MW)
-\c@textcitecount=\count389
-\c@textcitetotal=\count390
-\c@textcitemaxnames=\count391
-\c@biburlbigbreakpenalty=\count392
-\c@biburlbreakpenalty=\count393
-\c@biburlnumpenalty=\count394
-\c@biburlucpenalty=\count395
-\c@biburllcpenalty=\count396
+\c@textcitecount=\count398
+\c@textcitetotal=\count399
+\c@textcitemaxnames=\count400
+\c@biburlbigbreakpenalty=\count401
+\c@biburlbreakpenalty=\count402
+\c@biburlnumpenalty=\count403
+\c@biburlucpenalty=\count404
+\c@biburllcpenalty=\count405
 \biburlbigskip=\muskip18
 \biburlnumskip=\muskip19
 \biburlucskip=\muskip20
 \biburllcskip=\muskip21
-\c@smartand=\count397
+\c@smartand=\count406
 )
 Package biblatex Info: Trying to load bibliography style 'numeric'...
 Package biblatex Info: ... file 'numeric.bbx' found.
@@ -248,8 +278,8 @@ Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/bbx\standard.bbx
 File: standard.bbx 2024/03/21 v3.20 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count398
-\c@bbx:relatedtotal=\count399
+\c@bbx:relatedcount=\count407
+\c@bbx:relatedtotal=\count408
 ))
 Package biblatex Info: Trying to load citation style 'numeric'...
 Package biblatex Info: ... file 'numeric.cbx' found.
@@ -278,8 +308,8 @@ Package biblatex Info: Document encoding is UTF8 ....
 Package: expl3 2024-10-09 L3 programming layer (loader) 
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count400
-\l__pdf_internal_box=\box52
+\l__color_backend_stack_int=\count409
+\l__pdf_internal_box=\box54
 ))
 Package biblatex Info: ... and expl3
 (biblatex)             2024-10-09 L3 programming layer (loader) 
@@ -303,14 +333,15 @@ Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
 \caption@hangindent=\dimen149
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count401
-\c@continuedfloat=\count402
+\c@caption@flags=\count410
+\c@continuedfloat=\count411
+Package caption Info: float package is loaded.
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/caption\subcaption.sty
 Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
 Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count403
+\c@subfigure=\count412
 Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count404
+\c@subtable=\count413
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/tocbibind\tocbibind.sty
 Package: tocbibind 2010/10/13 v1.5k extra ToC listings
 Package tocbibind Info: The document has section divisions on input line 50.
@@ -324,57 +355,57 @@ Package: minted2 2024/05/09 v2.9 Yet another Pygments shim for LaTeX
 Package: fvextra 2024/10/16 v1.9.0 fvextra - extensions and patches for fancyvrb
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/fancyvrb\fancyvrb.sty
 Package: fancyvrb 2024/01/20 4.5c verbatim text (tvz,hv)
-\FV@CodeLineNo=\count405
+\FV@CodeLineNo=\count414
 \FV@InFile=\read3
-\FV@TabBox=\box53
-\c@FancyVerbLine=\count406
-\FV@StepNumber=\count407
+\FV@TabBox=\box55
+\c@FancyVerbLine=\count415
+\FV@StepNumber=\count416
 \FV@OutFile=\write4
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/upquote\upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verbatim
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/lineno\lineno.sty
 Package: lineno 2023/05/20 line numbers on paragraphs v5.3
-\linenopenalty=\count408
-\output=\toks20
-\linenoprevgraf=\count409
+\linenopenalty=\count417
+\output=\toks23
+\linenoprevgraf=\count418
 \linenumbersep=\dimen150
 \linenumberwidth=\dimen151
-\c@linenumber=\count410
-\c@pagewiselinenumber=\count411
-\c@LN@truepage=\count412
-\c@internallinenumber=\count413
-\c@internallinenumbers=\count414
+\c@linenumber=\count419
+\c@pagewiselinenumber=\count420
+\c@LN@truepage=\count421
+\c@internallinenumber=\count422
+\c@internallinenumbers=\count423
 \quotelinenumbersep=\dimen152
 \bframerule=\dimen153
 \bframesep=\dimen154
-\bframebox=\box54
+\bframebox=\box56
 LaTeX Info: Redefining \\ on input line 3180.
 )
-\c@FancyVerbWriteLine=\count415
-\c@FancyVerbBufferIndex=\count416
-\c@FancyVerbBufferLine=\count417
-\c@FV@TrueTabGroupLevel=\count418
-\c@FV@TrueTabCounter=\count419
-\FV@TabBox@Group=\box55
-\FV@TmpLength=\skip73
-\c@FV@HighlightLinesStart=\count420
-\c@FV@HighlightLinesStop=\count421
-\FV@LoopCount=\count422
-\FV@NCharsBox=\box56
+\c@FancyVerbWriteLine=\count424
+\c@FancyVerbBufferIndex=\count425
+\c@FancyVerbBufferLine=\count426
+\c@FV@TrueTabGroupLevel=\count427
+\c@FV@TrueTabCounter=\count428
+\FV@TabBox@Group=\box57
+\FV@TmpLength=\skip76
+\c@FV@HighlightLinesStart=\count429
+\c@FV@HighlightLinesStop=\count430
+\FV@LoopCount=\count431
+\FV@NCharsBox=\box58
 \FV@BreakIndent=\dimen155
-\FV@BreakIndentNChars=\count423
+\FV@BreakIndentNChars=\count432
 \FV@BreakSymbolSepLeft=\dimen156
-\FV@BreakSymbolSepLeftNChars=\count424
+\FV@BreakSymbolSepLeftNChars=\count433
 \FV@BreakSymbolSepRight=\dimen157
-\FV@BreakSymbolSepRightNChars=\count425
+\FV@BreakSymbolSepRightNChars=\count434
 \FV@BreakSymbolIndentLeft=\dimen158
-\FV@BreakSymbolIndentLeftNChars=\count426
+\FV@BreakSymbolIndentLeftNChars=\count435
 \FV@BreakSymbolIndentRight=\dimen159
-\FV@BreakSymbolIndentRightNChars=\count427
-\c@FancyVerbLineBreakLast=\count428
-\FV@LineBox=\box57
-\FV@LineIndentBox=\box58
-\c@FV@BreakBufferDepth=\count429
+\FV@BreakSymbolIndentRightNChars=\count436
+\c@FancyVerbLineBreakLast=\count437
+\FV@LineBox=\box59
+\FV@LineIndentBox=\box60
+\c@FV@BreakBufferDepth=\count438
 \FV@LineWidth=\dimen160
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/tools\shellesc.sty
 Package: shellesc 2023/07/08 v1.0d unified shell escape interface for LaTeX
@@ -388,56 +419,31 @@ Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifluatex.sty
 Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 )) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/xstring\xstring.sty (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/generic/xstring\xstring.tex
-\xs_counta=\count430
-\xs_countb=\count431
+\xs_counta=\count439
+\xs_countb=\count440
 )
 Package: xstring 2023/08/22 v1.86 String manipulations (CT)
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/framed\framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip74
+\OuterFrameSep=\skip77
 \fb@frw=\dimen161
 \fb@frh=\dimen162
 \FrameRule=\dimen163
 \FrameSep=\dimen164
-) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count432
-\float@exts=\toks21
-\float@box=\box59
-\@float@everytoks=\toks22
-\@floatcapt=\box60
 )
 \minted@appexistsfile=\read4
 \minted@bgbox=\box61
 \minted@code=\write5
-\c@minted@FancyVerbLineTemp=\count433
-\c@minted@pygmentizecounter=\count434
-\@float@every@listing=\toks23
-\c@listing=\count435
+\c@minted@FancyVerbLineTemp=\count441
+\c@minted@pygmentizecounter=\count442
+\@float@every@listing=\toks24
+\c@listing=\count443
 )
-runsystem(if not exist _minted-main mkdir _minted-main)...executed.
+runsystem(if not exist _minted-testmain mkdir _minted-testmain)...executed.
 
- (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/algorithms\algorithm.sty
-Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
-\@float@every@algorithm=\toks24
-\c@algorithm=\count436
-) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algpseudocode.sty
+ (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algpseudocode.sty
 Package: algpseudocode 
- (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/algorithmicx\algorithmicx.sty
-Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
-Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count437
-\c@ALG@rem=\count438
-\c@ALG@nested=\count439
-\ALG@tlm=\skip75
-\ALG@thistlm=\skip76
-\c@ALG@Lnr=\count440
-\c@ALG@blocknr=\count441
-\c@ALG@storecount=\count442
-\c@ALG@tmpcounter=\count443
-\ALG@tmplength=\skip77
-)
 Document Style - pseudocode environments for use with the `algorithmicx' style
 ) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
@@ -801,7 +807,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip78
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 86.
+Package hyperref Info: Option `colorlinks' set `true' on input line 91.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/comment\comment.sty
 \CommentStream=\write7
  Excluding comment 'comment') (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/pdfpages\pdfpages.sty
@@ -1056,7 +1062,7 @@ Package: fancyhdr 2024/07/23 v4.3.1 Extensive control of page headers and footer
 \f@nch@O@erf=\skip97
 \f@nch@O@olf=\skip98
 \f@nch@O@orf=\skip99
-)) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/todonotes\todonotes.sty
+) (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/todonotes\todonotes.sty
 Package: todonotes 2024/01/05 v1.1.7 Todonotes source and documentation.
 Package: todonotes 2024/01/05
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
@@ -1072,43 +1078,35 @@ File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
 \c@@todonotes@numberoftodonotes=\count523
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 22.
-runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > main.aex <nul: /p x=^%~$PATH:i>> main.aex)...executed.
+runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > testmain.aex <nul: /p x=^%~$PATH:i>> testmain.aex)...executed.
 
-runsystem(del main.aex)...executed.
+runsystem(del testmain.aex)...executed.
 
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'british'.
- (main.aux (custom_structures.aux)
+ (testmain.aux)
+\openout1 = `testmain.aux'.
 
-LaTeX Warning: Label `def:' multiply defined.
-
-
-LaTeX Warning: Label `alg:grad_descent' multiply defined.
-
-)
-\openout1 = `main.aux'.
-
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
 Package biblatex Info: Trying to load language 'british'...
 Package biblatex Info: ... file 'british.lbx' found.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/lbx\british.lbx
@@ -1121,23 +1119,14 @@ File: english.lbx 2024/03/21 v3.20 biblatex localization (PK/MW)
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
-\openout3 = `main.bcf'.
+\openout3 = `testmain.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'main.bbl' found.
- (main.bbl
-
-Package biblatex Warning: The following entry could not be found
-(biblatex)                in the database:
-(biblatex)                BZ
-(biblatex)                Please verify the spelling and rerun
-(biblatex)                LaTeX afterwards.
-
-)
-Package biblatex Info: Reference section=0 on input line 26.
-Package biblatex Info: Reference segment=0 on input line 26.
+Package biblatex Info: ... file 'testmain.bbl' found.
+ (testmain.bbl)
+Package biblatex Info: Reference section=0 on input line 157.
+Package biblatex Info: Reference segment=0 on input line 157.
 Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
@@ -1160,10 +1149,10 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 26.
- (main.out) (main.out)
+Package hyperref Info: Link coloring ON on input line 157.
+ (testmain.out) (testmain.out)
 \@outlinefile=\write8
-\openout8 = `main.out'.
+\openout8 = `testmain.out'.
 
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/pdflscape\pdflscape.sty
 Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
@@ -1178,15 +1167,15 @@ File: translations-basic-dictionary-english.trsl (english translation file `tran
 )
 \symgns@font=\mathgroup9
 LaTeX Font Info:    Overwriting symbol font `gns@font' in version `bold'
-(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 26.
-Package gensymb Info: Math companion symbols declared on input line 26.
-LaTeX Info: Redefining \degree on input line 26.
-LaTeX Info: Redefining \celsius on input line 26.
-Package gensymb Info: Using text companion symbols for \degree, \celsius and \perthousand on input line 26.
-LaTeX Info: Redefining \ohm on input line 26.
-Package gensymb Info: Using \textohm for \ohm on input line 26.
-LaTeX Info: Redefining \micro on input line 26.
-Package gensymb Info: Using \textmu for \micro on input line 26.
+(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 157.
+Package gensymb Info: Math companion symbols declared on input line 157.
+LaTeX Info: Redefining \degree on input line 157.
+LaTeX Info: Redefining \celsius on input line 157.
+Package gensymb Info: Using text companion symbols for \degree, \celsius and \perthousand on input line 157.
+LaTeX Info: Redefining \ohm on input line 157.
+Package gensymb Info: Using \textohm for \ohm on input line 157.
+LaTeX Info: Redefining \micro on input line 157.
+Package gensymb Info: Using \textmu for \micro on input line 157.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1222,135 +1211,41 @@ Package gensymb Info: Using \textmu for \micro on input line 26.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\openout2 = `custom_structures.aux'.
-
-(custom_structures.tex
-\c@definition=\count530
-\c@theorem=\count531
-\c@lemma=\count532
-\c@proposition=\count533
-) (./title.tex
-<./Images/NTNU_logo.png, id=82, 426.393pt x 110.5731pt>
-File: ./Images/NTNU_logo.png Graphic file (type png)
-<use ./Images/NTNU_logo.png>
-Package pdftex.def Info: ./Images/NTNU_logo.png  used on input line 9.
-(pdftex.def)             Requested size: 170.71393pt x 44.26894pt.
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input line 27.
-
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 165.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 167.
+(C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 167.
+ (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
 
 [1
 
-
-
-
-{C:/Users/rannu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./Images/NTNU_logo.png>]) (main.toc
-LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
- (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
- (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
-\tf@toc=\write9
-\openout9 = `main.toc'.
-
- (main.lof)
-\tf@lof=\write10
-\openout10 = `main.lof'.
-
- (main.lot)
-\tf@lot=\write11
-\openout11 = `main.lot'.
-
-
-
-[1] (Sections/Introduction.tex) (Sections/Theory.tex (Sections/./Theory_subsections/Basic_definitions.tex
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.60     \end{equation*}
-                         [1]
-LaTeX Font Info:    Trying to load font information for U+euf on input line 69.
- (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\ueuf.fd
-File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-)
-
-LaTeX Warning: Marginpar on page 2 moved.
-
-) (Sections/./Theory_subsections/Symplectic_group.tex
-
-[2]
-
-LaTeX Warning: Marginpar on page 3 moved.
-
-) (Sections/./Theory_subsections/SymplecticStiefel.tex)
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 10.
-
-
-
-[3] (Sections/./Theory_subsections/Right_invariant_framework.tex
-Overfull \hbox (4.50305pt too wide) in paragraph at lines 2--3
-\OT1/cmr/m/n/10 We be-gin by de-fin-ing the point-wise right-invariant met-ric on $[](2\OML/cmm/m/it/10 n\OT1/cmr/m/n/10 )$ as the map-ping $\OML/cmm/m/it/10 g[] [] [] T[][]\OT1/cmr/m/n/10 (2\OML/cmm/m/it/10 n\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^B
- []
-
-) (Sections/./Theory_subsections/Geodesics.tex) (Sections/./Theory_subsections/Riemannian_gradient.tex
-
-LaTeX Warning: Marginpar on page 4 moved.
-
-
-
-[4]
-
-LaTeX Warning: Citation 'BZ' on page 5 undefined on input line 12.
-
-) (Sections/./Theory_subsections/Riemannian_hessian.tex
-
-[5]
-
-LaTeX Warning: Marginpar on page 6 moved.
-
-) (Sections/./Theory_subsections/Theory_to_application.tex)) (Sections/Algorithms.tex (Sections/./Algorithms_subsections/Gradient_descent.tex
-
-[6]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 14.
-) (Sections/./Algorithms_subsections/Trust_region.tex)) (Sections/Numerical_experiments.tex) (Sections/Conclusion.tex)
-
-[7]
-
-[8]
-
-[9] (main.aux (custom_structures.aux))
+{C:/Users/rannu/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] (testmain.aux)
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-10-09>
  ***********
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: EE6C0599BE71D2903933398DA3CDA651;3355.
-Package logreq Info: Writing requests to 'main.run.xml'.
-\openout1 = `main.run.xml'.
+Package rerunfilecheck Info: File `testmain.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
+Package logreq Info: Writing requests to 'testmain.run.xml'.
+\openout1 = `testmain.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 44175 strings out of 473702
- 927338 string characters out of 5719438
- 1804712 words of memory out of 5000000
- 66398 multiletter control sequences out of 15000+600000
- 568960 words of font info for 74 fonts, out of 8000000 for 9000
+ 43170 strings out of 473702
+ 900631 string characters out of 5719438
+ 1754850 words of memory out of 5000000
+ 65594 multiletter control sequences out of 15000+600000
+ 563538 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,19n,121p,896b,2461s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (11 pages, 376515 bytes).
+ 102i,11n,107p,825b,2461s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on testmain.pdf (1 page, 47469 bytes).
 PDF statistics:
- 409 PDF objects out of 1000 (max. 8388607)
- 107 named destinations out of 1000 (max. 500000)
- 170 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 35 PDF objects out of 1000 (max. 8388607)
+ 3 named destinations out of 1000 (max. 500000)
+ 13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

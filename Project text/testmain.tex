@@ -1,3 +1,7 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+
 % Author - Jon Arnt Kårstad, NTNU IV-IMT
 % Modified by Ole Gunnar Røsholt Hovland
 
@@ -50,7 +54,8 @@
 \usepackage{minted2}
 \usepackage{minted} % Includes several programming languages and styles, visit --https://www.ntnu.no/wiki/display/imtsoftware/Code+in+LaTeX-- for more information and examples
 \usepackage{algorithm}
-\usepackage{algpseudocode}
+\usepackage{algpseudocode} 
+
 
 % --- Colors ---
 \usepackage[dvipsnames]{xcolor} % Using colors in LaTeX. This package is placed here as it needs to be imported previous to the flow chart packages to ensure no errors.
@@ -143,4 +148,28 @@
 
 % --- Other tools ---
 \usepackage{todonotes} % Add to-do notes in the document
-% \usepackage{cleveref} % Clever references, e.g. \cref{label} will produce "equation (1)" or "figure 1" depending on what is referenced. Sadly, incompatible with the algorithms package
+% \usepackage{cleveref} % Clever references, e.g. \cref{label} will produce "equation (1)" or "figure 1" depending on what is referenced
+% % % % Define custom names for the algorithm environment
+% \crefname{algocf}{alg.}{algs.}
+% \Crefname{algocf}{Algorithm}{Algorithms}
+
+
+\begin{document}
+
+
+asdas
+
+% \begingroup
+% \renewcommand\thealgorithm{} % Disable cleveref's handling of numbering
+\begin{algorithm}[htbp]
+\caption{Simple Algorithm}
+\begin{algorithmic}
+    \State Initialize $x \gets 0$
+    \While{$x < 10$}
+        \State $x \gets x + 1$
+    \EndWhile
+\end{algorithmic}
+\end{algorithm}
+% \endgroup
+
+\end{document}

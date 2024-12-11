@@ -2,15 +2,19 @@
 \contentsline {section}{List of Figures}{i}{section*.3}%
 \contentsline {section}{List of Tables}{i}{section*.4}%
 \contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
-\contentsline {section}{\numberline {2}Theory}{1}{section.2}%
+\contentsline {section}{\numberline {2}Introductory Theory}{1}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Foundational definitions}{1}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}The Symplectic group}{3}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}The Symplectic Stiefel manifold}{3}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Right-invariant framework}{4}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Geodesics}{4}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}Riemannian gradient of the Symplectic Stiefel manifold}{4}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Riemannian Hessian of the Symplectic Stiefel manifold}{5}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Algorithms}{6}{section.3}%
-\contentsline {section}{\numberline {4}Numerical Experiments}{6}{section.4}%
-\contentsline {section}{\numberline {5}Conclusion}{6}{section.5}%
-\contentsline {section}{Bibliography}{7}{section*.32}%
+\contentsline {section}{\numberline {3}Right-Invariant Framework on the \\Symplectic Stiefel Manifold}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Right-invariant metric}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Geodesics}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Riemannian gradient of the Symplectic Stiefel manifold}{5}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Riemannian Hessian of the Symplectic Stiefel manifold}{5}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Moving from Theory to Application}{6}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Algorithms}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Gradient descent}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Trust region method}{7}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Numerical Experiments}{8}{section.5}%
+\contentsline {section}{\numberline {6}Conclusion}{8}{section.6}%
+\contentsline {section}{Bibliography}{9}{section*.35}%

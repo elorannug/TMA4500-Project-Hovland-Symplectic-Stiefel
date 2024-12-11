@@ -1,0 +1,34 @@
+\subsection{Trust region method}
+
+
+% Source boumal. Algorithm 6.3 
+\begin{algorithm}[H]
+    \caption{Riemannian Trust-region method}\label{alg:grad_descent}
+    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, maximum number of iterations $N\in \mathbb{N}$,  maximal radius $\overline{\Delta}>0$, initial radius $\Delta_{0}\in(0,\overline{\Delta})$, ratio threshold $\gamma_{\text{min}}>0$
+
+    tolerance parameters $\epsilon, \epsilon_{x}, \epsilon_{f}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with gradient $\operatorname*{grad}_{f}$ where $\langle \cdot,\cdot \rangle$ denotes the Euclidean inner product.
+    \begin{algorithmic}[1]
+        \For{$0\leq k\leq N$}
+        \State $X_{k}=\operatorname*{arg min}_{X\in T_{p_{k}}\mathrm{SpSt}(2n, 2k)}m_{k}(X)$, subject to $\lvert \lvert X \rvert  \rvert _{p_{k}}\leq \Delta_{k}$ with $m_{k}$ as in todo: ref
+        \State $\hat{p}=\mathcal{R}_{p_{k}}(X_{k})$
+        \State $\gamma_{k}=\big(f(p_{k})-f(\hat{p})\big)/\big(m_{k}(0)-m_{k}(X_{k})\big)$
+        \State Compute new iterate\begin{equation*}
+            p_{k+1}=
+            \begin{cases}
+            \hat{p} & \text{if }\gamma_{k}>\gamma_{\text{min}} \\
+            p_{k}  & \text{otherwise}
+            \end{cases}
+            \end{equation*}
+        \State Compute new trust-region radius\begin{equation*}
+    \Delta_{k+1}=
+    \begin{cases}
+    \frac{1}{4}\Delta_{k} & \text{if }\gamma_{k}<\frac{1}{4} \\
+    \operatorname{min}\begin{Bmatrix}2\Delta_{k},\overline{\Delta_{k}}\end{Bmatrix} & \text{if }\gamma>\frac{3}{4}\text{ and }\lvert \lvert X_{k} \rvert  \rvert =\Delta_{k} \\
+    \Delta_{k} & \text{otherwise}
+    \end{cases}
+    \end{equation*}
+        \State Todo: add tolerances
+    \EndFor
+    \end{algorithmic}
+    \textbf{Output:} Iterates $p_{k}$
+\end{algorithm}

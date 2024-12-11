@@ -1,13 +1,13 @@
 \subsection{Riemannian Hessian of the Symplectic Stiefel manifold}
 \todo[inline]{Define the remaining preliminaries for Hessian. Make an intro to section. loosly following Appendix A in Jz}
 
-For two smooth vector fields, $\mathcal{X}(p)=\mathbf{\alpha}^{\mathrm{T}}\mathbf{\partial}$ and $\mathcal{Y}(p)=\mathbf{\beta}^{\mathrm{T}}\mathbf{\partial}$ defined as in \Cref{def:vector_field_on_manifold}, the covariant derivative (defined through the Riemannian connection by \cref{def:riemannian_connection}) written in local coordinates is
+For two smooth vector fields, $\mathcal{X}(p)=\mathbf{\alpha}^{\mathrm{T}}\mathbf{\partial}$ and $\mathcal{Y}(p)=\mathbf{\beta}^{\mathrm{T}}\mathbf{\partial}$ defined as in Definition \ref{def:vector_field_on_manifold}, the covariant derivative (defined through the Riemannian connection by Definition \ref{def:riemannian_connection}) written in local coordinates is
 \begin{equation*}
     \nabla_{\mathcal{X}}\mathcal{Y}=\sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}\alpha_{i}\partial_{i}(\beta_{j})\partial_{j}+\alpha_{i}\beta_{j}\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}.
 \end{equation*}
-In preparation for the Hessian, we include the description of the covariant derivative from \cite[p.~96]{Tu2017} to restrict the covariant derivative further. We want to define the covariant derivative of a vector field along a curve $c(t)$. $c(t)$ is the smooth curve, $c:I\xrightarrow{}\mathcal{M},$ $t\mapsto(\gamma_{1}(t), \dots, \gamma_{n}(t))$, where $I \coloneqq [a,b]\subseteq \mathbb{R}$. Since we have an affine connection on $\mathcal{M}$, the following unique map exists:
+In preparation for the Hessian, we include the description of the covariant derivative from \cite[p.~96]{Tu2017} to restrict the covariant derivative further. We want to define the covariant derivative of a vector field along a curve $c(t)$. $c(t)$ is the smooth curve, $c\colon I\xrightarrow{}\mathcal{M},$ $t\mapsto(\gamma_{1}(t), \dots, \gamma_{n}(t))$, where $I \coloneqq [a,b]\subseteq \mathbb{R}$. Since we have an affine connection on $\mathcal{M}$, the following unique map exists:
 \begin{equation*}
-    \frac{D}{\mathrm{d}t}:\Gamma(T \mathcal{M}|_{c(t)})\xrightarrow{}\Gamma(T \mathcal{M}|_{c(t)}),
+    \frac{D}{\mathrm{d}t}\colon \Gamma(T \mathcal{M}|_{c(t)})\xrightarrow{}\Gamma(T \mathcal{M}|_{c(t)}),
 \end{equation*}
 where $\Gamma(T \mathcal{M}|_{c(t)})$ denotes the the vector space of all smooth vector fields along $c(t)$. If $V\in \Gamma(T \mathcal{M}|_{c(t)})$ is induced by $\mathcal{X}$, meaning $V(t)=\mathcal{X}|_{c(t)}$, then
 \begin{equation*}
@@ -26,8 +26,13 @@ where $X,Y\in \Gamma(T \mathcal{M}|_{c(t)})$.
 
 
 To find the Christoffel symbols for $\mathrm{SpSt}(2n, 2k)$ with respect to the right invariant metric $g$ defined in \eqref{eq:spst_metric}, we differentiate the geodesic formula from \todo{ref geod.}ref, and use \eqref{eq:christoffel_symbols_through_geodesic} to achieve the following formula,
-$$\Gamma(X,X)=-\ddot{\gamma}(0)=-(\overline{\Omega}(X)-\overline{\Omega}(X)^{\mathrm{T}})(X+\overline{\Omega}(X)^{\mathrm{T}}p)-(\overline{\Omega}(X)^{\mathrm{T}})^{2}p.$$
+\begin{equation*}
+    \Gamma(X,X)=-\ddot{\gamma}(0)=-(\overline{\Omega}(X)-\overline{\Omega}(X)^{\mathrm{T}})(X+\overline{\Omega}(X)^{\mathrm{T}}p)-(\overline{\Omega}(X)^{\mathrm{T}})^{2}p.
+\end{equation*}
 Here $X=\dot{\gamma}(0)\in T_{p}\mathrm{SpSt}(2n, 2k)$, $p\in \mathrm{SpSt}(2n, 2k)$, and $\overline{\Omega}(X)$ is as in \todo{define this somewhere}ref. 
-With our metric $g$, the Hessian at $p$ of a smooth function $f:\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$ is the endomorphism $\operatorname{Hess}f(p):T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}T_{p}\mathrm{SpSt}(2n, 2k)$,
-$$\operatorname{Hess}f(p)[X]=\left.\frac{\mathrm{d}}{\mathrm{d}t}\operatorname{grad}f(c(t))\right|_{t=0}+\Gamma(\operatorname{grad}f(p),X),$$
+With our metric $g$, the Hessian at $p$ of a smooth function $f\colon \mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$ is the endomorphism 
+\begin{gather*}
+    \operatorname{Hess}f(p)\colon T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}T_{p}\mathrm{SpSt}(2n, 2k),  \\
+    \operatorname{Hess}f(p)[X]=\left.\frac{\mathrm{d}}{\mathrm{d}t}\operatorname{grad}f(c(t))\right|_{t=0}+\Gamma(\operatorname{grad}f(p),X),
+\end{gather*}
 where $\operatorname{grad}f(\cdot)$ is as in \ref{eq:rie_grad}. $c(t)\in \mathrm{SpSt}(2n, 2k)$ is an arbitrary curve such that $c(0)=p$ and $c'(0)=X$ % Curve definition should be somewhere else
