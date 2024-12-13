@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  11 DEC 2024 19:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  13 DEC 2024 19:27
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1072,7 +1072,7 @@ File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
 \c@@todonotes@numberoftodonotes=\count523
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 22.
+Package hyperref Info: Option `colorlinks' set `true' on input line 32.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > main.aex <nul: /p x=^%~$PATH:i>> main.aex)...executed.
 
 runsystem(del main.aex)...executed.
@@ -1091,24 +1091,24 @@ LaTeX Warning: Label `alg:grad_descent' multiply defined.
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
 Package biblatex Info: Trying to load language 'british'...
 Package biblatex Info: ... file 'british.lbx' found.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/lbx\british.lbx
@@ -1134,8 +1134,8 @@ Package biblatex Warning: The following entry could not be found
 (biblatex)                LaTeX afterwards.
 
 )
-Package biblatex Info: Reference section=0 on input line 26.
-Package biblatex Info: Reference segment=0 on input line 26.
+Package biblatex Info: Reference section=0 on input line 36.
+Package biblatex Info: Reference segment=0 on input line 36.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
@@ -1160,7 +1160,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 26.
+Package hyperref Info: Link coloring ON on input line 36.
  (main.out) (main.out)
 \@outlinefile=\write8
 \openout8 = `main.out'.
@@ -1178,15 +1178,15 @@ File: translations-basic-dictionary-english.trsl (english translation file `tran
 )
 \symgns@font=\mathgroup9
 LaTeX Font Info:    Overwriting symbol font `gns@font' in version `bold'
-(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 26.
-Package gensymb Info: Math companion symbols declared on input line 26.
-LaTeX Info: Redefining \degree on input line 26.
-LaTeX Info: Redefining \celsius on input line 26.
-Package gensymb Info: Using text companion symbols for \degree, \celsius and \perthousand on input line 26.
-LaTeX Info: Redefining \ohm on input line 26.
-Package gensymb Info: Using \textohm for \ohm on input line 26.
-LaTeX Info: Redefining \micro on input line 26.
-Package gensymb Info: Using \textmu for \micro on input line 26.
+(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 36.
+Package gensymb Info: Math companion symbols declared on input line 36.
+LaTeX Info: Redefining \degree on input line 36.
+LaTeX Info: Redefining \celsius on input line 36.
+Package gensymb Info: Using text companion symbols for \degree, \celsius and \perthousand on input line 36.
+LaTeX Info: Redefining \ohm on input line 36.
+Package gensymb Info: Using \textohm for \ohm on input line 36.
+LaTeX Info: Redefining \micro on input line 36.
+Package gensymb Info: Using \textmu for \micro on input line 36.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1230,7 +1230,7 @@ Package gensymb Info: Using \textmu for \micro on input line 26.
 \c@lemma=\count532
 \c@proposition=\count533
 ) (./title.tex
-<./Images/NTNU_logo.png, id=82, 426.393pt x 110.5731pt>
+<./Images/NTNU_logo.png, id=86, 426.393pt x 110.5731pt>
 File: ./Images/NTNU_logo.png Graphic file (type png)
 <use ./Images/NTNU_logo.png>
 Package pdftex.def Info: ./Images/NTNU_logo.png  used on input line 9.
@@ -1271,8 +1271,8 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.60     \end{equation*}
-                         [1]
+l.58     \begin{equation*}
+                           [1]
 LaTeX Font Info:    Trying to load font information for U+euf on input line 69.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
@@ -1314,43 +1314,65 @@ LaTeX Warning: Citation 'BZ' on page 5 undefined on input line 12.
 
 LaTeX Warning: Marginpar on page 6 moved.
 
-) (Sections/./Theory_subsections/Theory_to_application.tex)) (Sections/Algorithms.tex (Sections/./Algorithms_subsections/Gradient_descent.tex
+) (Sections/./Theory_subsections/Theory_to_application.tex)) (Sections/Algorithms.tex
 
-[6]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 14.
-) (Sections/./Algorithms_subsections/Trust_region.tex)) (Sections/Numerical_experiments.tex) (Sections/Conclusion.tex)
+[6] (Sections/./Algorithms_subsections/Gradient_descent.tex
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 24.
+) (Sections/./Algorithms_subsections/Trust_region.tex
 
 [7]
 
-[8]
+LaTeX Warning: Reference `' on page 8 undefined on input line 12.
 
-[9] (main.aux (custom_structures.aux))
+
+LaTeX Warning: Reference `' on page 8 undefined on input line 12.
+
+
+LaTeX Warning: Reference `alg:TR' on page 8 undefined on input line 20.
+
+
+LaTeX Warning: Reference `' on page 8 undefined on input line 20.
+
+
+
+[8])) (Sections/Numerical_experiments.tex
+
+LaTeX Warning: Reference `???' on page 9 undefined on input line 14.
+
+(Sections/./Numerical_exp_subsections/NSM_proper.tex)) (Sections/Conclusion.tex)
+
+[9]
+
+[10] (main.aux (custom_structures.aux))
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-10-09>
  ***********
 
 
+LaTeX Warning: There were undefined references.
+
+
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: EE6C0599BE71D2903933398DA3CDA651;3355.
+(rerunfilecheck)             Checksum: 2B771E584A87BBA2EC448BF444FEF022;3700.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 44175 strings out of 473702
- 927338 string characters out of 5719438
- 1804712 words of memory out of 5000000
- 66398 multiletter control sequences out of 15000+600000
+ 44192 strings out of 473702
+ 928280 string characters out of 5719438
+ 1803756 words of memory out of 5000000
+ 66405 multiletter control sequences out of 15000+600000
  568960 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,19n,121p,896b,2461s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 117i,19n,121p,903b,2461s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (11 pages, 376515 bytes).
+Output written on main.pdf (12 pages, 392237 bytes).
 PDF statistics:
- 409 PDF objects out of 1000 (max. 8388607)
- 107 named destinations out of 1000 (max. 500000)
- 170 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 440 PDF objects out of 1000 (max. 8388607)
+ 110 named destinations out of 1000 (max. 500000)
+ 178 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,9 +1,19 @@
-\subsection{Gradient descent}
+\subsection{Riemannian gradient descent}
+The first algorithm we will define is Riemannian gradient descent (GD). Although seemingly simple, the Euclidean gradient descent (E-GD) is a powerful algorithm because of its simplicity. The lack of assumptions makes the algorithm easily applicable to a wide range of problems, and its simplicity also makes it computationally efficient. Initially following \cite[p.~56]{Boumal2023}, the E-GD is intuitivly transferred to the Riemannian framework. For the sequence $\left\{ p_{k} \right\}$ where $k\in \mathbb{N}$, we have the point $p_{k}\in \mathrm{SpSt}(2n, 2k)$, where the next point in the sequence is computed as 
+%
+\begin{equation*}
+p_{k+1}=\mathcal{R}_{p_{k}}(-t_{k}\operatorname{grad}f(p_{k})).
+\end{equation*}
+%
+Here $t_{k}>0$ is some step-size to be determined. 
 
-\todo[inline]{Armijo line search bou23, p.58}%https://manoptjl.org/stable/plans/stepsize/#Manopt.ArmijoLinesearch
-
-
-
+To ensure that reach step sufficiently decreases the cost function, we will use the Riemannian version of the Armijo condition to compute $t_{k}$. In \cite[p.~17]{GaoSonAbsilStykel2021} the Armijo condition for each iteration $k$ given for $\beta \in(0,1)$, and a search direction $X_{k}$ as
+%
+\begin{equation}\label{eq:Armijo}
+f\big(\mathcal{R}_{p_{k}}(t_{k}X_{k})\big)\leq f(p_{k})+\beta t_{k}\langle \operatorname{grad}f(p_{k}),X_{k} \rangle _{p_{k}}.
+\end{equation}
+%
+The step-size $t_{k}$ is calculated as $t_{k}=\gamma_{k}\delta^{h}$, where $\gamma\in(0,1)$ is the backtracking parameter and $h$ is the smallest integer such that \eqref{eq:Armijo} is satisfied. 
 
 % source https://epubs.siam.org/doi/epdf/10.1137/20M1348522
 
@@ -15,9 +25,9 @@
     \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, parameters $\beta, \gamma \in(0,1)$, steplength range $0<\gamma_{\text{min}}<\gamma_{\text{max}}$, initial step size $\gamma_{0}=f(p_{0})$, maximum number of iterations $N\in \mathbb{N}$, step parameters $h_{\text{min}}<h_{\text{max}}\in \mathbb{Z}$, tolerance parameters $\epsilon, \epsilon_{x}, \epsilon_{f}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with gradient $\operatorname*{grad}_{f}$ where $\langle \cdot,\cdot \rangle$ denotes the Euclidean inner product.
     \begin{algorithmic}[1]
         \For{$0\leq k\leq N$}
-        \State $X_{k}=-\operatorname{grad}f(X_{k})$
+        \State $X_{k}=-\operatorname{grad}f(p_{k})$
         \State $\gamma_{k}=\operatorname{max}(\gamma_{\text{min}},(\gamma_{k}, \gamma_{\text{max}}))$
-        \State Armijo, $t_{k}=\dots$
+        \State Find $t_{k}$ through solving \eqref{eq:Armijo}
         \State $p_{k+1}=\mathcal{R}_{p_{k}}(t_{k}X_{k})$
         \If{$\lvert \lvert \operatorname{grad}f(p_{k}) \rvert  \rvert_{\text{F}}<\epsilon$}
         \If{$\frac{\lvert f(p_{k})-f(p_{k+1}) \rvert}{\lvert f(p_{k})+1 \rvert}<\epsilon_{f}$ and $\frac{\lvert \lvert p_{k}-p_{k+1} \rvert  \rvert _{\text{F}}}{\sqrt{ 2n }}<\epsilon_{x}$}
@@ -26,5 +36,7 @@
         \EndIf
         \EndFor
     \end{algorithmic}
-    \textbf{Output:} Iterates $p_{k}$
+    \textbf{Output:} Iterates $\{p_{k}\}$
 \end{algorithm}
+
+For robustness it is important to know if this algorithm behaves properly, in the sense that we want it to reliably converge to critical points of $f$. It is shown in \cite[Cor.~5.8]{GaoSonAbsilStykel2021} that for $\mathrm{SpSt}(2n, 2k)$ Algorithm \ref{alg:grad_descent} generates an infinite sequence of iterates $\{p_{k}\}$\cite[Prop.~5.6]{GaoSonAbsilStykel2021}. It can ve shown that every accumulation point $p^*$ of $\left\{ p_{k} \right\}$ is a critical point of $f$, meaning $\operatorname{grad}f(p^{*})=0$. 

@@ -202,6 +202,57 @@
       \verb arXiv:physics/9806030v1
       \endverb
     \endentry
+    \entry{GaoSonAbsilStykel2021}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=4b8da17a1cd42b7bfaba56a8dbcf5168}{%
+           family={Gao},
+           familyi={G\bibinitperiod},
+           given={Bin},
+           giveni={B\bibinitperiod}}}%
+        {{hash=0391658a9fced59d427cbebc33f50c16}{%
+           family={Son},
+           familyi={S\bibinitperiod},
+           given={Nguyen\bibnamedelima Son},
+           giveni={N\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=9a81fe9ad87cf630eb4a68e86949545d}{%
+           family={Absil},
+           familyi={A\bibinitperiod},
+           given={P.-A.},
+           giveni={P\bibinithyphendelim A\bibinitperiod}}}%
+        {{hash=78d8a101f4137e8100120693fc293177}{%
+           family={Stykel},
+           familyi={S\bibinitperiod},
+           given={Tatjana},
+           giveni={T\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Society for Industrial & Applied Mathematics (SIAM)}%
+      }
+      \strng{namehash}{ce7c2ff638e28c47dac8fa1d458c0d77}
+      \strng{fullhash}{52eb6fe5567443aa9b6737dfd8794e6b}
+      \strng{fullhashraw}{52eb6fe5567443aa9b6737dfd8794e6b}
+      \strng{bibnamehash}{ce7c2ff638e28c47dac8fa1d458c0d77}
+      \strng{authorbibnamehash}{ce7c2ff638e28c47dac8fa1d458c0d77}
+      \strng{authornamehash}{ce7c2ff638e28c47dac8fa1d458c0d77}
+      \strng{authorfullhash}{52eb6fe5567443aa9b6737dfd8794e6b}
+      \strng{authorfullhashraw}{52eb6fe5567443aa9b6737dfd8794e6b}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{journaltitle}{SIAM Journal on Optimization}
+      \field{title}{Riemannian optimization on the symplectic Stiefel manifold}
+      \field{volume}{31}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb https://doi.org/10.1137/20M1348522
+      \endverb
+      \verb{eprint}
+      \verb arXiv:2006.15226
+      \endverb
+    \endentry
     \entry{JensenZimmermann2024}{online}{}{}
       \name{author}{2}{}{%
         {{hash=c7fdffec2b5cc2706e8b943da2ccf26d}{%
