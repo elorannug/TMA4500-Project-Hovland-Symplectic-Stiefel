@@ -2408,8 +2408,9 @@
     <bcf:citekey order="34" intorder="1">Boumal2023</bcf:citekey>
     <bcf:citekey order="35" intorder="1">Boumal2023</bcf:citekey>
     <bcf:citekey order="36" intorder="1">Boumal2023</bcf:citekey>
-    <bcf:citekey order="37" intorder="1">JensenZimmermann2024</bcf:citekey>
+    <bcf:citekey order="37" intorder="1">Hovland2024</bcf:citekey>
     <bcf:citekey order="38" intorder="1">JensenZimmermann2024</bcf:citekey>
+    <bcf:citekey order="39" intorder="1">JensenZimmermann2024</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

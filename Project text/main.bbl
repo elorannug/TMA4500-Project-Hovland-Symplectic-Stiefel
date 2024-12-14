@@ -253,6 +253,35 @@
       \verb arXiv:2006.15226
       \endverb
     \endentry
+    \entry{Hovland2024}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=0382ac83240602230999abae790ce5dc}{%
+           family={Hovland},
+           familyi={H\bibinitperiod},
+           given={Ole\bibnamedelimb Gunnar\bibnamedelima Røsholt},
+           giveni={O\bibinitperiod\bibinitdelim G\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+      }
+      \strng{namehash}{0382ac83240602230999abae790ce5dc}
+      \strng{fullhash}{0382ac83240602230999abae790ce5dc}
+      \strng{fullhashraw}{0382ac83240602230999abae790ce5dc}
+      \strng{bibnamehash}{0382ac83240602230999abae790ce5dc}
+      \strng{authorbibnamehash}{0382ac83240602230999abae790ce5dc}
+      \strng{authornamehash}{0382ac83240602230999abae790ce5dc}
+      \strng{authorfullhash}{0382ac83240602230999abae790ce5dc}
+      \strng{authorfullhashraw}{0382ac83240602230999abae790ce5dc}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{TMA4500-Project-Hovland-Symplectic-Stiefel}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://github.com/kellertuer/TMA4500-Project-Hovland-Symplectic-Stiefel.git
+      \endverb
+      \verb{url}
+      \verb https://github.com/kellertuer/TMA4500-Project-Hovland-Symplectic-Stiefel.git
+      \endverb
+    \endentry
     \entry{JensenZimmermann2024}{online}{}{}
       \name{author}{2}{}{%
         {{hash=c7fdffec2b5cc2706e8b943da2ccf26d}{%

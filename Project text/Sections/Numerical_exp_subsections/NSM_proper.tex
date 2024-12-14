@@ -1,1 +1,238 @@
 \subsection{Nearest symplectic matrix problem}
+
+% \begin{tikzpicture}
+%     \begin{axis}[
+%         title={Convergence of the cost-function value},
+%         xlabel={Iteration},
+%         ylabel={Cost-function value},
+%         xmode=log,
+%         ymode=log
+%     ]
+%         \addplot table [
+%             x=iterations, 
+%             y=cost_GD, 
+%             col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+%         \addlegendentry{GD}
+
+%         \addplot table [
+%             x=iteration_TR_hess, 
+%             y=cost_TR_hess, 
+%             col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+%         \addlegendentry{TR-1}
+
+%         \addplot table [
+%             x=iteration_TR_hess_approx, 
+%             y=cost_TR_hess_approx, 
+%             col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+%         \addlegendentry{TR-2}
+        
+%     \end{axis}
+% \end{tikzpicture}
+
+\begin{tikzpicture}
+    \begin{groupplot}[
+        group style = {group size = 2 by 1},
+        xlabel={Iteration}
+    ]
+    % (1,1)
+    \nextgroupplot[
+        title = {Convergence of the cost-function},
+        ylabel={Cost-function value},
+        xmode=log,
+        ymode=log]
+        \addplot table [
+            x=iterations, 
+            y=cost_GD, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+        \addlegendentry{GD}
+
+        \addplot table [
+            x=iteration_TR_hess, 
+            y=cost_TR_hess, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+        \addlegendentry{TR-1}
+
+        \addplot table [
+            x=iteration_TR_hess_approx, 
+            y=cost_TR_hess_approx, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+        \addlegendentry{TR-2}
+    % (1,2)
+    \nextgroupplot[
+        title = {Convergence of the gradient of the cost-function},
+        ylabel={Cost-function value},
+        ymode=log,
+        xmode=log]
+        \addplot table [
+            x=iterations, 
+            y=gradient_GD, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+        \addlegendentry{GD}
+
+        \addplot table [
+            x=iteration_TR_hess, 
+            y=gradient_TR_hess, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+        \addlegendentry{TR-1}
+
+        \addplot table [
+            x=iteration_TR_hess_approx, 
+            y=gradient_TR_hess_approx, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test.csv};
+        \addlegendentry{TR-2}
+    
+    
+    \end{groupplot}
+\end{tikzpicture}
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tikzpicture}
+    \begin{groupplot}[
+        group style = {group size = 2 by 3},
+        xlabel={Iteration},
+        log basis x={10}
+    ]
+    % (1,1)
+    \nextgroupplot[
+        title = {Convergence of $f(p)$, for $k=5$},
+        ylabel={Cost-function value},
+        xmode=log,
+        ymode=log]
+        \addplot table [
+            x=iterations, 
+            y=cost_GD, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k5.csv};
+        \addlegendentry{GD}
+
+        \addplot table [
+            x=iteration_TR_hess, 
+            y=cost_TR_hess, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k5.csv};
+        \addlegendentry{TR-1}
+
+        \addplot table [
+            x=iteration_TR_hess_approx, 
+            y=cost_TR_hess_approx, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k5.csv};
+        \addlegendentry{TR-2}
+    % (1,2)
+    \nextgroupplot[
+        title = {Convergence of $\nabla f(p)$, for $k=5$},
+        ylabel={Cost-function value},
+        ymode=log,
+        xmode=log]
+        \addplot table [
+            x=iterations, 
+            y=gradient_GD, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k5.csv};
+        \addlegendentry{GD}
+
+        \addplot table [
+            x=iteration_TR_hess, 
+            y=gradient_TR_hess, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k5.csv};
+        \addlegendentry{TR-1}
+
+        \addplot table [
+            x=iteration_TR_hess_approx, 
+            y=gradient_TR_hess_approx, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k5.csv};
+        \addlegendentry{TR-2}
+    % (2,1)
+    \nextgroupplot[
+        title = {Convergence of $f(p)$, for $k=10$},
+        ylabel={Cost-function value},
+        xmode=log,
+        ymode=log]
+        \addplot table [
+            x=iterations, 
+            y=cost_GD, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k10.csv};
+        \addlegendentry{GD}
+
+        \addplot table [
+            x=iteration_TR_hess, 
+            y=cost_TR_hess, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k10.csv};
+        \addlegendentry{TR-1}
+
+        \addplot table [
+            x=iteration_TR_hess_approx, 
+            y=cost_TR_hess_approx, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k10.csv};
+        \addlegendentry{TR-2}
+    % (2,2)
+    \nextgroupplot[
+        title = {Convergence of $\nabla f(p)$, for $k=10$},
+        ylabel={Cost-function value},
+        ymode=log,
+        xmode=log]
+        \addplot table [
+            x=iterations, 
+            y=gradient_GD, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k10.csv};
+        \addlegendentry{GD}
+
+        \addplot table [
+            x=iteration_TR_hess, 
+            y=gradient_TR_hess, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k10.csv};
+        \addlegendentry{TR-1}
+
+        \addplot table [
+            x=iteration_TR_hess_approx, 
+            y=gradient_TR_hess_approx, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k10.csv};
+        \addlegendentry{TR-2}
+    % (3,1)
+    \nextgroupplot[
+        title = {Convergence of $f(p)$, for $k=20$},
+        ylabel={Cost-function value},
+        xmode=log,
+        ymode=log]
+        \addplot table [
+            x=iterations, 
+            y=cost_GD, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k20.csv};
+        \addlegendentry{GD}
+
+        \addplot table [
+            x=iteration_TR_hess, 
+            y=cost_TR_hess, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k20.csv};
+        \addlegendentry{TR-1}
+
+        \addplot table [
+            x=iteration_TR_hess_approx, 
+            y=cost_TR_hess_approx, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k20.csv};
+        \addlegendentry{TR-2}
+    % (3,2)
+    \nextgroupplot[
+        title = {Convergence of $\nabla f(p)$, for $k=20$},
+        ylabel={Cost-function value},
+        ymode=log,
+        xmode=log]
+        \addplot table [
+            x=iterations, 
+            y=gradient_GD, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k20.csv};
+        \addlegendentry{GD}
+
+        \addplot table [
+            x=iteration_TR_hess, 
+            y=gradient_TR_hess, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k20.csv};
+        \addlegendentry{TR-1}
+
+        \addplot table [
+            x=iteration_TR_hess_approx, 
+            y=gradient_TR_hess_approx, 
+            col sep=comma]{../2nd_order_nearest_sp_matrix_test_n100k20.csv};
+        \addlegendentry{TR-2}
+    
+    
+    \end{groupplot}
+\end{tikzpicture}

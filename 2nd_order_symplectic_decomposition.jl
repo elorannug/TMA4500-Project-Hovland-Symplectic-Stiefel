@@ -8,10 +8,6 @@ using InteractiveUtils
 using Manopt, Manifolds, Distributions, Random, LinearAlgebra, 
 Plots, BenchmarkTools, Printf
 
-# ╔═╡ 765f5af5-ca3f-4c6a-81f0-adba6db4aeeb
-# For saving to .csv
-using CSV, DataFrames
-
 # ╔═╡ 5da75c4a-504c-4fb8-a531-ace91b6836a9
 md"""
 Note, BZ stands for Bendocat & Zimmermann
@@ -31,30 +27,32 @@ md"""
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 100 # In the problem report {100} were utilized
+n = 10
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 5 # In the problemreport {5, 10, 20} were utilized
+k = 3
+
+# ╔═╡ 1b0763d0-3c2b-43bb-b663-c792f5f4ce24
+r = 10
+
+# ╔═╡ 0011fbe2-acd2-4798-8e82-9cd4b567423f
+m = 25 # Jensen picked 100
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
 
-# ╔═╡ 51b3f6de-8841-4cb0-8eeb-87b9a3e76d55
-md"""
-### Generate a random point, $A$
-"""
+# ╔═╡ 1fabcdce-2a13-4ea3-820d-86342270f580
+T_manif = SymplecticStiefel(2*n,2*r)
 
 # ╔═╡ d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 begin
 	Random.seed!(seed)
-	rand_A = randn(2*n,2*k) 
+	rand_T = rand(T_manif)
+	rand_C = randn(2*r,m)
 end;
 
 # ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
-A = rand_A/norm(rand_A)
-
-# ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
-is_point(M, A; error=:info)
+S = rand_T * (rand_C/norm(rand_C))
 
 # ╔═╡ 6460d549-e79d-473e-82e9-92c261a02dd7
 md"""
@@ -71,76 +69,6 @@ begin
 	Random.seed!(seed)
 	U0 = rand(M)
 end
-
-# ╔═╡ 9281660e-6a48-4b2d-b792-13b8803e2a5e
-# ╠═╡ disabled = true
-#=╠═╡
-begin
-	@printf "["
-for i in 1:size(U0, 1)
-    for j in 1:size(U0, 2)
-        @printf("%.32f", U0[i, j])
-        if j < size(U0, 2)
-            @printf "  "
-        end
-    end
-	@printf "\n"
-end
-    @printf "]"
-end
-  ╠═╡ =#
-
-# ╔═╡ 5895c078-5f50-4783-9ecd-acdacc38ab5d
-# ╠═╡ disabled = true
-#=╠═╡
-begin # n = 2, k = 1
-	A = [-0.480444   0.470344
-  		0.304117  -0.104969
-  		0.318186   0.143638
-  		0.567337   0.0264584]
-	U0 = [-1.40663890210255781987314094294561  0.23371634267482957469930227034638
-		0.40603619258114187484665080773993  -0.55070185394803905509775177051779
-		1.09738409755748933527286226308206  -1.23250078660319939416467605042271
-		-0.44419512036050057268710133939749  -0.57282548568309843428636440876289]
-	X = [-0.45604098553023686424268134942395  1.00874277615952712139346658659633
-		0.49420549013378234359805674102972  -0.19475315178057600595806775345409
-		1.14370352044281964332128609385109  -0.57741159467602198862579143678886
-		0.34114544561118481658112955301476  0.44757702285017553212043139865273]
-end
-  ╠═╡ =#
-
-# ╔═╡ 91dfd45c-a658-4d95-b1e8-34453090cc12
-# ╠═╡ disabled = true
-#=╠═╡
-begin # n = 4, k = 1
-	A = [
-	    0.2927  0.3440
-	    0.3254  0.3466
-	    0.0456  0.0566
-	    0.3281  0.3487
-	    0.2272  0.3439
-	    0.0350  0.1744
-	    0.1001  0.2875
-	    0.1965  0.0510
-	]
-	U0 = [-1.50835280569350471679967995441984  1.44811016664258151998012635885971
-	1.00828481053718577165057013189653  -0.29919980071474577831835972574481
-	0.46845294167179246658250235668675  -1.72336921563406986201982817874523
-	-0.36559294978277639964758805035672  0.50308079139646422195397690302343
-	0.21892228436644922684450875749462  -1.71767040855571551105640537571162
-	0.31776788367191294293334635767678  -0.91342865581348042791631769432570
-	-0.36680309588972281886753989965655  -0.08548276134862793640412093054692
-	-0.18157746944470815053662704485760  -0.36358588182425338741765585837129]
-	X = [-0.5065223769881723 0.8420883555520725
-	0.032089759348237164 -0.4932420370950294
-	0.7409883951402091 -0.3941959214694802
-	-0.1924697782337678 0.21994677172891908
-	0.7643689465681343 -0.2792475667584258
-	0.3855053888104501 -0.2407731481108792
-	0.0773827859190266 0.15919402104081007
-	0.18553779175069454 0.04534051646419934]
-end;
-  ╠═╡ =#
 
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
 is_point(M, U0) # Not throwing an error, so it is in SpSt
@@ -159,18 +87,30 @@ md"""
 # ╔═╡ 84713389-c089-4c1a-ab0b-bc504c4e59c3
 function cost_function(M, p::Matrix{Float64}) # Why must it include M?
 	# Implement some checks
-	return 0.5 * norm(p - A) ^ 2 # ⚠️ should be p - A? in the paper it is not (nor in the matlab code)
+	#return 0.5 * norm(p - A) ^ 2 # ⚠️ should be p - A? in the paper it is not (nor in the matlab code)'
+	return norm(S - p*symplectic_inverse(p)*S) ^ 2
+	
 end
 
 # ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
 function euclid_grad_cost_function(p::Matrix{Float64})
 	# Implement some checks
-	return p - A
+	J = SymplecticElement(1)
+	ppPLUS = p*symplectic_inverse(p)
+	SST = S*S'
+	return - 2 * ((I - ppPLUS)*SST*J'*p*J - J*SST*(I - ppPLUS)'*p*J)
 end
 
 # ╔═╡ 402611b0-d0f2-4b13-8a67-6c60007bb377
 function euclid_hessian_cost_function(p::Matrix{Float64}, X::Matrix{Float64})
-	return X
+	J = SymplecticElement(1)
+	ppPlus = p*symplectic_inverse(p)
+	SST = S*S'
+	XpPlus = X*symplectic_inverse(p)
+	A_U_X = - XpPlus - symplectic_inverse(XpPlus) # JZ had -XpPlus
+	ImppPlusSSTJ = (I-ppPlus)*SST*J'
+	A_U_XSSTJ = A_U_X*SST*J # Here JZ had J'
+	return -2 * ((A_U_XSSTJ-A_U_XSSTJ')*p*J+(ImppPlusSSTJ-ImppPlusSSTJ')*X*J)
 end
 
 # ╔═╡ 51fc0bfb-8796-40a9-9d93-16d3f2282a75
@@ -181,13 +121,12 @@ md"""
 # ╔═╡ 60850703-1a35-4ca4-8830-8d02ca6b8cfd
 function r_grad(M,p)
 	riemannian_gradient(M, p, euclid_grad_cost_function(p))
+	#egrad = euclid_grad_cost_function(p)
+	#return egrad * (p'*p) - symplectic_inverse(p')*(symplectic_inverse(egrad)*p)
 end
 
 # ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
-# ╠═╡ disabled = true
-#=╠═╡
-check_gradient(M, cost_function, r_grad; plot=false, error = :info)
-  ╠═╡ =#
+check_gradient(M, cost_function, r_grad; plot=true, error = :info)
 
 # ╔═╡ 30c6c236-86f1-4289-b717-e0d4d31a1403
 md"""
@@ -290,11 +229,8 @@ function r_hess(M, p, X)
 end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
-# ╠═╡ disabled = true
-#=╠═╡
 # ⚠️ It was using Cayley as default!
 check_Hessian(M, cost_function, r_grad, r_hess#=, U0, X=#; plot=true, error=:warn, check_symmetry=true, check_vector=true, retraction_method=ExponentialRetraction(), limits=(-5,0))
-  ╠═╡ =#
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -342,12 +278,6 @@ function r_hess_approx(M, p, X)
 	#return custom_project(p, Dgrad_f) 
 	#F(p): 0.556918, |▽F(p)|: 1.9975e-06, 
 end
-
-# ╔═╡ d64a5af1-0190-4cbb-a791-e44a5c5f1953
-# ╠═╡ disabled = true
-#=╠═╡
-check_Hessian(M, cost_function, r_grad, r_hess_approx; error=:info, check_symmetry=true, plot=false)#; Hessian = r_hess_approx)
-  ╠═╡ =#
 
 # ╔═╡ d25a8e78-b216-4e99-a29d-3a0fd898b8da
 md"""
@@ -417,33 +347,31 @@ solver = gradient_descent(M, cost_function, r_grad, U0;
 # ╔═╡ 715fb2bf-5f2c-4e68-ac9e-80056152146a
 begin # JZ: TR-1
 solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
-	acceptance_rate = 0.1,
-	max_trust_region_radius = sqrt(min(2n,2k)),
-	reduction_threshold = 0.25,
-	trust_region_radius = sqrt(min(2n,2k))/8,
+	#F(p): 0.556936, |▽F(p)|: 5.2116e-07, 
+	#augmentation_threshold = 0.1,
+	#F(p): 0.552004, |▽F(p)|: 3.2531e-07, 
 	# Removed StopWHenModelIncreased() from subproblem stopping criterion
-	sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
+	#sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 	return_state = true,
 	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",10,:Stop],
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 end
 
 # ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
 # JZ: TR-2
 solver_og_tr_approx = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
-	acceptance_rate = 0.1,
-	max_trust_region_radius = sqrt(min(2n,2k)),
-	reduction_threshold = 0.25,
-	trust_region_radius = sqrt(min(2n,2k))/8,
-	# Removed StopWHenModelIncreased() from subproblem stopping criterion
-	sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 	return_state = true,
 	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
+	# Removed StopWHenModelIncreased() from subproblem stopping criterion
+	#sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",1,:Stop],
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
+
+#;return_state = true)
+#(M, cost_function, r_grad, r_hess)
 
 # ╔═╡ 755f4c1c-153c-4f64-9caa-cc2e30e06c61
 begin
@@ -497,42 +425,9 @@ end
 
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
 begin
-	plot(iterations, cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, yaxis=:log10, label = "Grad. Descent")
+	plot(iterations, cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, label = "Grad. Descent")
 	plot!(iterations_og_tr_approx, cost_vals_og_tr_approx, label = "TR approx Hess")
 	plot!(iterations_og_tr_hess, cost_vals_og_tr_hess, label = "TR exact Hess")
-end
-
-# ╔═╡ 3c56ea70-c3c1-4f08-b544-07adc5be764d
-begin
-	# Saving data as dataframe to csv
-
-	# All need to be of same length. 
-    max_length = maximum([
-        length(iterations),
-        length(iterations_og_tr_hess),
-        length(iterations_og_tr_approx)
-    ])
-
-    function pad_to_length(arr, target_length)
-        return vcat(arr, fill(missing, target_length - length(arr)))
-    end
-	
-	data = DataFrame(
-	    iterations = pad_to_length(iterations, max_length),
-	    cost_GD = pad_to_length(cost_vals, max_length),
-	    gradient_GD = pad_to_length(gradient_vals, max_length),
-	
-		iteration_TR_hess = pad_to_length(iterations_og_tr_hess, max_length),
-		cost_TR_hess = pad_to_length(cost_vals_og_tr_hess, max_length),
-		gradient_TR_hess = pad_to_length(gradient_vals_og_tr_hess, max_length),
-	
-		iteration_TR_hess_approx = pad_to_length(iterations_og_tr_approx, max_length),
-		cost_TR_hess_approx = pad_to_length(cost_vals_og_tr_approx, max_length),
-		gradient_TR_hess_approx = pad_to_length(gradient_vals_og_tr_approx, max_length)
-	)
-	
-	# Save to a CSV file
-	#CSV.write("2nd_order_nearest_sp_matrix_test_n100k5.csv", data)
 end
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
@@ -593,8 +488,6 @@ end
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
-CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Manifolds = "1cead3c2-87b3-11e9-0ccd-23c62b72b94e"
@@ -606,8 +499,6 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
 BenchmarkTools = "~1.5.0"
-CSV = "~0.10.15"
-DataFrames = "~1.7.0"
 Distributions = "~0.25.112"
 Manifolds = "~0.10.2"
 ManifoldsBase = "~0.15.16"
@@ -621,7 +512,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "3ff2f7471197ff33cd5369bfae715f013d672188"
+project_hash = "f4652b45abe0bb91d25cdf1bc87b5b98e3b596ae"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -661,12 +552,6 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "9e2a6b69137e6969bab0152632dcb3bc108c8bdd"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
 version = "1.0.8+1"
-
-[[deps.CSV]]
-deps = ["CodecZlib", "Dates", "FilePathsBase", "InlineStrings", "Mmap", "Parsers", "PooledArrays", "PrecompileTools", "SentinelArrays", "Tables", "Unicode", "WeakRefStrings", "WorkerUtilities"]
-git-tree-sha1 = "deddd8725e5e1cc49ee205a1964256043720a6c3"
-uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-version = "0.10.15"
 
 [[deps.Cairo_jll]]
 deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
@@ -734,32 +619,16 @@ git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.6.3"
 
-[[deps.Crayons]]
-git-tree-sha1 = "249fe38abf76d48563e2f4556bebd215aa317e15"
-uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
-version = "4.1.1"
-
 [[deps.DataAPI]]
 git-tree-sha1 = "abe83f3a2f1b857aac70ef8b269080af17764bbe"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.16.0"
-
-[[deps.DataFrames]]
-deps = ["Compat", "DataAPI", "DataStructures", "Future", "InlineStrings", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrecompileTools", "PrettyTables", "Printf", "Random", "Reexport", "SentinelArrays", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
-git-tree-sha1 = "fb61b4812c49343d7ef0b533ba982c46021938a6"
-uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-version = "1.7.0"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
 git-tree-sha1 = "1d0a14036acb104d9e89698bd408f63ab58cdc82"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 version = "0.18.20"
-
-[[deps.DataValueInterfaces]]
-git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
-uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
-version = "1.0.0"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -844,17 +713,6 @@ git-tree-sha1 = "466d45dc38e15794ec7d5d63ec03d776a9aff36e"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "4.4.4+1"
 
-[[deps.FilePathsBase]]
-deps = ["Compat", "Dates"]
-git-tree-sha1 = "7878ff7172a8e6beedd1dea14bd27c3c6340d361"
-uuid = "48062228-2e41-5def-b9a4-89aafe57970f"
-version = "0.9.22"
-weakdeps = ["Mmap", "Test"]
-
-    [deps.FilePathsBase.extensions]
-    FilePathsBaseMmapExt = "Mmap"
-    FilePathsBaseTestExt = "Test"
-
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
@@ -898,10 +756,6 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "1ed150b39aebcc805c26b93a8d0122c940f64ce2"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
-
-[[deps.Future]]
-deps = ["Random"]
-uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
@@ -973,37 +827,14 @@ git-tree-sha1 = "d1b1b796e47d94588b3757fe84fbf65a5ec4a80d"
 uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
 version = "0.1.5"
 
-[[deps.InlineStrings]]
-git-tree-sha1 = "45521d31238e87ee9f9732561bfee12d4eebd52d"
-uuid = "842dd82b-1e85-43dc-bf29-5d0ee9dffc48"
-version = "1.4.2"
-
-    [deps.InlineStrings.extensions]
-    ArrowTypesExt = "ArrowTypes"
-    ParsersExt = "Parsers"
-
-    [deps.InlineStrings.weakdeps]
-    ArrowTypes = "31f734f8-188a-4ce0-8406-c8a06bd891cd"
-    Parsers = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
-
-[[deps.InvertedIndices]]
-git-tree-sha1 = "0dc7b50b8d436461be01300fd8cd45aa0274b038"
-uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
-version = "1.3.0"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.2"
-
-[[deps.IteratorInterfaceExtensions]]
-git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
-uuid = "82899510-4779-5014-852e-03e436cf321d"
-version = "1.0.0"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
@@ -1481,12 +1312,6 @@ version = "1.40.8"
     ImageInTerminal = "d8c32880-2388-543b-8c61-d9f865259254"
     Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
-[[deps.PooledArrays]]
-deps = ["DataAPI", "Future"]
-git-tree-sha1 = "36d8b4b899628fb92c2749eb488d884a926614d3"
-uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
-version = "1.4.3"
-
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
 git-tree-sha1 = "5aa36f7049a63a1528fe8f7c3f2113413ffd4e1f"
@@ -1498,12 +1323,6 @@ deps = ["TOML"]
 git-tree-sha1 = "9306f6085165d270f7e3db02af26a400d580f5c6"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
 version = "1.4.3"
-
-[[deps.PrettyTables]]
-deps = ["Crayons", "LaTeXStrings", "Markdown", "PrecompileTools", "Printf", "Reexport", "StringManipulation", "Tables"]
-git-tree-sha1 = "1101cd475833706e4d0e7b122218257178f48f34"
-uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
-version = "2.4.0"
 
 [[deps.Printf]]
 deps = ["Unicode"]
@@ -1625,12 +1444,6 @@ git-tree-sha1 = "3bac05bc7e74a75fd9cba4295cde4045d9fe2386"
 uuid = "6c6a2e73-6563-6170-7368-637461726353"
 version = "1.2.1"
 
-[[deps.SentinelArrays]]
-deps = ["Dates", "Random"]
-git-tree-sha1 = "d0553ce4031a081cc42387a9b9c8441b7d99f32d"
-uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
-version = "1.4.7"
-
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 
@@ -1737,12 +1550,6 @@ version = "1.3.2"
     ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
     InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
-[[deps.StringManipulation]]
-deps = ["PrecompileTools"]
-git-tree-sha1 = "a6b1675a536c5ad1a60e5a5153e1fee12eb146e3"
-uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
-version = "0.4.0"
-
 [[deps.SuiteSparse]]
 deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
@@ -1756,18 +1563,6 @@ version = "7.2.1+1"
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 version = "1.0.3"
-
-[[deps.TableTraits]]
-deps = ["IteratorInterfaceExtensions"]
-git-tree-sha1 = "c06b2f539df1c6efa794486abfb6ed2022561a39"
-uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
-version = "1.0.1"
-
-[[deps.Tables]]
-deps = ["DataAPI", "DataValueInterfaces", "IteratorInterfaceExtensions", "OrderedCollections", "TableTraits"]
-git-tree-sha1 = "598cd7c1f68d1e205689b1c2fe65a9f85846f297"
-uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
-version = "1.12.0"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
@@ -1849,17 +1644,6 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "93f43ab61b16ddfb2fd3bb13b3ce241cafb0e6c9"
 uuid = "2381bf8a-dfd0-557d-9999-79630e7b1b91"
 version = "1.31.0+0"
-
-[[deps.WeakRefStrings]]
-deps = ["DataAPI", "InlineStrings", "Parsers"]
-git-tree-sha1 = "b1be2855ed9ed8eac54e5caff2afcdb442d52c23"
-uuid = "ea10d353-3f73-51f8-a26c-33c1cb351aa5"
-version = "1.4.2"
-
-[[deps.WorkerUtilities]]
-git-tree-sha1 = "cd1659ba0d57b71a464a29e64dbc67cfe83d54e7"
-uuid = "76eceee3-57b5-4d4a-8e66-0e911cebbf60"
-version = "1.6.1"
 
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
@@ -2143,22 +1927,19 @@ version = "1.4.1+1"
 # ╔═╡ Cell order:
 # ╟─5da75c4a-504c-4fb8-a531-ace91b6836a9
 # ╠═136aef20-7c14-11ef-0f8a-2f66ffd8fe96
-# ╠═765f5af5-ca3f-4c6a-81f0-adba6db4aeeb
 # ╠═c09b766d-6643-433a-a84e-9416dd2b668d
 # ╠═af11ace2-3798-4c4d-a43a-46f0c099ab13
 # ╟─9a2619b4-3130-465f-996e-127e634ce2d3
 # ╠═ba92e87a-6ac3-4490-ab75-148cc0a25666
 # ╠═fd42108d-79bd-4db5-a1ce-1875341513c2
+# ╠═1b0763d0-3c2b-43bb-b663-c792f5f4ce24
+# ╠═0011fbe2-acd2-4798-8e82-9cd4b567423f
 # ╠═7d05e993-ae82-4e41-b36f-e76224483849
-# ╟─51b3f6de-8841-4cb0-8eeb-87b9a3e76d55
+# ╠═1fabcdce-2a13-4ea3-820d-86342270f580
 # ╠═d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 # ╠═212f0565-d5ee-48e7-90bc-05351d905157
-# ╠═9a50fa8f-123d-4edb-9556-500da8ea2498
 # ╟─6460d549-e79d-473e-82e9-92c261a02dd7
 # ╠═30ceffac-5c28-4c53-9f3a-0375828ac2cb
-# ╠═9281660e-6a48-4b2d-b792-13b8803e2a5e
-# ╠═5895c078-5f50-4783-9ecd-acdacc38ab5d
-# ╠═91dfd45c-a658-4d95-b1e8-34453090cc12
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
 # ╠═02d74ff3-5281-43bf-b434-17ac75958866
 # ╟─a8971fce-7b45-4a50-9c63-9d726b460a5f
@@ -2179,7 +1960,6 @@ version = "1.4.1+1"
 # ╟─e3878383-0f27-4859-bd9e-165076a52da6
 # ╠═a183a142-188a-4991-92a7-69ddc7bc187b
 # ╠═5fd713a4-54be-4828-bb5a-3edb030f89eb
-# ╠═d64a5af1-0190-4cbb-a791-e44a5c5f1953
 # ╟─d25a8e78-b216-4e99-a29d-3a0fd898b8da
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8
 # ╟─34dbfd16-9658-4de2-ac07-b91843aceace
@@ -2200,7 +1980,6 @@ version = "1.4.1+1"
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
 # ╟─de8bf366-f01d-43cd-bcd0-db8828d6745a
-# ╠═3c56ea70-c3c1-4f08-b544-07adc5be764d
 # ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╠═f2526a0a-f155-4e41-b9bd-1d824904907f
 # ╟─8c04cb67-1e83-4fce-a32e-9067790409cb
