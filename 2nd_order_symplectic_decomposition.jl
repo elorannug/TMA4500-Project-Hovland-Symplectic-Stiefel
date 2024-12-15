@@ -27,16 +27,16 @@ md"""
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 10
+n = 4
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 3
+k = 1
 
 # ╔═╡ 1b0763d0-3c2b-43bb-b663-c792f5f4ce24
-r = 10
+r = 2
 
 # ╔═╡ 0011fbe2-acd2-4798-8e82-9cd4b567423f
-m = 25 # Jensen picked 100
+m = 3 # Jensen picked 100
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
@@ -70,6 +70,22 @@ begin
 	U0 = rand(M)
 end
 
+# ╔═╡ 262c70ed-3bf3-4181-943b-41b374c020ae
+begin
+	var_to_print = U0
+	@printf "["
+for i in 1:size(var_to_print, 1)
+    for j in 1:size(var_to_print, 2)
+        @printf("%.32f", var_to_print[i, j])
+        if j < size(var_to_print, 2)
+            @printf "  "
+        end
+    end
+	@printf "\n"
+end
+    @printf "]"
+end
+
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
 is_point(M, U0) # Not throwing an error, so it is in SpSt
 
@@ -85,21 +101,23 @@ md"""
 """
 
 # ╔═╡ 84713389-c089-4c1a-ab0b-bc504c4e59c3
-function cost_function(M, p::Matrix{Float64}) # Why must it include M?
-	# Implement some checks
-	#return 0.5 * norm(p - A) ^ 2 # ⚠️ should be p - A? in the paper it is not (nor in the matlab code)'
+function cost_function(M, p::Matrix{Float64}) 
 	return norm(S - p*symplectic_inverse(p)*S) ^ 2
-	
 end
+
+# ╔═╡ 34a28708-9567-4284-aeff-c457badf5771
+cost_function(M,U0)
 
 # ╔═╡ 1787795e-46c1-4d89-8388-0b1753b61fd2
 function euclid_grad_cost_function(p::Matrix{Float64})
-	# Implement some checks
 	J = SymplecticElement(1)
 	ppPLUS = p*symplectic_inverse(p)
 	SST = S*S'
 	return - 2 * ((I - ppPLUS)*SST*J'*p*J - J*SST*(I - ppPLUS)'*p*J)
 end
+
+# ╔═╡ 2ef5a035-c7fe-4516-a3b9-fc5dd7d0f5d5
+euclid_grad_cost_function(U0*12.324)
 
 # ╔═╡ 402611b0-d0f2-4b13-8a67-6c60007bb377
 function euclid_hessian_cost_function(p::Matrix{Float64}, X::Matrix{Float64})
@@ -120,13 +138,13 @@ md"""
 
 # ╔═╡ 60850703-1a35-4ca4-8830-8d02ca6b8cfd
 function r_grad(M,p)
-	riemannian_gradient(M, p, euclid_grad_cost_function(p))
-	#egrad = euclid_grad_cost_function(p)
-	#return egrad * (p'*p) - symplectic_inverse(p')*(symplectic_inverse(egrad)*p)
+	#riemannian_gradient(M, p, euclid_grad_cost_function(p))
+	egrad = euclid_grad_cost_function(p)
+	return egrad * (p'*p) - symplectic_inverse(p')*(symplectic_inverse(egrad)*p)
 end
 
 # ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
-check_gradient(M, cost_function, r_grad; plot=true, error = :info)
+check_gradient(M, cost_function, r_grad, U0; plot=false, error = :info)
 
 # ╔═╡ 30c6c236-86f1-4289-b717-e0d4d31a1403
 md"""
@@ -151,7 +169,6 @@ end
 # ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
 function Ω(p,X) # translated from MATLAB JZ
 	Q = p/(p'*p)
-	#println(Q)
 	XQT = -symplectic_inverse(X*Q')
 	return X*Q' + XQT - (XQT*Q)*p'
 end
@@ -211,10 +228,8 @@ function r_hess(M, p, X)
 	# ⚠️ matlab code only included the check above!
 	if norm(rg + X) < eps() # eps ≈ machine small, but not zero
 		Np = minimal
-		#print("bing - ")
 	else
 		Np = norm(rg + X) # Norm negative
-		#print("bong + ")
 	end
 
 	XTp = X' * p 
@@ -298,7 +313,7 @@ We need to define the injectivity radius of the SpSt for the Armijo to work
 begin
 import ManifoldsBase: injectivity_radius
 function injectivity_radius(M::Manifolds.SymplecticStiefel{T, N}) where {T, N}
-    return 5.0  # This is good enough for now
+    return 3.0  # This is good enough for now
 end
 end
 
@@ -331,6 +346,9 @@ JZ p. 15:
 # ╔═╡ a9b024f7-07ea-4e26-a4e8-b20f7b9af814
 grad_tol = 10^-6
 
+# ╔═╡ b6bb36b2-0eff-40de-9fde-5eddff9d010b
+no_iterations = 10000
+
 # ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
 md"""
 ### Defining and running gradient descent
@@ -339,39 +357,54 @@ md"""
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
 solver = gradient_descent(M, cost_function, r_grad, U0;
 	stepsize = stepsize, return_state = true, 
-	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol) | StopWhenStepsizeLess(10.0^-11),
+	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol) | StopWhenStepsizeLess(10.0^-11),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",100,:Stop],
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",1000,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 
-# ╔═╡ 715fb2bf-5f2c-4e68-ac9e-80056152146a
+# ╔═╡ 7301c2ba-706c-4797-b597-92877cd16a4b
 begin # JZ: TR-1
-solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
-	#F(p): 0.556936, |▽F(p)|: 5.2116e-07, 
-	#augmentation_threshold = 0.1,
-	#F(p): 0.552004, |▽F(p)|: 3.2531e-07, 
-	# Removed StopWHenModelIncreased() from subproblem stopping criterion
-	#sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
+solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess;
 	return_state = true,
-	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
+	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",1000,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 end
+
+# ╔═╡ 715fb2bf-5f2c-4e68-ac9e-80056152146a
+# ╠═╡ disabled = true
+#=╠═╡
+begin # JZ: TR-1
+solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
+	acceptance_rate = 0.1,
+	max_trust_region_radius = sqrt(min(2n,2k)),
+	reduction_threshold = 0.25,
+	trust_region_radius = sqrt(min(2n,2k))/8,
+	# Removed StopWHenModelIncreased() from subproblem stopping criterion
+	sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
+	return_state = true,
+	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol),
+	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",1000,:Stop],
+	record=[:Iteration, :Cost, RecordGradientNorm()])
+end
+  ╠═╡ =#
 
 # ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
 # JZ: TR-2
 solver_og_tr_approx = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
-	return_state = true,
-	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
+	acceptance_rate = 0.1,
+	max_trust_region_radius = sqrt(min(2n,2k)),
+	reduction_threshold = 0.25,
+	trust_region_radius = sqrt(min(2n,2k))/8,
 	# Removed StopWHenModelIncreased() from subproblem stopping criterion
-	#sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
+	sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
+	return_state = true,
+	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",100,:Stop],
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",1000,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
-
-#;return_state = true)
-#(M, cost_function, r_grad, r_hess)
 
 # ╔═╡ 755f4c1c-153c-4f64-9caa-cc2e30e06c61
 begin
@@ -425,10 +458,13 @@ end
 
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
 begin
-	plot(iterations, cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, label = "Grad. Descent")
+	plot(iterations, cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, yaxis=:log10,label = "Grad. Descent")
 	plot!(iterations_og_tr_approx, cost_vals_og_tr_approx, label = "TR approx Hess")
 	plot!(iterations_og_tr_hess, cost_vals_og_tr_hess, label = "TR exact Hess")
 end
+
+# ╔═╡ 612ca6d8-2bfc-4bc4-8e3c-487eed64b898
+
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 begin
@@ -1938,6 +1974,9 @@ version = "1.4.1+1"
 # ╠═1fabcdce-2a13-4ea3-820d-86342270f580
 # ╠═d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 # ╠═212f0565-d5ee-48e7-90bc-05351d905157
+# ╠═262c70ed-3bf3-4181-943b-41b374c020ae
+# ╠═34a28708-9567-4284-aeff-c457badf5771
+# ╠═2ef5a035-c7fe-4516-a3b9-fc5dd7d0f5d5
 # ╟─6460d549-e79d-473e-82e9-92c261a02dd7
 # ╠═30ceffac-5c28-4c53-9f3a-0375828ac2cb
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
@@ -1969,8 +2008,10 @@ version = "1.4.1+1"
 # ╠═afdac687-8170-4679-bb9e-2af82b6877de
 # ╟─5918c34b-c435-428f-bd18-5b156b5bb0bc
 # ╠═a9b024f7-07ea-4e26-a4e8-b20f7b9af814
+# ╠═b6bb36b2-0eff-40de-9fde-5eddff9d010b
 # ╟─0960b834-ee78-42bf-8fbd-955734e3426c
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
+# ╠═7301c2ba-706c-4797-b597-92877cd16a4b
 # ╠═715fb2bf-5f2c-4e68-ac9e-80056152146a
 # ╠═97db13d5-9e70-41be-84e7-866d26558b90
 # ╟─755f4c1c-153c-4f64-9caa-cc2e30e06c61
@@ -1979,7 +2020,8 @@ version = "1.4.1+1"
 # ╠═4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
 # ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╟─de8bf366-f01d-43cd-bcd0-db8828d6745a
+# ╠═de8bf366-f01d-43cd-bcd0-db8828d6745a
+# ╠═612ca6d8-2bfc-4bc4-8e3c-487eed64b898
 # ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╠═f2526a0a-f155-4e41-b9bd-1d824904907f
 # ╟─8c04cb67-1e83-4fce-a32e-9067790409cb

@@ -34,7 +34,7 @@ md"""
 n = 100 # In the problem report {100} were utilized
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 5 # In the problemreport {5, 10, 20} were utilized
+k = 20 # In the problemreport {5, 10, 20} were utilized
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
@@ -543,7 +543,7 @@ begin
 end
 
 # ╔═╡ f2526a0a-f155-4e41-b9bd-1d824904907f
-run_diag = false
+run_diag = true
 
 # ╔═╡ 8c04cb67-1e83-4fce-a32e-9067790409cb
 md"""

@@ -1,7 +1,8 @@
 \subsection{Riemannian Hessian of the Symplectic Stiefel manifold}
 \todo[inline]{Define the remaining preliminaries for Hessian. Make an intro to section. loosly following Appendix A in Jz}
+If one knows more about the manifold, one can make more assumptions for an optimization algorithm. The hope would be that these additional assumptions would make the algorithm more efficient. In the Euclidean setting, the Hessian gives us curvature information about the cost function. Generalizing the Hessian to the Riemannian setting it gives us something similar, and we can generalize many popular algorithms. In this section we will therefore define the Riemannian Hessian of the symplectic manifold. We begin by defining what it means to take a second derivative on a manifold. After defining the necessary tools, we will give an analytical expression for the Riemannian Hessian. 
 
-For two smooth vector fields, $\mathcal{X}(p)=\mathbf{\alpha}^{\mathrm{T}}\mathbf{\partial}$ and $\mathcal{Y}(p)=\mathbf{\beta}^{\mathrm{T}}\mathbf{\partial}$ defined as in Definition \ref{def:vector_field_on_manifold}, the covariant derivative (defined through the Riemannian connection by Definition \ref{def:riemannian_connection}) written in local coordinates is
+For two smooth vector fields, $\mathcal{X}(p)=\boldsymbol{\alpha}^{\mathrm{T}}\boldsymbol{\partial}$ and $\mathcal{Y}(p)=\boldsymbol{\beta}^{\mathrm{T}}\boldsymbol{\partial}$ defined as in Definition \ref{def:vector_field_on_manifold}, the covariant derivative (defined through the Riemannian connection by Definition \ref{def:riemannian_connection}) written in local coordinates is
 \begin{equation*}
     \nabla_{\mathcal{X}}\mathcal{Y}=\sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}\alpha_{i}\partial_{i}(\beta_{j})\partial_{j}+\alpha_{i}\beta_{j}\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}.
 \end{equation*}

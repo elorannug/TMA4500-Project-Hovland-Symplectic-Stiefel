@@ -1,6 +1,5 @@
 \subsection{Riemannian gradient of the Symplectic Stiefel manifold}
-%%% Riemannian gradient
-Now that we have chosen a metric, we can justify a choice for a Riemannian gradient. 
+Another component to many optimization algorithms is the gradient. In the Euclidean setting the gradient of the cost function is a vector that points in the direction of the steepest ascent. Analogously, the Riemannian gradient points in the direction of the steepest ascent on the manifold. A useful analogy of what this means is to consider the sphere, and some cost function defining a surface on the sphere. The riemannian gradient would then point in the direction towards the closest highest point on the sphere. In this section we will state the Riemannian gradient explicitly, and prove that it satisfies necessary properties. 
 \begin{proposition}
     Given \todo{add general def of R grad.?}a function $f\colon \mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, the \text{Riemannian gradient} with respect to $g_{p}$ is given by
     \begin{equation}\label{eq:rie_grad}
@@ -9,7 +8,7 @@ Now that we have chosen a metric, we can justify a choice for a Riemannian gradi
     where $\nabla f(p)$ is the Euclidean gradient of a smooth extension around $p\in \mathrm{SpSt}(2n, 2k)$ in $\mathbb{R}^{2n\times2k}$ at $p$.
 \end{proposition}
 \begin{proof}
-    We can see that this is the Riemannian gradient by the following two observations stated in \cite{BZ}, which we verify ourselves below.
+    We can see that this is the Riemannian gradient by the following two observations stated in \cite[p.~12]{BendokatZimmermann2021}, which we verify ourselves below.
 
     Firstly, gradient must be in $T_{p}\mathrm{SpSt}(2n, 2k)$, which means by \eqref{eq:spst_tangent_space} that $0=p^{+}\operatorname{grad}f(p)+(\operatorname{grad}f(p))^{+}p$. Computing this we get 
     \begin{equation*}

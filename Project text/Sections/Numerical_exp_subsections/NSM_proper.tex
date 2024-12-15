@@ -236,3 +236,17 @@
     
     \end{groupplot}
 \end{tikzpicture}
+
+\begin{table}
+    \centering
+    \caption{Nearest symplectic matrix problem solved by CG, TR-1 and TR-2. The table summarizes time to converge for all the algorithms, with $n=100$ for $k={5,10,20}$}\label{tab:exp1}
+    \begin{tabular}{ l c c c }
+        & \multicolumn{3}{c}{\textbf{Runtime (s)}} \\ 
+        \cmidrule(l){2-4}
+        & GD & TR-1 & TR-2 \\
+        \midrule
+        $k=5$ & 0.051 & 9.7 & 0.70 \\
+        $k=10$ & 0.23 & 12 & 5.4 \\
+        $k=20$ & 1.1 & 35 & 23 \\        
+    \end{tabular}
+\end{table}

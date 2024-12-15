@@ -47,18 +47,18 @@ This section is designed to be a reference work to set notation, and to ensure t
 \begin{definition}[Vector field on Riemannian manifold]\label{def:vector_field_on_manifold}
     Following Appendix A of \cite{JensenZimmermann2024}, a smooth vector field $\mathcal{X}\colon \mathcal{M}\xrightarrow{}T \mathcal{M},~p\mapsto \mathcal{X}(p)\in T_{p}\mathcal{M}$ on a Riemannian manifold $\mathcal{M}$ can be expressed through local coordinates as 
     \begin{equation*}
-        \mathcal{X}(p)=\sum\limits_{i=1}^{n}\alpha_{i}\partial_{i}\eqqcolon \mathbf{\alpha}^{\mathrm{T}}\mathbf{\partial},
+        \mathcal{X}(p)=\sum\limits_{i=1}^{n}\alpha_{i}\partial_{i}\eqqcolon \boldsymbol{\alpha}^{\mathrm{T}}\boldsymbol{\partial},
     \end{equation*}
-    where $\mathbf{\alpha}\in \mathbb{R}^{n}$, and $\mathbf{\partial}$ is the canonical basis of $T_{p}\mathcal{M}$.
+    where $\boldsymbol{\alpha}\in \mathbb{R}^{n}$, and $\boldsymbol{\partial}$ is the canonical basis of $T_{p}\mathcal{M}$.
     
 \end{definition}
 
 \begin{definition}[Horizontal \& Vertical Space]\label{def:horizontal_vertical_space}
     Using Definition \ref{def:quotient_manifold}, given a Riemannian manifold $\overline{\mathcal{M}}$ with Riemannian metric $\overline{g}$, denote a quotient manifold of $\overline{\mathcal{M}}$ as $\mathcal{M}=\overline{\mathcal{M}}/\sim$. Following the definitions in Absil et al. \cite[p.~43]{AbsilMahonySepulchre2008}, for a point $p\in \mathcal{M}$, the equivalence class $[p]=\pi^{-1}(p)$ induces an embedded submanifold of $\overline{\mathcal{M}}$ (see Definition \ref{def:quotient_manifold}), hence it admits a tangent space,
     \begin{equation*}
-        \mathcal{V}_{\overline{p}}=T_{\overline{p}}(\pi^{-1}(p))
+        \mathcal{V}_{\overline{p}}=T_{\overline{p}}(\pi^{-1}(p))=\operatorname{ker}(\operatorname{D}\pi(p))
     \end{equation*}
-    named the \textup{vertical space} at $\overline{p}$. Canonically chosen as the orthogonal complement of $\mathcal{V}_{\overline{p}}$ in $T_{\overline{p}}\overline{\mathcal{M}}$, the \textup{horizontal space} \cite[p.~48]{AbsilMahonySepulchre2008} is defined as %  p.48
+    \cite[p.~4]{JensenZimmermann2024}named the \textup{vertical space} at $\overline{p}$. Note that Canonically chosen as the orthogonal complement of $\mathcal{V}_{\overline{p}}$ in $T_{\overline{p}}\overline{\mathcal{M}}$, the \textup{horizontal space} \cite[p.~48]{AbsilMahonySepulchre2008} is defined as %  p.48
     \begin{equation*}
         \mathcal{H}_{\overline{p}}\coloneqq \mathcal{V}_{\overline{p}}^\perp=\{Y_{\overline{p}}\in T_{\overline{p}}\overline{\mathcal{M}} \;|\; \overline{g}(Y_{\overline{p}},Z_{\overline{p}})=0\quad\forall\quad Z_{\overline{p}}\in \mathcal{V}_{\overline{p}} \}.
     \end{equation*}

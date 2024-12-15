@@ -7,17 +7,40 @@ It is right-invariant in the sense that
 $g_{pq}^{\mathrm{Sp}}(X_{1}q,X_{2}q)=\tfrac{1}{2}\mathrm{tr}((X_{1}qq^{+}p^{+})^{T}X_{2}qq^{+}p^{+})=g_{p}^{\mathrm{Sp}}(X_{1},X_{2})$ for all $p\in \mathrm{Sp}(2n)$.
 Now \todo{rewrite these two sentences}that we have defined $g_{p}^{\mathrm{Sp}}$, we want to, in a sense, transport it to $\mathrm{SpSt}(2n, 2k)$ in a way that preserves the right-invariance. To achieve this we will use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(2n, 2k)$ through \ref{eq:sp_metric}. Split $T_{p}\mathrm{Sp}(2n)$ into to parts: the horizontal- and vertical part, with respect to $g^\mathrm{Sp}_{p}$ and $\pi$: % TODO: Define \pi! BZ (3.2)
 \begin{equation}\label{eq:spst_split}
-    T_{p}\mathrm{Sp}(2n)=\operatorname{Ver}^{\pi}_{p}\mathrm{Sp}(2n)\oplus \operatorname{Hor}^{\pi}_{p}\mathrm{Sp}(2n).
+    T_{p}\mathrm{Sp}(2n)=\operatorname{Ver}_{p}\mathrm{Sp}(2n)\oplus \operatorname{Hor}_{p}\mathrm{Sp}(2n).
 \end{equation}
-\todo[inline]{Define $\operatorname{Ver}^{\pi}_{p}\mathrm{Sp}(2n)$ and $\operatorname{Hor}^{\pi}_{p}\mathrm{Sp}(2n)$ in a smart way. Maybe just a reference if I do not have the space.}
-\todo[inline]{Rework the following paragraph. see obsidian}
-The point-wise right-invariant Riemannian metric on $\mathrm{SpSt}(2n, 2k)$ is defined as the mapping $g_{p}\colon T_{p}\mathrm{SpSt}(2n, 2k)\times T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, $g_{p}(X_{1},X_{2})\coloneqq g^{\mathrm{Sp}}_{p}((X_{1})^{\mathrm{hor}}_{p},(X_{2})^{\mathrm{hor}}_{p})$. More explicitly
-
+%
+%
+%
+Noting that $\mathfrak{sp}(2n)=T_{I}\mathrm{Sp}(2n)$, we can express these spaces through $\mathfrak{sp}(2n)$ as
+%
+\begin{align*}
+\operatorname{Ver}_{p}\mathrm{Sp}(2n)&\coloneqq\left\{ \Omega p\;\middle|\;\Omega \in \operatorname{Ver}\mathfrak{sp}(2n) \right\}, \\
+\operatorname{Hor}_{p}\mathrm{Sp}(2n)&\coloneqq\left\{ \Omega p\;\middle|\;\Omega \in \operatorname{Hor}\mathfrak{sp}(2n) \right\},
+\end{align*}
+%
+where horizontal- and vertical space is defined as in Definition \ref{def:horizontal_vertical_space}. Explicit expressions of $\operatorname{Ver}\mathfrak{sp}(2n)$ and $\operatorname{Hor}\mathfrak{sp}(2n)$ is given in \cite[p.~11]{BendokatZimmermann2021}. We will only need the horizontal space to define our desired geodesic, so we will only explicitly state $\operatorname{Hor}\mathrm{Sp}(2n)$. It is expressed as
+%
+\begin{equation*}
+\operatorname{Hor}_{p}\mathrm{Sp}(2n)=\left\{ \overline{\Omega}p\;\middle|\;\Omega r+r\Omega-r\Omega r=\overline{\Omega}\in \operatorname{Hor}\mathfrak{sp}(2n) \right\},
+\end{equation*}
+%
+where $r=J_{2n}^{\mathrm{T}}\pi(p)\pi (p)^+J_{2n}$. From this quotient perspective, for $p=\pi(q)$ where $q\in \mathrm{Sp}(2n)$, we can express vectors from $T_{p}\mathrm{SpSt}(2n, 2k)$ through $\operatorname{Hor}_{p}\mathrm{Sp}(2n)$. Following \cite[p.~5]{JensenZimmermann2024} any $X\in T_{p}\mathrm{SpSt}(2n, 2k)$ and a specific $p=\pi (q)$, there exists a unique horizontal lift (see Definition \ref{})
+%
+\begin{align}
+\mathfrak{h}_{q}(X)&=\overline{\Omega}(X)q, \\
+\intertext{ where }
+\overline{\Omega}(X)&=X(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}+J_{2n}p(p^{\mathrm{T}}p)^{-1}X^{\mathrm{T}}\big(I_{2n}-J_{2n}^{\mathrm{T}}p(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}J_{2n}\big)J_{2n}.
+\end{align}
+%
+%
+%
+%
 \todo[inline]{Look at 20, Theorem 2.28 in BZ to maybe skip the derivation up to gp}
-
+The point-wise right-invariant Riemannian metric on $\mathrm{SpSt}(2n, 2k)$ can then be defined as the mapping $g_{p}\colon T_{p}\mathrm{SpSt}(2n, 2k)\times T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, $g_{p}(X_{1},X_{2})\coloneqq g^{\mathrm{Sp}}_{p}(\mathfrak{h}_{q}(X_{1}),\mathfrak{h}_{q}(X_{2}))$. More explicitly
 \begin{equation}\label{eq:spst_metric}
     g_{p}(X_{1},X_{2})=\operatorname{tr}\left(X_{1}^{T}\left(I_{2n}- \frac{1}{2}J_{2n}^{T}p(p^{T}p)^{-1}p^{T}J_{2n}\right)X_{2}(p^{T}p)^{-1}\right),
 \end{equation}
-for $X_{1},X_{2}\in T_{p}\mathrm{SpSt}(2n, 2k)$. For this metric, \todo{pi here is weird, change this so it is more clear what it does}$\pi$ denotes a Riemannian submersion.
+for $X_{1},X_{2}\in T_{p}\mathrm{SpSt}(2n, 2k)$.
 
 
