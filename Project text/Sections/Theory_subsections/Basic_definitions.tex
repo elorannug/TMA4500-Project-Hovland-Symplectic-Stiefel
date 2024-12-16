@@ -36,6 +36,7 @@ This section is designed to be a reference work to set notation, and to ensure t
     \begin{equation*}
         T_{p}\mathcal{M}=C_{p}/\sim~=\left\{[\alpha] \;\middle|\; \alpha\in C_{p}\right\}.
     \end{equation*}  
+    We denote the \textup{tangent bundle} as $T\mathcal{M}=\bigsqcup_{p\in \mathcal{M}}T_{p}\mathcal{M}$, where $\bigsqcup$ denotes the disjoint union.
 \end{definition}
 
 % R manifolds
@@ -50,7 +51,14 @@ This section is designed to be a reference work to set notation, and to ensure t
         \mathcal{X}(p)=\sum\limits_{i=1}^{n}\alpha_{i}\partial_{i}\eqqcolon \boldsymbol{\alpha}^{\mathrm{T}}\boldsymbol{\partial},
     \end{equation*}
     where $\boldsymbol{\alpha}\in \mathbb{R}^{n}$, and $\boldsymbol{\partial}$ is the canonical basis of $T_{p}\mathcal{M}$.
-    
+\end{definition}
+
+\begin{definition}[Whitney sum]\label{def:Whitney_sum}
+    Restricting the definition in \cite[p.114]{Bourles2019} to our scope, for a manifold $\mathcal{M}$ define subsets of the tangent bundle (see Definition \ref{def:tangent_space}) $\mathcal{X},\mathcal{Y}\subseteq T\mathcal{M}$. The Whitney sum is defined as 
+    \begin{equation*}
+        \mathcal{X}\oplus \mathcal{Y}\coloneqq\bigsqcup_{p\in \mathcal{M}}\mathcal{X}_{p}\times \mathcal{Y}_{p},
+    \end{equation*}
+    where $\bigsqcup$ denotes the disjoint union. 
 \end{definition}
 
 \begin{definition}[Horizontal \& Vertical Space]\label{def:horizontal_vertical_space}
@@ -62,7 +70,7 @@ This section is designed to be a reference work to set notation, and to ensure t
     \begin{equation*}
         \mathcal{H}_{\overline{p}}\coloneqq \mathcal{V}_{\overline{p}}^\perp=\{Y_{\overline{p}}\in T_{\overline{p}}\overline{\mathcal{M}} \;|\; \overline{g}(Y_{\overline{p}},Z_{\overline{p}})=0\quad\forall\quad Z_{\overline{p}}\in \mathcal{V}_{\overline{p}} \}.
     \end{equation*}
-    The \textup{horizontal lift} at $\overline{p}\in\pi^{-1}(p)$ of a tangent vector $X_{p}\in T_{p}\mathcal{M}$ is the unique tangent vector $X_{\overline{p}}\in \mathcal{H}_{\overline{p}}$ that satisfies $\mathrm{D}\pi(\overline{p})[{X}_{\overline{p}}]=X_p$. Note that given the horizontal space on $\overline{\mathcal{M}}$, $\mathcal{H}_{\overline{p}}\oplus \mathcal{V}_{\overline{p}}=T_{\overline{p}}\mathcal{M}$, where $\oplus$ denotes the \todo{define or ref w sum? i wrote it in obsidian in the H and V space file.}Whitney sum. 
+    The \textup{horizontal lift} at $\overline{p}\in\pi^{-1}(p)$ of a tangent vector $X_{p}\in T_{p}\mathcal{M}$ is the unique tangent vector $X_{\overline{p}}\in \mathcal{H}_{\overline{p}}$ that satisfies $\mathrm{D}\pi(\overline{p})[{X}_{\overline{p}}]=X_p$. Note that given the horizontal space on $\overline{\mathcal{M}}$, $\mathcal{H}_{\overline{p}}\oplus \mathcal{V}_{\overline{p}}=T_{\overline{p}}\mathcal{M}$, where $\oplus$ denotes the Whitney sum as in Definition \ref{def:Whitney_sum}. 
 \end{definition}
 
 \begin{definition}[Riemannian connection]\label{def:riemannian_connection}
@@ -92,28 +100,16 @@ This section is designed to be a reference work to set notation, and to ensure t
     such that every curve generated from $c(t)=\mathcal{R}_{p}(tX)$ satisfies $c(0)=p$ and $\dot{c}(0)=X$. Equivalently the conditions can be stated as in \cite[p.~40]{Boumal2023} without the use of curves. For all $p\in \mathcal{M}$, $\mathcal{R}_{p}(0)=p$, and $\operatorname{D}\mathcal{R}_{p}(0)\colon T_{p}\mathcal{M}\xrightarrow{}T_{p}\mathcal{M}$, $\operatorname{D}\mathcal{R}_{p}(0)[X]=X$ is the identify map. 
 \end{definition}
 
-\begin{definition}[]\label{def:}
-    
-\end{definition}
-
-\begin{definition}[]\label{def:}
-    
-\end{definition}
     
 
 
 % TODO: Forklar at J_2n blir forenklet til J hvis det er klart fra konteksten
 
 % TODO: Is this a paper? ⚠️
-For the rest of this paper we denote $\mathcal{M}$ as being a Riemannian manifold.
+For the rest of this project report we denote $\mathcal{M}$ as being a Riemannian manifold.
 
 \todo[inline]{After the basic definitions, talk about how the rest of the theory is a highlighted summary through BZ and JZ. The goal is to look at the findings in JZ, however it relies heavely on theory derived in BZ. It will be mentioned of some parts are from other works, or if they are original work.}
 % optimization on R manif
-
-
-% TODO: "Symplectic identity" J_2n
-
-% TODO: Symplectic inverse
 
 
 

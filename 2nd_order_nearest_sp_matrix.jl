@@ -31,10 +31,10 @@ md"""
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 100 # In the problem report {100} were utilized
+n = 10 # In the problem report {100} were utilized
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 20 # In the problemreport {5, 10, 20} were utilized
+k = 2 # In the problemreport {5, 10, 20} were utilized
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
@@ -50,12 +50,6 @@ begin
 	rand_A = randn(2*n,2*k) 
 end;
 
-# ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
-A = rand_A/norm(rand_A)
-
-# ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
-is_point(M, A; error=:info)
-
 # ╔═╡ 6460d549-e79d-473e-82e9-92c261a02dd7
 md"""
 ### Generate random starting point on $\text{SpSt}$
@@ -66,11 +60,8 @@ random Hamiltonian matrix ``Ω \in \mathfrak{sp}(2n,F)`` with norm `σ`,
 and then transforming it to a symplectic matrix by applying the Cayley transform)
 """
 
-# ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
-begin
-	Random.seed!(seed)
-	U0 = rand(M)
-end
+# ╔═╡ 9a50fa8f-123d-4edb-9556-500da8ea2498
+is_point(M, A; error=:info)
 
 # ╔═╡ 9281660e-6a48-4b2d-b792-13b8803e2a5e
 # ╠═╡ disabled = true
@@ -88,58 +79,6 @@ for i in 1:size(U0, 1)
 end
     @printf "]"
 end
-  ╠═╡ =#
-
-# ╔═╡ 5895c078-5f50-4783-9ecd-acdacc38ab5d
-# ╠═╡ disabled = true
-#=╠═╡
-begin # n = 2, k = 1
-	A = [-0.480444   0.470344
-  		0.304117  -0.104969
-  		0.318186   0.143638
-  		0.567337   0.0264584]
-	U0 = [-1.40663890210255781987314094294561  0.23371634267482957469930227034638
-		0.40603619258114187484665080773993  -0.55070185394803905509775177051779
-		1.09738409755748933527286226308206  -1.23250078660319939416467605042271
-		-0.44419512036050057268710133939749  -0.57282548568309843428636440876289]
-	X = [-0.45604098553023686424268134942395  1.00874277615952712139346658659633
-		0.49420549013378234359805674102972  -0.19475315178057600595806775345409
-		1.14370352044281964332128609385109  -0.57741159467602198862579143678886
-		0.34114544561118481658112955301476  0.44757702285017553212043139865273]
-end
-  ╠═╡ =#
-
-# ╔═╡ 91dfd45c-a658-4d95-b1e8-34453090cc12
-# ╠═╡ disabled = true
-#=╠═╡
-begin # n = 4, k = 1
-	A = [
-	    0.2927  0.3440
-	    0.3254  0.3466
-	    0.0456  0.0566
-	    0.3281  0.3487
-	    0.2272  0.3439
-	    0.0350  0.1744
-	    0.1001  0.2875
-	    0.1965  0.0510
-	]
-	U0 = [-1.50835280569350471679967995441984  1.44811016664258151998012635885971
-	1.00828481053718577165057013189653  -0.29919980071474577831835972574481
-	0.46845294167179246658250235668675  -1.72336921563406986201982817874523
-	-0.36559294978277639964758805035672  0.50308079139646422195397690302343
-	0.21892228436644922684450875749462  -1.71767040855571551105640537571162
-	0.31776788367191294293334635767678  -0.91342865581348042791631769432570
-	-0.36680309588972281886753989965655  -0.08548276134862793640412093054692
-	-0.18157746944470815053662704485760  -0.36358588182425338741765585837129]
-	X = [-0.5065223769881723 0.8420883555520725
-	0.032089759348237164 -0.4932420370950294
-	0.7409883951402091 -0.3941959214694802
-	-0.1924697782337678 0.21994677172891908
-	0.7643689465681343 -0.2792475667584258
-	0.3855053888104501 -0.2407731481108792
-	0.0773827859190266 0.15919402104081007
-	0.18553779175069454 0.04534051646419934]
-end;
   ╠═╡ =#
 
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
@@ -198,24 +137,6 @@ JZ p. 15: *"We consider R–TR in two variants: R-TR1 uses the true Riemannian H
 R–TR2 uses the approximation given in (2.25). We will write R–TR when addressing
 both variants."*
 """
-
-# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
-# ╠═╡ disabled = true
-#=╠═╡
-function Ω(P, X) # Seems to work the same as MATLAB JZ
-	J = SymplecticElement(1)
-	invPTP = inv(P'*P) # Storing to not compute 3 times
-	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
-end
-  ╠═╡ =#
-
-# ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
-function Ω(p,X) # translated from MATLAB JZ
-	Q = p/(p'*p)
-	#println(Q)
-	XQT = -symplectic_inverse(X*Q')
-	return X*Q' + XQT - (XQT*Q)*p'
-end
 
 # ╔═╡ cab5b270-2bfa-493b-9885-12b2d01a227c
 function Γ(p,η)
@@ -377,19 +298,6 @@ md"""
 As the trial step size,$k$, use the alternating BB method $\gamma_{k}^{ABB}$.
 """
 
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
-# Init. step size as in paper
-
-# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
-# curcomvent calculation of injectivity radius 
-
-# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
-# ╠═╡ disabled = true
-#=╠═╡
-stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
-  ╠═╡ =#
-
 # ╔═╡ 5918c34b-c435-428f-bd18-5b156b5bb0bc
 md"""
 ### Running algorithms
@@ -543,7 +451,7 @@ begin
 end
 
 # ╔═╡ f2526a0a-f155-4e41-b9bd-1d824904907f
-run_diag = true
+run_diag = false
 
 # ╔═╡ 8c04cb67-1e83-4fce-a32e-9067790409cb
 md"""
@@ -588,6 +496,98 @@ begin # Approx Hess, TR-2
 		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0))
 	end
 end
+
+# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
+# ╠═╡ disabled = true
+#=╠═╡
+function Ω(P, X) # Seems to work the same as MATLAB JZ
+	J = SymplecticElement(1)
+	invPTP = inv(P'*P) # Storing to not compute 3 times
+	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
+end
+  ╠═╡ =#
+
+# ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
+begin
+	Random.seed!(seed)
+	U0 = rand(M)
+end
+
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
+# Init. step size as in paper
+
+# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
+# curcomvent calculation of injectivity radius 
+
+# ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
+A = rand_A/norm(rand_A)
+
+# ╔═╡ 91dfd45c-a658-4d95-b1e8-34453090cc12
+# ╠═╡ disabled = true
+#=╠═╡
+begin # n = 4, k = 1
+	A = [
+	    0.2927  0.3440
+	    0.3254  0.3466
+	    0.0456  0.0566
+	    0.3281  0.3487
+	    0.2272  0.3439
+	    0.0350  0.1744
+	    0.1001  0.2875
+	    0.1965  0.0510
+	]
+	U0 = [-1.50835280569350471679967995441984  1.44811016664258151998012635885971
+	1.00828481053718577165057013189653  -0.29919980071474577831835972574481
+	0.46845294167179246658250235668675  -1.72336921563406986201982817874523
+	-0.36559294978277639964758805035672  0.50308079139646422195397690302343
+	0.21892228436644922684450875749462  -1.71767040855571551105640537571162
+	0.31776788367191294293334635767678  -0.91342865581348042791631769432570
+	-0.36680309588972281886753989965655  -0.08548276134862793640412093054692
+	-0.18157746944470815053662704485760  -0.36358588182425338741765585837129]
+	X = [-0.5065223769881723 0.8420883555520725
+	0.032089759348237164 -0.4932420370950294
+	0.7409883951402091 -0.3941959214694802
+	-0.1924697782337678 0.21994677172891908
+	0.7643689465681343 -0.2792475667584258
+	0.3855053888104501 -0.2407731481108792
+	0.0773827859190266 0.15919402104081007
+	0.18553779175069454 0.04534051646419934]
+end;
+  ╠═╡ =#
+
+# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
+# ╠═╡ disabled = true
+#=╠═╡
+stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
+  ╠═╡ =#
+
+# ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
+function Ω(p,X) # translated from MATLAB JZ
+	Q = p/(p'*p)
+	#println(Q)
+	XQT = -symplectic_inverse(X*Q')
+	return X*Q' + XQT - (XQT*Q)*p'
+end
+
+# ╔═╡ 5895c078-5f50-4783-9ecd-acdacc38ab5d
+# ╠═╡ disabled = true
+#=╠═╡
+begin # n = 2, k = 1
+	A = [-0.480444   0.470344
+  		0.304117  -0.104969
+  		0.318186   0.143638
+  		0.567337   0.0264584]
+	U0 = [-1.40663890210255781987314094294561  0.23371634267482957469930227034638
+		0.40603619258114187484665080773993  -0.55070185394803905509775177051779
+		1.09738409755748933527286226308206  -1.23250078660319939416467605042271
+		-0.44419512036050057268710133939749  -0.57282548568309843428636440876289]
+	X = [-0.45604098553023686424268134942395  1.00874277615952712139346658659633
+		0.49420549013378234359805674102972  -0.19475315178057600595806775345409
+		1.14370352044281964332128609385109  -0.57741159467602198862579143678886
+		0.34114544561118481658112955301476  0.44757702285017553212043139865273]
+end
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """

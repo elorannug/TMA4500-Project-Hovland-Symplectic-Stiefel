@@ -24,7 +24,7 @@
         {{hash=9a81fe9ad87cf630eb4a68e86949545d}{%
            family={Absil},
            familyi={A\bibinitperiod},
-           given={P-A},
+           given={P.-A.},
            giveni={P\bibinithyphendelim A\bibinitperiod}}}%
         {{hash=557ac8b0d5f2ea79ae1c98d25604636a}{%
            family={Mahony},
@@ -154,6 +154,35 @@
       \endverb
       \verb{url}
       \verb https://www.nicolasboumal.net/book
+      \endverb
+    \endentry
+    \entry{Bourles2019}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=acb243fc90dbb374c15a6003511371dd}{%
+           family={Bourles},
+           familyi={B\bibinitperiod},
+           given={Henri},
+           giveni={H\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier Ltd.}%
+      }
+      \strng{namehash}{acb243fc90dbb374c15a6003511371dd}
+      \strng{fullhash}{acb243fc90dbb374c15a6003511371dd}
+      \strng{fullhashraw}{acb243fc90dbb374c15a6003511371dd}
+      \strng{bibnamehash}{acb243fc90dbb374c15a6003511371dd}
+      \strng{authorbibnamehash}{acb243fc90dbb374c15a6003511371dd}
+      \strng{authornamehash}{acb243fc90dbb374c15a6003511371dd}
+      \strng{authorfullhash}{acb243fc90dbb374c15a6003511371dd}
+      \strng{authorfullhashraw}{acb243fc90dbb374c15a6003511371dd}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Fundamentals of Advanced Mathematics V3}
+      \field{year}{2019}
+      \verb{doi}
+      \verb 10.1016/c2017-0-00728-0
       \endverb
     \endentry
     \entry{Edelman1998}{article}{}{}
@@ -314,6 +343,38 @@
       \verb arXiv:2404.08463v2
       \endverb
     \endentry
+    \entry{Lee2018}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=36896354ee3aedc1a13d683ea773634e}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={John\bibnamedelima M.},
+           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer Cham}%
+      }
+      \strng{namehash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{fullhash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{fullhashraw}{36896354ee3aedc1a13d683ea773634e}
+      \strng{bibnamehash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{authorbibnamehash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{authornamehash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{authorfullhash}{36896354ee3aedc1a13d683ea773634e}
+      \strng{authorfullhashraw}{36896354ee3aedc1a13d683ea773634e}
+      \field{extraname}{1}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{title}{Introduction to Riemannian Manifolds}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1007/978-3-319-91755-9
+      \endverb
+    \endentry
     \entry{Lee2012:1}{book}{}{}
       \name{author}{1}{}{%
         {{hash=36896354ee3aedc1a13d683ea773634e}{%
@@ -333,6 +394,7 @@
       \strng{authornamehash}{36896354ee3aedc1a13d683ea773634e}
       \strng{authorfullhash}{36896354ee3aedc1a13d683ea773634e}
       \strng{authorfullhashraw}{36896354ee3aedc1a13d683ea773634e}
+      \field{extraname}{2}
       \field{sortinit}{L}
       \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
       \field{labelnamesource}{author}
@@ -409,7 +471,7 @@
       \endverb
     \endentry
   \enddatalist
-  \missing{BZ}
+  \missing{Boumal}
 \endrefsection
 \endinput
 

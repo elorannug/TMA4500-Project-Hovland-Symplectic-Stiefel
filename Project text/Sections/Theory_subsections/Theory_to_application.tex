@@ -1,2 +1,58 @@
 \subsection{Moving from Theory to Application}%TODO: Make a better title
 \todo[inline]{Additional stuff to bridge the gap between theory and application. I.e. cayley transformation (p.20 in BZ, and prop. 5.2). Approx to the Riemannian hessian}
+
+In this section, we will discuss various ways to improve the computational efficiency of the theoretical results presented above. We will first introduce the Cayley retraction, and the pseudo-Riemannian geodesic, which both approximate how we compute geodesics. Secondly we will introduce an approximate Hessian. The formulas to be optimized share a common computational challenge: they both involve computations of matrix exponentials, which are computationally expensive. 
+
+From \cite[p.~7]{JensenZimmermann2024} define the $\textit{Cayley transformation}$ as the first-order expansion of the matrix exponential,
+%
+\begin{equation*}
+\exp(2p)\approx(I-p)(p-I)^{-1}\eqqcolon\mathrm{Cay}(p).
+\end{equation*}
+%
+Though it is only an approximation, it has the property that $\mathrm{Cay}\colon\mathfrak{sp}(2n)\to \mathrm{Sp}(2n)$. Inserting this into \eqref{eq:geodesic_spst} gives us the \textit{Cayley retraction} given by
+%
+\begin{equation*}
+\hat{\mathcal{R}}_{p}(X)=\mathrm{Cay}\left( \frac{1}{2}\big(\overline{\Omega}(X)-\overline{\Omega}(X)^{\mathrm{T}}\big) \right)\mathrm{Cay}\left( \frac{1}{2}\overline{\Omega}(X)^{\mathrm{T}} \right)p.
+\end{equation*}
+However, we will proceed with the even simpler, yet shown to be sufficient, retraction presented in \cite[p.~20]{BendokatZimmermann2021}:
+%
+\begin{equation}
+    \label{eq:cayley_retraction}
+    \begin{split}
+        \mathcal{R}_{p}(tX)&\coloneqq\mathrm{Cay}\left( \frac{t}{2}\tilde{\Omega}(p,X) \right)p \\
+        &=-p+(tq+2p)\left( \frac{t^{2}}{4}q^{+}q- \frac{t}{2}p^{+}X+I \right)^{-1},
+    \end{split}
+\end{equation}
+%
+where $\tilde{\Omega}(p,X)\coloneqq\left( I- \frac{1}{2}pp^{+} \right)Xp^{+}-pX^{+}\left( I- \frac{1}{2}pp^{+} \right)$, and $q\coloneqq X-pp^{+}X$. In \eqref{eq:cayley_retraction},  the last equality comes from \cite[Prop.~5.2]{BendokatZimmermann2021}.
+
+Functioning as a numerical middle ground between the geodesic \eqref{eq:geodesic_spst} on $\mathrm{SpSt}(2n, 2k)$ and the Cayley retraction \eqref{eq:cayley_retraction}, we now define the pseudo-Riemannian geodesic described in \cite[p.~10]{BendokatZimmermann2021}. While invoking \cite{BendokatZimmermann2021} to explain the underlying theory, the pseudo-Riemannian geodesic is defined for $X\in \mathrm{SpSt}(2n, 2k)$ as 
+%
+\begin{equation*}
+\phi(t)=\begin{bmatrix}
+p & \frac{1}{2}pr+q
+\end{bmatrix}\exp\left( t\begin{bmatrix}
+\frac{1}{2}r  & \frac{1}{2}r^{2}-q^{+}q \\
+I_{2n} & \frac{1}{2}r
+\end{bmatrix} \right)
+\begin{bmatrix}
+I_{2k} \\
+0
+\end{bmatrix},
+\end{equation*}
+%
+where $q$ and $r$ are as above. 
+
+To approximate the Riemannian Hessian defined in \eqref{eq:riemannian_hessian} we include the following approximation from \cite[Corr.~5.16]{Boumal2023}. Since $\mathrm{SpSt}(2n, 2k)$ is a submanifold of a Euclidean space, then
+%
+\begin{equation*}
+\operatorname{Hess}f(p)[X]=\operatorname{Proj}_{p}(\operatorname{D}\overline{\operatorname{grad}}f(p)[X]),
+\end{equation*}
+%
+where $\overline{\operatorname{grad}}f(p)$ is a smooth extension of $\operatorname{grad}f(p)$, and $\mathrm{Proj}_{p}(\cdot)$ is the projection onto the tangent space of $p$. It is defined explicitly in \cite[Lemma~2.3]{JensenZimmermann2024}, but we will solve it numerically through the following optimization problem. For $A\in \mathbb{R}^{2n\times 2k}$,
+%
+\begin{equation*}
+\operatorname{Proj}_{p}(A)\approx \operatorname*{min}_{B\in \mathbb{R}^{2n\times2k}} \frac{1}{2}\lvert \lvert B-A \rvert  \rvert ^{2},\quad\text{subject to}\quad B^{\mathrm{T}}Jp+p^{\mathrm{T}}JB=0.
+\end{equation*}
+%
+Now that we have introduced the Cayley retraction, the pseudo-Riemannian geodesic, and the approximate Hessian, we have increased our toolbox in applying the theoretical results to optimization problems. The last thing on our agenda before we can conduct our experiments is to introduce the optimization algorithms we will use. 

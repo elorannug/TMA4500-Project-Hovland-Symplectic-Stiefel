@@ -144,7 +144,7 @@ function r_grad(M,p)
 end
 
 # ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
-check_gradient(M, cost_function, r_grad, U0; plot=false, error = :info)
+check_gradient(M, cost_function, r_grad, U0; retraction_method=ExponentialRetraction(),  plot=true, error = :info)
 
 # ╔═╡ 30c6c236-86f1-4289-b717-e0d4d31a1403
 md"""
@@ -260,17 +260,6 @@ Where:
 -  $\operatorname{D} (\overline{\operatorname{grad}} f(p))[X]$ is the directional derivative of the smooth extension of the Riemannian gradient $\operatorname{grad} f(p)$ along $X$.
 """
 
-# ╔═╡ a183a142-188a-4991-92a7-69ddc7bc187b
-# for debugging, implement own projection
-function custom_project(p, X) # Lemma 2.2?
-	# project X onto SpSt at point p
-	if n < k # dont care about this case
-		throw(DomainError("n < k!"))
-	end
-	XPp = symplectic_inverse(X) * p
-	return X - 0.5 * p * (XPp + symplectic_inverse(XPp))
-end
-
 # ╔═╡ 5fd713a4-54be-4828-bb5a-3edb030f89eb
 function r_hess_approx(M, p, X)
 	eg = euclid_grad_cost_function(p)
@@ -289,9 +278,6 @@ function r_hess_approx(M, p, X)
 	- symplectic_inverse(eg * p') * X
 	)
 	return project(M, p, Dgrad_f)
-	#F(p): 0.556918, |▽F(p)|: 2.0134e-06,
-	#return custom_project(p, Dgrad_f) 
-	#F(p): 0.556918, |▽F(p)|: 1.9975e-06, 
 end
 
 # ╔═╡ d25a8e78-b216-4e99-a29d-3a0fd898b8da
@@ -347,7 +333,7 @@ JZ p. 15:
 grad_tol = 10^-6
 
 # ╔═╡ b6bb36b2-0eff-40de-9fde-5eddff9d010b
-no_iterations = 10000
+no_iterations = 100000
 
 # ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
 md"""
@@ -1997,7 +1983,6 @@ version = "1.4.1+1"
 # ╠═8d97e650-7584-49f3-9a76-4af9b0426b37
 # ╠═2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
 # ╟─e3878383-0f27-4859-bd9e-165076a52da6
-# ╠═a183a142-188a-4991-92a7-69ddc7bc187b
 # ╠═5fd713a4-54be-4828-bb5a-3edb030f89eb
 # ╟─d25a8e78-b216-4e99-a29d-3a0fd898b8da
 # ╟─93add6b4-11d7-4fec-8878-86c128a6e6c8

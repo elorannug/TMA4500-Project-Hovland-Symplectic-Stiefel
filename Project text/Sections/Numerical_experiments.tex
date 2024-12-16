@@ -1,17 +1,5 @@
 \section{Numerical Experiments}
 \todo[inline]{The following experiments were performed using Julia version 1.10.2 on the Laptop ACER Swift SF314-43 processor AMD Ryzen 7 5700U with Radeon Graphics 1.80GHz and 16GB of RAM.}
-To test and compare the feasibility of our algorithms we will, as in \cite[p.~15]{JensenZimmermann2024}, try to solve the following problem. For a matrix $q\in \mathbb{R}^{2n\times2k}$ we want to find the closest symplectic matrix $p \in \mathrm{SpSt}(2n, 2k)$. We formalize this in as the following optimization problem, 
-%
-\begin{equation}
-\operatorname*{min}_{p \in \mathrm{SpSt}(2n, 2k)}f(p),
-\end{equation}
-%
-where $f(p)\colon=\tfrac{1}{2}\lvert \lvert q-p \rvert \rvert^{2}_{\text{F}}$. For a point $p\in \mathrm{SpSt}(2n, 2k)$ and $X\in T_{p}\mathrm{SpSt}(2n, 2k)$, Euclidean gradient and Hessian are, respectively,
-%
-\begin{equation*}
-\nabla f(p)=p-q,\quad \nabla^{2}f(p)[X]=X.
-\end{equation*}
-%
-For the experiments we generate $q$ randomly, and normalize it, $q\cdot\lvert \lvert q \rvert \rvert^{-1}_{\text{F}}$. For the optimization runs we choose $n=1000$ and $k=\{10,50,100\}$. The results is displayed in Table {???} and in Figure \ref{???}. 
 
-\import{./Numerical_exp_subsections/}{NSM_proper.tex}
+\import{./Numerical_exp_subsections/}{Retraction_comparison.tex}
+\import{./Numerical_exp_subsections/}{Nearest_symplectic_matrix.tex}

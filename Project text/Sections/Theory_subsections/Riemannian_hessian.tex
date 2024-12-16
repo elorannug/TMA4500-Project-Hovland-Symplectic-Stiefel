@@ -1,5 +1,5 @@
 \subsection{Riemannian Hessian of the Symplectic Stiefel manifold}
-\todo[inline]{Define the remaining preliminaries for Hessian. Make an intro to section. loosly following Appendix A in Jz}
+\todo[inline]{Say we're loosly following Appendix A in Jz}
 If one knows more about the manifold, one can make more assumptions for an optimization algorithm. The hope would be that these additional assumptions would make the algorithm more efficient. In the Euclidean setting, the Hessian gives us curvature information about the cost function. Generalizing the Hessian to the Riemannian setting it gives us something similar, and we can generalize many popular algorithms. In this section we will therefore define the Riemannian Hessian of the symplectic manifold. We begin by defining what it means to take a second derivative on a manifold. After defining the necessary tools, we will give an analytical expression for the Riemannian Hessian. 
 
 For two smooth vector fields, $\mathcal{X}(p)=\boldsymbol{\alpha}^{\mathrm{T}}\boldsymbol{\partial}$ and $\mathcal{Y}(p)=\boldsymbol{\beta}^{\mathrm{T}}\boldsymbol{\partial}$ defined as in Definition \ref{def:vector_field_on_manifold}, the covariant derivative (defined through the Riemannian connection by Definition \ref{def:riemannian_connection}) written in local coordinates is
@@ -32,8 +32,11 @@ To find the Christoffel symbols for $\mathrm{SpSt}(2n, 2k)$ with respect to the 
 \end{equation*}
 Here $X=\dot{\gamma}(0)\in T_{p}\mathrm{SpSt}(2n, 2k)$, $p\in \mathrm{SpSt}(2n, 2k)$, and $\overline{\Omega}(X)$ is as in \todo{define this somewhere}ref. 
 With our metric $g$, the Hessian at $p$ of a smooth function $f\colon \mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$ is the endomorphism 
-\begin{gather*}
-    \operatorname{Hess}f(p)\colon T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}T_{p}\mathrm{SpSt}(2n, 2k),  \\
-    \operatorname{Hess}f(p)[X]=\left.\frac{\mathrm{d}}{\mathrm{d}t}\operatorname{grad}f(c(t))\right|_{t=0}+\Gamma(\operatorname{grad}f(p),X),
-\end{gather*}
-where $\operatorname{grad}f(\cdot)$ is as in \ref{eq:rie_grad}. $c(t)\in \mathrm{SpSt}(2n, 2k)$ is an arbitrary curve such that $c(0)=p$ and $c'(0)=X$ % Curve definition should be somewhere else
+\begin{equation}\label{eq:riemannian_hessian}
+    \begin{gathered}
+        \operatorname{Hess}f(p)\colon T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}T_{p}\mathrm{SpSt}(2n, 2k),  \\
+        \operatorname{Hess}f(p)[X]=\left.\frac{\mathrm{d}}{\mathrm{d}t}\operatorname{grad}f(c(t))\right|_{t=0}+\Gamma(\operatorname{grad}f(p),X),
+    \end{gathered}
+\end{equation}
+where $\operatorname{grad}f(\cdot)$ is as in \ref{eq:rie_grad}. $c(t)\in \mathrm{SpSt}(2n, 2k)$ is an arbitrary curve such that $c(0)=p$ and $c'(0)=X$. \todo{Curve definition should be somewhere else}
+Although powerful, the Hessian can become cumbersome to compute. In the next section we will give an alternative way: to compute an approximate Hessian that has the potential to be more computationally efficient. 
