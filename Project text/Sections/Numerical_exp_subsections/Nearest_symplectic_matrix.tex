@@ -1,9 +1,7 @@
-\subsection{Nearest symplectic matrix problem - 2nd}
-
-
+\subsection{Nearest symplectic matrix problem - 2nd order}\label{sec:NSM_2nd_order}
+As in the preceding section, we will conduct our experiments on the optimization problem called the nearest symplectic matrix problem, \eqref{eq:nearest_symplectic_matrix}. Striving to replicate the conditions in \cite[p.~15]{JensenZimmermann2024}, for $\mathrm{SpSt}(2n, 2k)$ we select $n=100$, and $k=\left\{ 5,10,20 \right\}$. The algorithms tested are GD, TR-1 and TR-2.  The results of these runs are summarized in Table \ref{tbl:Nearest_symplectic_matrix_2nd_order} and Figure \ref{fig:nearest_symplectic_matrix_2nd_order}.
 
 \begin{figure}\label{fig:nearest_symplectic_matrix_2nd_order}
-    \centering
     \begin{tikzpicture}
         \begin{groupplot}[
             group style = {
@@ -11,7 +9,7 @@
                 horizontal sep=1.75cm,
                 vertical sep=1.5cm},
             log basis x={10},
-            width = 0.5\textwidth,
+            width = 0.48\textwidth,
             height = 0.4\textwidth
         ]
         % (1,1)
@@ -39,8 +37,8 @@
             \addlegendentry{TR-2}
         % (1,2)
         \nextgroupplot[
-            title = {Convergence of $\nabla f(p)$, for $k=5$},
-            ylabel={$\nabla f(p)$},
+            title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, for $k=5$},
+            ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
             ymode=log,
             xmode=log]
             \addplot table [
@@ -85,8 +83,8 @@
             \addlegendentry{TR-2}
         % (2,2)
         \nextgroupplot[
-            title = {Convergence of $\nabla f(p)$, for $k=10$},
-            ylabel={$\nabla f(p)$},
+            title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, for $k=10$},
+            ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
             ymode=log,
             xmode=log]
             \addplot table [
@@ -132,8 +130,8 @@
             \addlegendentry{TR-2}
         % (3,2)
         \nextgroupplot[
-            title = {Convergence of $\nabla f(p)$, for $k=20$},
-            ylabel={$\nabla f(p)$},
+            title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, for $k=20$},
+            ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
             xlabel={Iteration},
             ymode=log,
             xmode=log]
@@ -156,8 +154,9 @@
             \addlegendentry{TR-2}
         \end{groupplot}
     \end{tikzpicture}
-    \caption[Nearest symplectic matrix problem solved by CG, TR-1 and TR-2]{Nearest symplectic matrix problem solved by CG, TR-1 and TR-2. The figures show $f(p)$ and $\nabla f(p)$ on $\mathrm{SpSt}(2n, 2k)$ as a function of iteration for all three algorithms, with $n=100$ for $k={5,10,20}$}\label{fig:nearest_symplectic_matrix_2nd_order}
+    \caption[Nearest symplectic matrix problem solved by CG, TR-1 and TR-2]{Nearest symplectic matrix problem solved by CG, TR-1 and TR-2. The figures show $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ on $\mathrm{SpSt}(2n, 2k)$ as a function of iteration for all three algorithms, with $n=100$ for $k={5,10,20}$}\label{fig:nearest_symplectic_matrix_2nd_order}
 \end{figure}
+Figure \ref{fig:nearest_symplectic_matrix_2nd_order} shows $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ as a function of iteration for the three different runs with $k=\left\{ 5,10,20 \right\}$, for the three algorithms GD, TR-1 and TR-2. We observe that for all $k$'s, the algorithms behaved similarly in the sense that they all converged in a similar number of steps, and following a similar shape. We observe that TR-1 and TR-2 behaves  similarly, so we will denote both of them as TR. The only major pattern to be observed between $k$'s is that the first $\sim 15$ iterations of TR in $k=5$ have a steeper slope than GD. This difference is smaller for $k=10$, and almost non-existent in $k=20$. Looking at $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ we observe that the major difference in convergence, as theoretically predicted, is visible after the first $\sim 15$ iterations. after this point, while the convergence rate of GD seem to slow down, the convergence rate of TR seems to increase. It should be noted that this "speeding up" and "slowing down" is an artifact of the loglog plotting, but it is clearly showing that the rate of convergence close to the critical point is fundamentally different between TR and GD. It should also be noted that all algorithms terminated as the result of hitting the condition $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}\leq10^{-6}$. This can give the perception that the final iteration of TR is more precise than GD. However, this is only an artefact of the convergence rate of TR being so high that the final step before convergence is detected, significantly overshoots the convergence condition for $k=\left\{ 5,10 \right\}$. 
 
 \begin{table}
     \centering
@@ -172,6 +171,9 @@
         $k=20$ & 1.1 & 35 & 23 \\        
     \end{tabular}
 \end{table}
+Table \ref{tbl:Nearest_symplectic_matrix_2nd_order} displays the time to converge for the runs displayed in Figure \ref{fig:nearest_symplectic_matrix_2nd_order}. We can see that GD has a significantly faster time to converge than TR-1 and TR-2. We also observe that TR-2 is faster than TR-1, though the difference in time shrinks as $k$ increases. We can also see that the time increase per $k$ for TR-1 and TR-2 is much slower than for GD, which increases the convergence time by approximately an order of magnitude for the increases in $k$. 
+
+
 
 % Other plots  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

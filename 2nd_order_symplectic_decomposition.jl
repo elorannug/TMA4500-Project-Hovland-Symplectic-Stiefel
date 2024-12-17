@@ -27,16 +27,16 @@ md"""
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 4
+n = 100 
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 1
+k = 10
 
 # ╔═╡ 1b0763d0-3c2b-43bb-b663-c792f5f4ce24
-r = 2
+r = 20
 
 # ╔═╡ 0011fbe2-acd2-4798-8e82-9cd4b567423f
-m = 3 # Jensen picked 100
+m = 30 # Jensen picked 100
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
@@ -70,9 +70,16 @@ begin
 	U0 = rand(M)
 end
 
-# ╔═╡ 262c70ed-3bf3-4181-943b-41b374c020ae
+# ╔═╡ ee696c17-8eb3-40f9-bd97-fe9789e0f7bb
 begin
-	var_to_print = U0
+	Random.seed!(seed)
+	X0 = rand(M; vector_at=U0)
+	is_vector(M, U0, X0)
+end
+
+# ╔═╡ 262c70ed-3bf3-4181-943b-41b374c020ae
+begin # Function to make matrices transferrable to MATLAB
+	var_to_print = X0
 	@printf "["
 for i in 1:size(var_to_print, 1)
     for j in 1:size(var_to_print, 2)
@@ -116,9 +123,6 @@ function euclid_grad_cost_function(p::Matrix{Float64})
 	return - 2 * ((I - ppPLUS)*SST*J'*p*J - J*SST*(I - ppPLUS)'*p*J)
 end
 
-# ╔═╡ 2ef5a035-c7fe-4516-a3b9-fc5dd7d0f5d5
-euclid_grad_cost_function(U0*12.324)
-
 # ╔═╡ 402611b0-d0f2-4b13-8a67-6c60007bb377
 function euclid_hessian_cost_function(p::Matrix{Float64}, X::Matrix{Float64})
 	J = SymplecticElement(1)
@@ -144,7 +148,7 @@ function r_grad(M,p)
 end
 
 # ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
-check_gradient(M, cost_function, r_grad, U0; retraction_method=ExponentialRetraction(),  plot=true, error = :info)
+check_gradient(M, cost_function, r_grad, U0; retraction_method=ExponentialRetraction(),  plot=false, error = :info)
 
 # ╔═╡ 30c6c236-86f1-4289-b717-e0d4d31a1403
 md"""
@@ -245,7 +249,7 @@ end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
 # ⚠️ It was using Cayley as default!
-check_Hessian(M, cost_function, r_grad, r_hess#=, U0, X=#; plot=true, error=:warn, check_symmetry=true, check_vector=true, retraction_method=ExponentialRetraction(), limits=(-5,0))
+check_Hessian(M, cost_function, r_grad, r_hess#=, U0, X0=#; plot=true, error=:warn, check_symmetry=true, check_vector=true, retraction_method=ExponentialRetraction(), limits=(-8,0))
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -333,7 +337,7 @@ JZ p. 15:
 grad_tol = 10^-6
 
 # ╔═╡ b6bb36b2-0eff-40de-9fde-5eddff9d010b
-no_iterations = 100000
+no_iterations = 1000
 
 # ╔═╡ 0960b834-ee78-42bf-8fbd-955734e3426c
 md"""
@@ -343,24 +347,12 @@ md"""
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
 solver = gradient_descent(M, cost_function, r_grad, U0;
 	stepsize = stepsize, return_state = true, 
-	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol) | StopWhenStepsizeLess(10.0^-11),
+	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",1000,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 
 # ╔═╡ 7301c2ba-706c-4797-b597-92877cd16a4b
-begin # JZ: TR-1
-solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess;
-	return_state = true,
-	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol),
-	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",1000,:Stop],
-	record=[:Iteration, :Cost, RecordGradientNorm()])
-end
-
-# ╔═╡ 715fb2bf-5f2c-4e68-ac9e-80056152146a
-# ╠═╡ disabled = true
-#=╠═╡
 begin # JZ: TR-1
 solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
 	acceptance_rate = 0.1,
@@ -370,12 +362,11 @@ solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
 	# Removed StopWHenModelIncreased() from subproblem stopping criterion
 	sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 	return_state = true,
-	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol),
+	stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",1000,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 end
-  ╠═╡ =#
 
 # ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
 # JZ: TR-2
@@ -442,15 +433,46 @@ begin
 	println("Fetched arrays for plotting")
 end
 
+# ╔═╡ fec87766-fb88-4ebb-b2e8-31471c2ff885
+begin
+	using CSV, DataFrames
+	# Saving data as dataframe to csv
+
+	# All need to be of same length. 
+    max_length = maximum([
+        length(iterations),
+        length(iterations_og_tr_hess),
+        length(iterations_og_tr_approx)
+    ])
+
+    function pad_to_length(arr, target_length)
+        return vcat(arr, fill(missing, target_length - length(arr)))
+    end
+	
+	data = DataFrame(
+	    iterations = pad_to_length(iterations, max_length),
+	    cost_GD = pad_to_length(cost_vals, max_length),
+	    gradient_GD = pad_to_length(gradient_vals, max_length),
+	
+		iteration_TR_hess = pad_to_length(iterations_og_tr_hess, max_length),
+		cost_TR_hess = pad_to_length(cost_vals_og_tr_hess, max_length),
+		gradient_TR_hess = pad_to_length(gradient_vals_og_tr_hess, max_length),
+	
+		iteration_TR_hess_approx = pad_to_length(iterations_og_tr_approx, max_length),
+		cost_TR_hess_approx = pad_to_length(cost_vals_og_tr_approx, max_length),
+		gradient_TR_hess_approx = pad_to_length(gradient_vals_og_tr_approx, max_length)
+	)
+	
+	# Save to a CSV file
+	# CSV.write("2nd_order_symplectic_decomposition_n100k10r20m30.csv", data)
+end
+
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
 begin
 	plot(iterations, cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, yaxis=:log10,label = "Grad. Descent")
 	plot!(iterations_og_tr_approx, cost_vals_og_tr_approx, label = "TR approx Hess")
 	plot!(iterations_og_tr_hess, cost_vals_og_tr_hess, label = "TR exact Hess")
 end
-
-# ╔═╡ 612ca6d8-2bfc-4bc4-8e3c-487eed64b898
-
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
 begin
@@ -510,6 +532,8 @@ end
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Manifolds = "1cead3c2-87b3-11e9-0ccd-23c62b72b94e"
@@ -521,6 +545,8 @@ Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [compat]
 BenchmarkTools = "~1.5.0"
+CSV = "~0.10.15"
+DataFrames = "~1.7.0"
 Distributions = "~0.25.112"
 Manifolds = "~0.10.2"
 ManifoldsBase = "~0.15.16"
@@ -534,7 +560,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.2"
 manifest_format = "2.0"
-project_hash = "f4652b45abe0bb91d25cdf1bc87b5b98e3b596ae"
+project_hash = "3ff2f7471197ff33cd5369bfae715f013d672188"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -574,6 +600,12 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "9e2a6b69137e6969bab0152632dcb3bc108c8bdd"
 uuid = "6e34b625-4abd-537c-b88f-471c36dfa7a0"
 version = "1.0.8+1"
+
+[[deps.CSV]]
+deps = ["CodecZlib", "Dates", "FilePathsBase", "InlineStrings", "Mmap", "Parsers", "PooledArrays", "PrecompileTools", "SentinelArrays", "Tables", "Unicode", "WeakRefStrings", "WorkerUtilities"]
+git-tree-sha1 = "deddd8725e5e1cc49ee205a1964256043720a6c3"
+uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+version = "0.10.15"
 
 [[deps.Cairo_jll]]
 deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
@@ -641,16 +673,32 @@ git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.6.3"
 
+[[deps.Crayons]]
+git-tree-sha1 = "249fe38abf76d48563e2f4556bebd215aa317e15"
+uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+version = "4.1.1"
+
 [[deps.DataAPI]]
 git-tree-sha1 = "abe83f3a2f1b857aac70ef8b269080af17764bbe"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.16.0"
+
+[[deps.DataFrames]]
+deps = ["Compat", "DataAPI", "DataStructures", "Future", "InlineStrings", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrecompileTools", "PrettyTables", "Printf", "Random", "Reexport", "SentinelArrays", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
+git-tree-sha1 = "fb61b4812c49343d7ef0b533ba982c46021938a6"
+uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+version = "1.7.0"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
 git-tree-sha1 = "1d0a14036acb104d9e89698bd408f63ab58cdc82"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 version = "0.18.20"
+
+[[deps.DataValueInterfaces]]
+git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
+uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
+version = "1.0.0"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -735,6 +783,17 @@ git-tree-sha1 = "466d45dc38e15794ec7d5d63ec03d776a9aff36e"
 uuid = "b22a6f82-2f65-5046-a5b2-351ab43fb4e5"
 version = "4.4.4+1"
 
+[[deps.FilePathsBase]]
+deps = ["Compat", "Dates"]
+git-tree-sha1 = "7878ff7172a8e6beedd1dea14bd27c3c6340d361"
+uuid = "48062228-2e41-5def-b9a4-89aafe57970f"
+version = "0.9.22"
+weakdeps = ["Mmap", "Test"]
+
+    [deps.FilePathsBase.extensions]
+    FilePathsBaseMmapExt = "Mmap"
+    FilePathsBaseTestExt = "Test"
+
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
@@ -778,6 +837,10 @@ deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "1ed150b39aebcc805c26b93a8d0122c940f64ce2"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.14+0"
+
+[[deps.Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
@@ -849,14 +912,37 @@ git-tree-sha1 = "d1b1b796e47d94588b3757fe84fbf65a5ec4a80d"
 uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
 version = "0.1.5"
 
+[[deps.InlineStrings]]
+git-tree-sha1 = "45521d31238e87ee9f9732561bfee12d4eebd52d"
+uuid = "842dd82b-1e85-43dc-bf29-5d0ee9dffc48"
+version = "1.4.2"
+
+    [deps.InlineStrings.extensions]
+    ArrowTypesExt = "ArrowTypes"
+    ParsersExt = "Parsers"
+
+    [deps.InlineStrings.weakdeps]
+    ArrowTypes = "31f734f8-188a-4ce0-8406-c8a06bd891cd"
+    Parsers = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
+
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[deps.InvertedIndices]]
+git-tree-sha1 = "0dc7b50b8d436461be01300fd8cd45aa0274b038"
+uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
+version = "1.3.0"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.2"
+
+[[deps.IteratorInterfaceExtensions]]
+git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
+uuid = "82899510-4779-5014-852e-03e436cf321d"
+version = "1.0.0"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
@@ -1334,6 +1420,12 @@ version = "1.40.8"
     ImageInTerminal = "d8c32880-2388-543b-8c61-d9f865259254"
     Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
+[[deps.PooledArrays]]
+deps = ["DataAPI", "Future"]
+git-tree-sha1 = "36d8b4b899628fb92c2749eb488d884a926614d3"
+uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
+version = "1.4.3"
+
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
 git-tree-sha1 = "5aa36f7049a63a1528fe8f7c3f2113413ffd4e1f"
@@ -1345,6 +1437,12 @@ deps = ["TOML"]
 git-tree-sha1 = "9306f6085165d270f7e3db02af26a400d580f5c6"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
 version = "1.4.3"
+
+[[deps.PrettyTables]]
+deps = ["Crayons", "LaTeXStrings", "Markdown", "PrecompileTools", "Printf", "Reexport", "StringManipulation", "Tables"]
+git-tree-sha1 = "1101cd475833706e4d0e7b122218257178f48f34"
+uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+version = "2.4.0"
 
 [[deps.Printf]]
 deps = ["Unicode"]
@@ -1466,6 +1564,12 @@ git-tree-sha1 = "3bac05bc7e74a75fd9cba4295cde4045d9fe2386"
 uuid = "6c6a2e73-6563-6170-7368-637461726353"
 version = "1.2.1"
 
+[[deps.SentinelArrays]]
+deps = ["Dates", "Random"]
+git-tree-sha1 = "d0553ce4031a081cc42387a9b9c8441b7d99f32d"
+uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
+version = "1.4.7"
+
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 
@@ -1572,6 +1676,12 @@ version = "1.3.2"
     ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
     InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
+[[deps.StringManipulation]]
+deps = ["PrecompileTools"]
+git-tree-sha1 = "a6b1675a536c5ad1a60e5a5153e1fee12eb146e3"
+uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
+version = "0.4.0"
+
 [[deps.SuiteSparse]]
 deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
@@ -1585,6 +1695,18 @@ version = "7.2.1+1"
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 version = "1.0.3"
+
+[[deps.TableTraits]]
+deps = ["IteratorInterfaceExtensions"]
+git-tree-sha1 = "c06b2f539df1c6efa794486abfb6ed2022561a39"
+uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
+version = "1.0.1"
+
+[[deps.Tables]]
+deps = ["DataAPI", "DataValueInterfaces", "IteratorInterfaceExtensions", "OrderedCollections", "TableTraits"]
+git-tree-sha1 = "598cd7c1f68d1e205689b1c2fe65a9f85846f297"
+uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
+version = "1.12.0"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
@@ -1666,6 +1788,17 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "93f43ab61b16ddfb2fd3bb13b3ce241cafb0e6c9"
 uuid = "2381bf8a-dfd0-557d-9999-79630e7b1b91"
 version = "1.31.0+0"
+
+[[deps.WeakRefStrings]]
+deps = ["DataAPI", "InlineStrings", "Parsers"]
+git-tree-sha1 = "b1be2855ed9ed8eac54e5caff2afcdb442d52c23"
+uuid = "ea10d353-3f73-51f8-a26c-33c1cb351aa5"
+version = "1.4.2"
+
+[[deps.WorkerUtilities]]
+git-tree-sha1 = "cd1659ba0d57b71a464a29e64dbc67cfe83d54e7"
+uuid = "76eceee3-57b5-4d4a-8e66-0e911cebbf60"
+version = "1.6.1"
 
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
@@ -1961,8 +2094,8 @@ version = "1.4.1+1"
 # ╠═d9773f1b-e03f-461b-9f44-0ad6aea5b0a0
 # ╠═212f0565-d5ee-48e7-90bc-05351d905157
 # ╠═262c70ed-3bf3-4181-943b-41b374c020ae
+# ╠═ee696c17-8eb3-40f9-bd97-fe9789e0f7bb
 # ╠═34a28708-9567-4284-aeff-c457badf5771
-# ╠═2ef5a035-c7fe-4516-a3b9-fc5dd7d0f5d5
 # ╟─6460d549-e79d-473e-82e9-92c261a02dd7
 # ╠═30ceffac-5c28-4c53-9f3a-0375828ac2cb
 # ╠═75aff951-90ed-491c-8d98-f0149cad8162
@@ -1997,16 +2130,15 @@ version = "1.4.1+1"
 # ╟─0960b834-ee78-42bf-8fbd-955734e3426c
 # ╠═761c40ec-878a-42a6-b372-f79394dcf4f8
 # ╠═7301c2ba-706c-4797-b597-92877cd16a4b
-# ╠═715fb2bf-5f2c-4e68-ac9e-80056152146a
 # ╠═97db13d5-9e70-41be-84e7-866d26558b90
 # ╟─755f4c1c-153c-4f64-9caa-cc2e30e06c61
 # ╟─8ab39b2a-6b4d-4ccc-a988-53654827b647
 # ╠═55d3d303-c6b5-4df3-bb2d-5b1b87a442d0
 # ╠═4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
-# ╠═de8bf366-f01d-43cd-bcd0-db8828d6745a
-# ╠═612ca6d8-2bfc-4bc4-8e3c-487eed64b898
+# ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
+# ╠═fec87766-fb88-4ebb-b2e8-31471c2ff885
+# ╟─de8bf366-f01d-43cd-bcd0-db8828d6745a
 # ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0
 # ╠═f2526a0a-f155-4e41-b9bd-1d824904907f
 # ╟─8c04cb67-1e83-4fce-a32e-9067790409cb

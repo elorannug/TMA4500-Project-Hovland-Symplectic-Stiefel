@@ -1,12 +1,13 @@
 \subsection{Foundational definitions}
 % TODO: Give intro to section. What will be covered?
-This section is designed to be a reference work to set notation, and to ensure that the reader has the necessary background to understand the optimization algorithms we will be studying. 
-\todo[inline]{Note that even though the elements of the symplectic group and symplectic stiefel manifold are matrices, the word "point" will be used to refer to a specific matrix, as it is a point on the matrix manifold.}
-% The optimization algorithm we will be studying is defined on a \textit{Riemannian manifold}. This is because the algorithms we will use are designed to utilize first and second order information, and we need to define what these concepts mean on a manifold.   
+This section is designed to be a reference work to set notation, and to make the rest of the report more readable in the sense that we do not take detours to define basic properties. 
 
-\begin{definition}[General Linear group]\label{def:general_linear_group}
-    The \textup{real General Linear group} is defined as the set of all invertible matrices in $\mathbb{R}^{n\times n}$, denoted by $\mathrm{GL}(n)$. \cite[Example~9.11]{Boumal2023}
-\end{definition}
+Note that even though the elements of the symplectic group and symplectic stiefel manifold are matrices, the word "point" will be used to refer to a specific matrix, as the specific matrix is a point on the matrix manifold.
+
+
+% \begin{definition}[General Linear group]\label{def:general_linear_group}
+%     The \textup{real General Linear group} is defined as the set of all invertible matrices in $\mathbb{R}^{n\times n}$, denoted by $\mathrm{GL}(n)$. \cite[Example~9.11]{Boumal2023}
+% \end{definition}
 
 \begin{definition}[Orthogonal group]\label{def:orthogonal_group}
     The \textup{real Orthogonal group} is defined as the set of all orthogonal matrices in $\mathbb{R}^{n\times n}$, denoted by $\mathrm{O}(n)$. \cite[p.~3]{Edelman1998}
@@ -45,7 +46,7 @@ This section is designed to be a reference work to set notation, and to ensure t
 \end{definition}
 
 
-\begin{definition}[Vector field on Riemannian manifold]\label{def:vector_field_on_manifold}
+\begin{definition}[Vector field on a Riemannian manifold]\label{def:vector_field_on_manifold}
     Following Appendix A of \cite{JensenZimmermann2024}, a smooth vector field $\mathcal{X}\colon \mathcal{M}\xrightarrow{}T \mathcal{M},~p\mapsto \mathcal{X}(p)\in T_{p}\mathcal{M}$ on a Riemannian manifold $\mathcal{M}$ can be expressed through local coordinates as 
     \begin{equation*}
         \mathcal{X}(p)=\sum\limits_{i=1}^{n}\alpha_{i}\partial_{i}\eqqcolon \boldsymbol{\alpha}^{\mathrm{T}}\boldsymbol{\partial},
@@ -87,6 +88,16 @@ This section is designed to be a reference work to set notation, and to ensure t
     \end{enumerate}
 \end{definition}
 
+\begin{definition}[Riemannian gradient]\label{def:riemannian_gradient}
+    As defined in \cite[Def.~3.58]{Boumal2023}, for the Riemannian manifold $\mathcal{M}$, let $f\colon\mathcal{M}\to \mathbb{R}$ be a smooth function. The \textup{Riemannian gradient} of $f$ is the vector field $\operatorname{grad}f$ on $\mathcal{M}$ defined uniquely by for all $(p,X)\in T\mathcal{M}$,
+    %
+    \begin{equation*}
+    \operatorname{D}f(p)[X]=\langle X,\operatorname{grad}f(p) \rangle _{p},
+    \end{equation*}
+    %
+    where $\operatorname{D}$ denotes the differential of $f$ at $p$ meaning $(f\circ c)'(0)$ for som curve $c(t)$ like in Definition \ref{def:tangent_space} \cite[Def.~3.34]{Boumal2023}. The $\langle \cdot,\cdot \rangle_{p}$ denotes the Riemannian metric at the point $p$. 
+\end{definition}
+
 \begin{definition}[Christoffel symbols]\label{def:christoffel_symbols}
     The method we will employ to completely describe a connection (as defined in Definition \ref{def:riemannian_connection}) locally is to describe them through $\textup{Christoffel symbols}$. Following the definition of \cite[p.~100]{Tu2017}, let $\nabla$ be an affine connection on $\mathcal{M}$. Denote a \todo{do i need a source to define this?}coordinate vector field on the coordinate open set $(U,p^{1},\dots,p^{n})\subseteq\mathcal{M}$ by $\partial_{i}\coloneqq \partial/\partial p^i$. In this coordinate frame there exist the numbers called Christoffel symbols, $\Gamma_{ij}^{k}$, defined through the following
     \begin{equation*}
@@ -100,16 +111,9 @@ This section is designed to be a reference work to set notation, and to ensure t
     such that every curve generated from $c(t)=\mathcal{R}_{p}(tX)$ satisfies $c(0)=p$ and $\dot{c}(0)=X$. Equivalently the conditions can be stated as in \cite[p.~40]{Boumal2023} without the use of curves. For all $p\in \mathcal{M}$, $\mathcal{R}_{p}(0)=p$, and $\operatorname{D}\mathcal{R}_{p}(0)\colon T_{p}\mathcal{M}\xrightarrow{}T_{p}\mathcal{M}$, $\operatorname{D}\mathcal{R}_{p}(0)[X]=X$ is the identify map. 
 \end{definition}
 
-    
+Now that we have defined som foundational definitions to this report, we will proceed with defining the symplectic group and the symplectic Stiefel manifold, the objects of interest in this report. Note that for the rest of this project report we denote $\mathcal{M}$ as being a Riemannian manifold unless stated otherwise.
 
 
-% TODO: Forklar at J_2n blir forenklet til J hvis det er klart fra konteksten
-
-% TODO: Is this a paper? ⚠️
-For the rest of this project report we denote $\mathcal{M}$ as being a Riemannian manifold.
-
-\todo[inline]{After the basic definitions, talk about how the rest of the theory is a highlighted summary through BZ and JZ. The goal is to look at the findings in JZ, however it relies heavely on theory derived in BZ. It will be mentioned of some parts are from other works, or if they are original work.}
-% optimization on R manif
 
 
 

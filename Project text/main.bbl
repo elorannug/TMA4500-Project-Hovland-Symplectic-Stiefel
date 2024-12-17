@@ -57,6 +57,51 @@
       \field{year}{2008}
       \field{dateera}{ce}
     \endentry
+    \entry{AxenBaranBergmannRzecki:2023}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=187d51a503d9bbcc224daad47aa15ef0}{%
+           family={Axen},
+           familyi={A\bibinitperiod},
+           given={Seth\bibnamedelima D.},
+           giveni={S\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=a5cf2b0544ac563410255f91d67a98ff}{%
+           family={Baran},
+           familyi={B\bibinitperiod},
+           given={Mateusz},
+           giveni={M\bibinitperiod}}}%
+        {{hash=53fb91f9eee2be872f4efb88cf9b65c1}{%
+           family={Bergmann},
+           familyi={B\bibinitperiod},
+           given={Ronny},
+           giveni={R\bibinitperiod}}}%
+        {{hash=267c475a2996028ba5cc4f8d885c2049}{%
+           family={Rzecki},
+           familyi={R\bibinitperiod},
+           given={Krzysztof},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{281e653b7fdde7547a3b9826a3182884}
+      \strng{fullhash}{50bdb3baef71ce522d2071f074db9ccd}
+      \strng{fullhashraw}{50bdb3baef71ce522d2071f074db9ccd}
+      \strng{bibnamehash}{281e653b7fdde7547a3b9826a3182884}
+      \strng{authorbibnamehash}{281e653b7fdde7547a3b9826a3182884}
+      \strng{authornamehash}{281e653b7fdde7547a3b9826a3182884}
+      \strng{authorfullhash}{50bdb3baef71ce522d2071f074db9ccd}
+      \strng{authorfullhashraw}{50bdb3baef71ce522d2071f074db9ccd}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACM Transactions on Mathematical Software}
+      \field{month}{12}
+      \field{number}{4}
+      \field{title}{Manifolds.Jl: An Extensible Julia Framework for Data Analysis on Manifolds}
+      \field{volume}{49}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.1145/3618296
+      \endverb
+    \endentry
     \entry{BendokatZimmermann2021}{online}{}{}
       \name{author}{2}{}{%
         {{hash=4a0de0daa50048b404982d9ab47dabb9}{%
@@ -87,6 +132,40 @@
       \field{year}{2021}
       \verb{eprint}
       \verb arXiv:2108.12447v1
+      \endverb
+    \endentry
+    \entry{Bergmann2022}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=53fb91f9eee2be872f4efb88cf9b65c1}{%
+           family={Bergmann},
+           familyi={B\bibinitperiod},
+           given={Ronny},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {The Open Journal}%
+      }
+      \strng{namehash}{53fb91f9eee2be872f4efb88cf9b65c1}
+      \strng{fullhash}{53fb91f9eee2be872f4efb88cf9b65c1}
+      \strng{fullhashraw}{53fb91f9eee2be872f4efb88cf9b65c1}
+      \strng{bibnamehash}{53fb91f9eee2be872f4efb88cf9b65c1}
+      \strng{authorbibnamehash}{53fb91f9eee2be872f4efb88cf9b65c1}
+      \strng{authornamehash}{53fb91f9eee2be872f4efb88cf9b65c1}
+      \strng{authorfullhash}{53fb91f9eee2be872f4efb88cf9b65c1}
+      \strng{authorfullhashraw}{53fb91f9eee2be872f4efb88cf9b65c1}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Open Source Software}
+      \field{number}{70}
+      \field{title}{Manopt.jl: Optimization on Manifolds in {J}ulia}
+      \field{volume}{7}
+      \field{year}{2022}
+      \field{pages}{3866}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.21105/joss.03866
       \endverb
     \endentry
     \entry{Boothby1975}{book}{}{}
@@ -471,7 +550,7 @@
       \endverb
     \endentry
   \enddatalist
-  \missing{Boumal}
+  \missing{same as JZ}
 \endrefsection
 \endinput
 

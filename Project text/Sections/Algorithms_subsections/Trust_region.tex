@@ -9,7 +9,7 @@ Following \cite[p.~131]{Boumal2023}, the goal of each step $k$ of TR is for a po
 f(\mathcal{R}_{p_{k}}(X))\approx m_{p_{k}}(X)=f(p_{k})+\langle \operatorname{grad}f(p_{k}),X \rangle _{p_{k}}+ \frac{1}{2}\langle H_{p_{k}}(X),X \rangle _{p_{k}}.
 \end{equation*}
 %
-$H_{p_{k}}$ can be any self-adjoint linear map on $T_{p_{k}}\mathrm{SpSt}(2n, 2k)$, but in our experiments $H_{p_{k}}$ will be either $\operatorname{Hess}f(p_{k})[X]$ as in \ref{}, or $\pi_{p_{k}}(\operatorname{D}\overline{\operatorname{grad}}f(p_{k})[X])$ as in \ref{}. From \cite[Prop.~5.44]{Boumal2023} the convergence rate of this method is essentially the same as $\operatorname{Hess}f(p)[X]$. 
+$H_{p_{k}}$ can be any self-adjoint linear map on $T_{p_{k}}\mathrm{SpSt}(2n, 2k)$, but in our experiments $H_{p_{k}}$ will be either $\operatorname{Hess}f(p_{k})[X]$ as in \eqref{eq:riemannian_hessian}, or $\operatorname{Proj}_{p_{k}}(\operatorname{D}\overline{\operatorname{grad}}f(p_{k})[X])$ as in \eqref{eq:approximate_hessian}. From \cite[Prop.~5.44]{Boumal2023} the convergence rate of this method is essentially the same as $\operatorname{Hess}f(p)[X]$. 
 
 To choose a step size for TR we demand that the step must reduce the value of $m_{p_{k}}(X)$. Since our model is an approximation of the tangent space, we construct a trust region which is the region around $p_{k}$ where we assume that the error in our approximation is negligible. We solve the TR subproblem
 %
@@ -17,14 +17,12 @@ To choose a step size for TR we demand that the step must reduce the value of $m
 \operatorname*{min}_{X\in T_{p_{k}}\mathrm{SpSt}(2n, 2k)}m_{k}(X)\quad \text{subject to}\quad \lvert \lvert X \rvert  \rvert _{p_{k}}\leq \Delta_{k}
 \end{equation}
 %
-to find the candidate step $X_{k}$,  where candidate for next iterate then is $\hat{p}_{k}=\mathcal{R}_{p_{k}}(X_{k})$. $\Delta_{k}$ denotes the radius of the trust region at that iterate. Depending on how the new step performs (see line ? of Algorithm \ref{alg:TR}) it is either accepted or rejected. Finally the trust region radius is evaluated to see if it needs to be modified. The prcedure is codified in Algorithm \ref{}, which is adapted from \cite[Algorithm 3.3]{Boumal2023}. Further reading can be found in \cite[p.~131]{Boumal2023}.
+to find the candidate step $X_{k}$,  where candidate for next iterate then is $\hat{p}_{k}=\mathcal{R}_{p_{k}}(X_{k})$. $\Delta_{k}$ denotes the radius of the trust region at that iterate. Depending on how the new step performs (see line 5 of Algorithm \ref{alg:Trust_region}) it is either accepted or rejected. Finally the trust region radius is evaluated to see if it needs to be modified. The procedure is codified in Algorithm \ref{alg:Trust_region}, which is adapted from \cite[Algorithm 3.3]{Boumal2023}. To solve the subproblem in line 2 of Algorithm \ref{alg:Trust_region} we employ, as Jensen and Zimmermann did, the \textit{truncated conjugate gradients method}. We will not go into more detail in this report, but further reading can be found in \cite[p.~131]{Boumal2023}.
 
 % Source boumal. Algorithm 6.3 
 \begin{algorithm}[H]
-    \caption{Riemannian Trust-region method}\label{alg:grad_descent}
-    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, maximum number of iterations $N\in \mathbb{N}$,  maximal radius $\overline{\Delta}>0$, initial radius $\Delta_{0}\in(0,\overline{\Delta})$, ratio of model improvement threshold $\gamma_{\text{min}}>0$
-
-    tolerance parameters $\epsilon, \epsilon_{x}, \epsilon_{f}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with gradient $\operatorname*{grad}_{f}$ where $\langle \cdot,\cdot \rangle$ denotes the Euclidean inner product.
+    \caption{Riemannian Trust-region method}\label{alg:Trust_region}
+    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, maximum number of iterations $N\in \mathbb{N}$,  maximal radius $\overline{\Delta}>0$, initial radius $\Delta_{0}\in(0,\overline{\Delta})$, ratio of model improvement threshold $\gamma_{\text{min}}>0$, tolerance parameters $\epsilon>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with gradient $\operatorname*{grad}_{f}$ where $\langle \cdot,\cdot \rangle$ denotes the Euclidean inner product.
     \begin{algorithmic}[1]
         \For{$0\leq k\leq N$}
         \State Find $X_{k}$ through solving \eqref{eq:TR_subproblem}
@@ -41,11 +39,13 @@ to find the candidate step $X_{k}$,  where candidate for next iterate then is $\
     \Delta_{k+1}=
     \begin{cases}
     \frac{1}{4}\Delta_{k} & \text{if }\gamma_{k}<\frac{1}{4} \\
-    \operatorname{min}\begin{Bmatrix}2\Delta_{k},\overline{\Delta_{k}}\end{Bmatrix} & \text{if }\gamma>\frac{3}{4}\text{ and }\lvert \lvert X_{k} \rvert  \rvert =\Delta_{k} \\
+    \operatorname{min}\begin{Bmatrix}2\Delta_{k},\overline{\Delta}_{k}\end{Bmatrix} & \text{if }\gamma>\frac{3}{4}\text{ and }\lvert \lvert X_{k} \rvert  \rvert =\Delta_{k} \\
     \Delta_{k} & \text{otherwise}
     \end{cases}
-    \end{equation*}
-        \State Todo: add tolerances
+    \end{equation*}  
+        \If{$\lvert \lvert \operatorname{grad}f(p_{k}) \rvert  \rvert_{\text{F}}<\epsilon$}
+        \State Break
+        \EndIf
     \EndFor
     \end{algorithmic}
     \textbf{Output:} Iterates $\{p_{k}\}$
@@ -58,3 +58,4 @@ Convergence and stability of TR is presented in-depth in \cite[p.~147]{Boumal202
 \end{equation*}
 %
 In other words, this means that for all $\epsilon>0$ and $K$ there exists $k\geq K$ such that $\lvert \lvert \operatorname{grad}f(p_{k}) \rvert \rvert_{p_{k}}\leq\epsilon$. 
+Now that we have defined the Riemannian counterparts for GD and TR, we have all of the tools necessary to conduct our experiments. In the nect section we will discuss some minor details around the implementation before moving on to the actual experiments.

@@ -1,5 +1,5 @@
 \subsection{The Symplectic group}
-The real \textit{symplectic group} is the space overarching the symplectic Stiefel manifold, \todo{Why do we need sp? We will use quotient properties to map stuff to Spst}and we will look at this space first. To be able to define the symplectic group we first need some preliminary definitions. Define the \textit{symplectic identity} as the following block matrix,
+The real \textit{symplectic group} is the space overarching the symplectic Stiefel manifold. In this section we will therefore define the necessary concepts for this group in preparation for the symplectic Stiefel manifold. Following \cite[p.~3]{BendokatZimmermann2021}, to be able to define the symplectic group we first need some preliminary definitions. Define the \textit{symplectic identity} as the following block matrix,
 \begin{equation*}
     J_{2n}\coloneqq\begin{bmatrix}
         0_{n} & I_{n} \\
@@ -18,14 +18,76 @@ where $^{+}$ is defined as the \textit{symplectic inverse} of any matrix $q\in\m
 \begin{equation}\label{eq:symplectic_inverse}
     q^{+}\coloneqq J_{2k}^{\mathrm{T}}q ^{\mathrm{T}}J_{2n}.
 \end{equation}
-The Lie algebra of $\mathrm{Sp}(2n)$ is the symplectic groups' tangent space at the identity. It is given by 
+Finding the tangent space of $\mathrm{Sp}(2n)$ follows  intuitively from the definition, which we will verify ourselves in the following derivation. Let us first look at the tangent space at the identity. Assume we have a curve $c_{I}(t)\in \mathrm{Sp}(2n)$, such that $c_{I}(0)=I$ and $\dot{c}_{I}(0)\coloneqq\tfrac{d}{dt}c_{I}(t)|_{t=0}=X$. Since $c_{I}(t)$ is a curve on $\mathrm{Sp}(2n)$, by \eqref{eq:sp_def} it must satisfy the following condition:
+%
+\begin{equation}\label{eq:sp_condition_derivation}
+c_{I}(t)^{\mathrm{T}}J_{2n}c_{I}(t)=J_{2n}.
+\end{equation}
+%
+Taking the derivative of \eqref{eq:sp_condition_derivation} with respect to $t$ at $t=0$, \eqref{eq:sp_condition_derivation} becomes 
+%
+\begin{equation}\label{eq:sp_condition_derivation_2}
+\dot{c}_{I}(t)^{\mathrm{T}}Jc_{I}(0)+c_{I}(0)^{\mathrm{T}}J \dot{c}_{I}(0)=0.
+\end{equation}
+%
+Recalling that $c_{I}(0)=I$, defining $\Omega \coloneqq \dot{c}_{I}(0)$, and leveraging the symplectic properties \eqref{eq:J_2n_properties}, \eqref{eq:sp_condition_derivation_2} becomes
+%
+\begin{equation*}
+\Omega^{+}=-\Omega.
+\end{equation*}
+%
+We notice that this definition of the tangent space at the identity is equivalent to the definition of the Lie algebra of $\mathrm{Sp}(2n)$ \cite[p.~3]{BendokatZimmermann2021}. It is given by 
+%
 \begin{equation}\label{eq:sp_Lie_algebra}
-    \mathfrak{sp}(2n)\coloneqq \{\Omega\in \mathbb{R}^{2n\times2n} \;|\; \Omega^{+}=-\Omega\},
+    \mathfrak{sp}(2n)\coloneqq T_{I}\mathrm{Sp}(2n)=\{\Omega\in \mathbb{R}^{2n\times2n} \;|\; \Omega^{+}=-\Omega\},
 \end{equation}
-where $\Omega$ is called the Hamiltonian matrix \todo{Do I want to find a historical reference?}ref ??. 
-Now we can define the tangent space of $\mathrm{Sp}(2n)$ at any point $p$ \todo{maybe explain a little more how we get this tangent space} as
+%
+where $\Omega$ is called the Hamiltonian matrix. 
+
+Now, for a general $p \in \mathrm{Sp}(2n)$, $c(t)=pc_{I}(t)\in \mathrm{Sp}(2n)$, where $c(0)=p$. Therefore, by translation, we can define the tangent space of $\mathrm{Sp}(2n)$ at any point $p$  as
+%
 \begin{equation}\label{eq:sp_tangent_space}
-    T_{p}\mathrm{Sp}(2n)=\{\Omega p\in \mathbb{R}^{2n\times2n} \;|\; \Omega\in\mathfrak{sp}(2n)\}.
+\begin{split}
+T_{p}\mathrm{Sp}(2n)&=\{\Omega p\in \mathbb{R}^{2n\times2n} \;|\; \Omega\in\mathfrak{sp}(2n)\},\\
+&=\{\Omega p\in \mathbb{R}^{2n\times2n} \;|\; \Omega\in\mathfrak{sp}(2n)\}.
+\end{split}
 \end{equation}
+%
+We will verify that this makes sense by inserting $c\coloneqq c(t)$ in the condition of \eqref{eq:sp_def} to get
+%
+\begin{equation*}
+c^{\mathrm{T}}p^{\mathrm{T}}Jpc=J.
+\end{equation*}
+%
+We again take the derivative of to get
+%
+\begin{equation}\label{eq:sp_tangent_space_derivation_3}
+\Omega ^{\mathrm{T}}p^{\mathrm{T}}Jp+p^{\mathrm{T}}Jp\Omega=0,
+\end{equation}
+where we used that $c(0)=0$, and the definition of $\Omega$. Now, multiplying \eqref{eq:sp_tangent_space_derivation_3} by $J^{\mathrm{T}}p$ from the left, and simplifying we again end up with $\Omega^{+}=-\Omega$, verifying our claim.
+
+Now that we have defined the symplectic group, and its components that we will use throughout this report, we will move on to defining the symplectic Stiefel manifold.
+
+
+
+
+
+
+
+
+
+
+
+
+% The Lie algebra of $\mathrm{Sp}(2n)$ is the symplectic groups' tangent space at the identity. It is given by 
+% \begin{equation}\label{eq:sp_Lie_algebra}
+%     \mathfrak{sp}(2n)\coloneqq \{\Omega\in \mathbb{R}^{2n\times2n} \;|\; \Omega^{+}=-\Omega\},
+% \end{equation}
+% where $\Omega$ is called the Hamiltonian matrix. 
+% Now we can define the tangent space of $\mathrm{Sp}(2n)$ at any point $p$ \todo{maybe explain a little more how we get this tangent space} as
+% \begin{equation}\label{eq:sp_tangent_space}
+%     T_{p}\mathrm{Sp}(2n)=\{\Omega p\in \mathbb{R}^{2n\times2n} \;|\; \Omega\in\mathfrak{sp}(2n)\}.
+% \end{equation}
+
 
 

@@ -1,6 +1,4 @@
-\subsection{Moving from Theory to Application}%TODO: Make a better title
-\todo[inline]{Additional stuff to bridge the gap between theory and application. I.e. cayley transformation (p.20 in BZ, and prop. 5.2). Approx to the Riemannian hessian}
-
+\subsection{Moving from Theory to Application}\label{sec:theory_to_application}
 In this section, we will discuss various ways to improve the computational efficiency of the theoretical results presented above. We will first introduce the Cayley retraction, and the pseudo-Riemannian geodesic, which both approximate how we compute geodesics. Secondly we will introduce an approximate Hessian. The formulas to be optimized share a common computational challenge: they both involve computations of matrix exponentials, which are computationally expensive. 
 
 From \cite[p.~7]{JensenZimmermann2024} define the $\textit{Cayley transformation}$ as the first-order expansion of the matrix exponential,
@@ -30,7 +28,7 @@ Functioning as a numerical middle ground between the geodesic \eqref{eq:geodesic
 %
 \begin{equation*}
 \phi(t)=\begin{bmatrix}
-p & \frac{1}{2}pr+q
+p & \frac{1}{2}pr+qz
 \end{bmatrix}\exp\left( t\begin{bmatrix}
 \frac{1}{2}r  & \frac{1}{2}r^{2}-q^{+}q \\
 I_{2n} & \frac{1}{2}r
@@ -45,9 +43,9 @@ where $q$ and $r$ are as above.
 
 To approximate the Riemannian Hessian defined in \eqref{eq:riemannian_hessian} we include the following approximation from \cite[Corr.~5.16]{Boumal2023}. Since $\mathrm{SpSt}(2n, 2k)$ is a submanifold of a Euclidean space, then
 %
-\begin{equation*}
+\begin{equation}\label{eq:approximate_hessian}
 \operatorname{Hess}f(p)[X]=\operatorname{Proj}_{p}(\operatorname{D}\overline{\operatorname{grad}}f(p)[X]),
-\end{equation*}
+\end{equation}
 %
 where $\overline{\operatorname{grad}}f(p)$ is a smooth extension of $\operatorname{grad}f(p)$, and $\mathrm{Proj}_{p}(\cdot)$ is the projection onto the tangent space of $p$. It is defined explicitly in \cite[Lemma~2.3]{JensenZimmermann2024}, but we will solve it numerically through the following optimization problem. For $A\in \mathbb{R}^{2n\times 2k}$,
 %

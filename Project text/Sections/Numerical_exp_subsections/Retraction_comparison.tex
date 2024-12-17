@@ -1,8 +1,8 @@
-\subsection{Nearest Symplectic Matrix Problem - Retraction comparison}
+\subsection{Nearest Symplectic Matrix Problem - Retraction comparison}\label{sec:retraction_comparison}
 Before we compare CG and TR, we will verify the performance of the Cayley retraction, Riemannian geodesics, and pseudo-Riemannian geodesics on $\mathrm{SpSt}(2n, 2k)$. 
 To test and compare the feasibility of our retractions we will, similarly to \cite[p.~25]{BendokatZimmermann2021}, try to solve the following problem called the \textit{nearest symplectic matrix problem}. For a matrix $q\in \mathbb{R}^{2n\times2k}$ we want to find the closest symplectic matrix $p \in \mathrm{SpSt}(2n, 2k)$. We formalize this in as the following optimization problem, 
 %
-\begin{equation}
+\begin{equation}\label{eq:nearest_symplectic_matrix}
 \operatorname*{min}_{p \in \mathrm{SpSt}(2n, 2k)}f(p),
 \end{equation}
 %
@@ -21,8 +21,8 @@ For the experiments we generate $q$ randomly, and normalize it, $q\cdot\lvert \l
             group style = {
                 group size = 2 by 1,
                 horizontal sep=1.75cm },
-            width=0.45\textwidth, 
-            height=6cm,          
+            width = 0.48\textwidth,
+            height = 0.4\textwidth,      
             xlabel={Iteration}
         ]
         % (1,1)
@@ -50,8 +50,8 @@ For the experiments we generate $q$ randomly, and normalize it, $q\cdot\lvert \l
             \addlegendentry{Pseudo}
         % (1,2)
         \nextgroupplot[
-            title = {Convergence of $\nabla f(p)$},
-            ylabel={$\nabla f(p)$},
+            title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
+            ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
             ymode=log,
             xmode=log]
             \addplot table [
@@ -90,8 +90,8 @@ For the experiments we generate $q$ randomly, and normalize it, $q\cdot\lvert \l
     \end{tabular}
 \end{table}
 
-In Figure \ref{fig:retractions} we chose only to plot the optimization run for $n=1000$, $k=20$ since the other runs followed a similar pattern. We observe in the figure that the Riemannian Geodesic and the pseudo-Riemannian geodesic performed similarly in the sense that the pseudo-Riemannian geodesic did not drift away far from the Riemannian Geodesic in either the value for $f(p)$ nor $\nabla f(p)$. Cayley, on the other hand, is less accurate in the first $\sim10$ iterations than the other two in both  $f(p)$ and $\nabla f(p)$. Despite this, it quickly caches up to the others, and converges in a comparable amount of steps. 
+In Figure \ref{fig:retractions} we chose only to plot the optimization run for $n=1000$, $k=20$ since the other runs followed a similar pattern. We observe in the figure that the Riemannian Geodesic and the pseudo-Riemannian geodesic performed similarly in the sense that the pseudo-Riemannian geodesic did not drift away far from the Riemannian Geodesic in either the value for $f(p)$ nor $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$. Cayley, on the other hand, is less accurate in the first $\sim10$ iterations than the other two in both  $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$. Despite this, it quickly caches up to the others, and converges in a comparable amount of steps. 
 
-Regarding Table \ref{tbl:Retraction_comparison} we can see a clear pattern of all three using using more time to converge as we increase the dimension $k$. We observe that the Riemannian geodesic performs somewhat worse than the other two for all three runs. Interestingly, the Cayley retraction and the pseudo-Riemannian geodesic performed almost identically, in terms of wall-clock speed, in all three runs. It is unexpected that the pseudo-Riemannian geodesic performed as well as it did seeing as in \cite[p.]{BendokatZimmermann2021} it was excluded from a similar test. This was because it seemed to do rather unimpressively in an earlier test Bendokat and Zimmermann performed. 
+Regarding Table \ref{tbl:Retraction_comparison} we can see a clear pattern of all three using using more time to converge as we increase the dimension $k$. We observe that the Riemannian geodesic performs somewhat worse than the other two for all three runs. Interestingly, the Cayley retraction and the pseudo-Riemannian geodesic performed almost identically, in terms of wall-clock speed, in all three runs. 
 
 Despite the promising results of the pseudo-Riemannian geodesic, we will not use it in the following experiments, rather we will use the Cayley retraction. The reason for this is twofold. The first reason is that the Cayley retraction is already implemented in Manopt.jl. This means that it has been tested and verified to work by numerous users, and developers and is therefore probably more reliable. The second reason is that in an experiment in \cite[p.~26]{BendokatZimmermann2021} they found both the Riemannian geodesic and the pseudo-Riemannian geodesic to be exponentially more inaccurate for large stepsizes. Because of these two reasons, in an effort to make the experiments more independent, we will proceed with using the Manopt.jl implementation of the Cayley retraction.

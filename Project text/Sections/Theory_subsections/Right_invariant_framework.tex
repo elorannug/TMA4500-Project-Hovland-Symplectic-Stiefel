@@ -3,7 +3,7 @@ We begin by defining the point-wise right-invariant metric on $\mathrm{Sp}(2n)$ 
 \begin{equation}\label{eq:sp_metric}
     g_{p}^{\mathrm{Sp}}(X_{1},X_{2})\coloneqq\frac{1}{2}\operatorname{tr}((X_{1}p^{+})^{T}X_{2}p^{+}),\quad X_{1},X_{2}\in T_{p}\mathrm{Sp}(2n).
 \end{equation}
-It is right-invariant in the sense that
+We note that by metric we define it as we did in Definition \ref{def:riemannian_manifold}. It is right-invariant in the sense that
 $g_{pq}^{\mathrm{Sp}}(X_{1}q,X_{2}q)=\tfrac{1}{2}\mathrm{tr}((X_{1}qq^{+}p^{+})^{T}X_{2}qq^{+}p^{+})=g_{p}^{\mathrm{Sp}}(X_{1},X_{2})$ for all $p\in \mathrm{Sp}(2n)$.
 Now \todo{rewrite these two sentences}that we have defined $g_{p}^{\mathrm{Sp}}$, we want to, in a sense, transport it to $\mathrm{SpSt}(2n, 2k)$ in a way that preserves the right-invariance. To achieve this we will use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(2n, 2k)$ through \ref{eq:sp_metric}. Split $T_{p}\mathrm{Sp}(2n)$ into to parts: the horizontal- and vertical part, with respect to $g^\mathrm{Sp}_{p}$ and $\pi$: % TODO: Define \pi! BZ (3.2)
 \begin{equation}\label{eq:spst_split}
@@ -30,7 +30,7 @@ where $r=J_{2n}^{\mathrm{T}}\pi(p)\pi (p)^+J_{2n}$. From this quotient perspecti
 \begin{align}
 \mathfrak{h}_{q}(X)&=\overline{\Omega}(X)q, \\
 \intertext{ where }
-\overline{\Omega}(X)&=X(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}+J_{2n}p(p^{\mathrm{T}}p)^{-1}X^{\mathrm{T}}\big(I_{2n}-J_{2n}^{\mathrm{T}}p(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}J_{2n}\big)J_{2n}.
+\overline{\Omega}(X)&=X(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}+J_{2n}p(p^{\mathrm{T}}p)^{-1}X^{\mathrm{T}}\big(I_{2n}-J_{2n}^{\mathrm{T}}p(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}J_{2n}\big)J_{2n}.\label{eq:bar_omega}
 \end{align}
 %
 %

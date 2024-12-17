@@ -1,8 +1,7 @@
-\subsection{Riemannian Hessian of the Symplectic Stiefel manifold}
-\todo[inline]{Say we're loosly following Appendix A in Jz}
+\subsection{The Riemannian Hessian}
 If one knows more about the manifold, one can make more assumptions for an optimization algorithm. The hope would be that these additional assumptions would make the algorithm more efficient. In the Euclidean setting, the Hessian gives us curvature information about the cost function. Generalizing the Hessian to the Riemannian setting it gives us something similar, and we can generalize many popular algorithms. In this section we will therefore define the Riemannian Hessian of the symplectic manifold. We begin by defining what it means to take a second derivative on a manifold. After defining the necessary tools, we will give an analytical expression for the Riemannian Hessian. 
 
-For two smooth vector fields, $\mathcal{X}(p)=\boldsymbol{\alpha}^{\mathrm{T}}\boldsymbol{\partial}$ and $\mathcal{Y}(p)=\boldsymbol{\beta}^{\mathrm{T}}\boldsymbol{\partial}$ defined as in Definition \ref{def:vector_field_on_manifold}, the covariant derivative (defined through the Riemannian connection by Definition \ref{def:riemannian_connection}) written in local coordinates is
+Loosely following \cite[Appendix~A]{JensenZimmermann2024}, for two smooth vector fields, $\mathcal{X}(p)=\boldsymbol{\alpha}^{\mathrm{T}}\boldsymbol{\partial}$ and $\mathcal{Y}(p)=\boldsymbol{\beta}^{\mathrm{T}}\boldsymbol{\partial}$ defined as in Definition \ref{def:vector_field_on_manifold}, the covariant derivative (defined through the Riemannian connection by Definition \ref{def:riemannian_connection}) written in local coordinates is
 \begin{equation*}
     \nabla_{\mathcal{X}}\mathcal{Y}=\sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}\alpha_{i}\partial_{i}(\beta_{j})\partial_{j}+\alpha_{i}\beta_{j}\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}.
 \end{equation*}
@@ -14,7 +13,7 @@ where $\Gamma(T \mathcal{M}|_{c(t)})$ denotes the the vector space of all smooth
 \begin{equation*}
     \frac{DV}{\mathrm{d}t}(t)=\nabla_{\dot{c}(t)}\mathcal{X}=\dot{\alpha}(t)+\Gamma(\alpha(t), \dot{\gamma}(t)),\quad \Gamma(u,v)=\begin{bmatrix}u ^{\mathrm{T}}\Gamma^{1}v \\ \vdots \\ u ^{\mathrm{T}}\Gamma^{n}v\end{bmatrix}.
 \end{equation*}
-$\Gamma(u,v)$ is called the $\textit{Christoffel function}$. \todo{i felt JZ was unclear. Is this correct?}If $\dot{c}(t)$ is a \todo{refs}geodesic, the expression above reduces to 
+$\Gamma(u,v)$ is called the $\textit{Christoffel function}$. If $\dot{c}(t)$ is a geodesic, the expression above reduces to 
 \begin{equation}\label{eq:christoffel_symbols_through_geodesic}
     \ddot{\gamma}(t)=-\Gamma(\dot{\gamma}(t),\dot{\gamma}(t)),
 \end{equation}
@@ -23,14 +22,12 @@ since by definition geodesics must satisfy $\tfrac{D}{\mathrm{D}t}\dot{\gamma}(t
     \Gamma(X,Y)=\frac{1}{4}\big(\Gamma(X+Y,X+Y)-\Gamma(X-Y,X-Y)\big),
 \end{equation*}
 where $X,Y\in \Gamma(T \mathcal{M}|_{c(t)})$. 
-\todo[inline]{i do not understand polarization.}
 
-
-To find the Christoffel symbols for $\mathrm{SpSt}(2n, 2k)$ with respect to the right invariant metric $g$ defined in \eqref{eq:spst_metric}, we differentiate the geodesic formula from \todo{ref geod.}ref, and use \eqref{eq:christoffel_symbols_through_geodesic} to achieve the following formula,
+Following \cite[p.~10]{JensenZimmermann2024}, to find the Christoffel symbols for $\mathrm{SpSt}(2n, 2k)$ with respect to the right invariant metric $g$ defined in \eqref{eq:spst_metric}, we differentiate the geodesic formula from \ref{eq:geodesic_spst}, and use \eqref{eq:christoffel_symbols_through_geodesic} to achieve the following formula,
 \begin{equation*}
     \Gamma(X,X)=-\ddot{\gamma}(0)=-(\overline{\Omega}(X)-\overline{\Omega}(X)^{\mathrm{T}})(X+\overline{\Omega}(X)^{\mathrm{T}}p)-(\overline{\Omega}(X)^{\mathrm{T}})^{2}p.
 \end{equation*}
-Here $X=\dot{\gamma}(0)\in T_{p}\mathrm{SpSt}(2n, 2k)$, $p\in \mathrm{SpSt}(2n, 2k)$, and $\overline{\Omega}(X)$ is as in \todo{define this somewhere}ref. 
+Here $X=\dot{\varphi}(0)\in T_{p}\mathrm{SpSt}(2n, 2k)$, $p\in \mathrm{SpSt}(2n, 2k)$, and $\overline{\Omega}(X)$ is as in \ref{eq:bar_omega}. 
 With our metric $g$, the Hessian at $p$ of a smooth function $f\colon \mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$ is the endomorphism 
 \begin{equation}\label{eq:riemannian_hessian}
     \begin{gathered}
@@ -38,5 +35,5 @@ With our metric $g$, the Hessian at $p$ of a smooth function $f\colon \mathrm{Sp
         \operatorname{Hess}f(p)[X]=\left.\frac{\mathrm{d}}{\mathrm{d}t}\operatorname{grad}f(c(t))\right|_{t=0}+\Gamma(\operatorname{grad}f(p),X),
     \end{gathered}
 \end{equation}
-where $\operatorname{grad}f(\cdot)$ is as in \ref{eq:rie_grad}. $c(t)\in \mathrm{SpSt}(2n, 2k)$ is an arbitrary curve such that $c(0)=p$ and $c'(0)=X$. \todo{Curve definition should be somewhere else}
+where $\operatorname{grad}f(\cdot)$ is as in \ref{eq:rie_grad}. $c(t)\in \mathrm{SpSt}(2n, 2k)$ is an arbitrary curve such that $c(0)=p$ and $c'(0)=X$. 
 Although powerful, the Hessian can become cumbersome to compute. In the next section we will give an alternative way: to compute an approximate Hessian that has the potential to be more computationally efficient. 
