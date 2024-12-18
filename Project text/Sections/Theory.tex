@@ -1,4 +1,4 @@
-\section{Introductory Theory}
+\section{Introductory Theory}\label{sec:Introductory_theory}
 In this section we will first cover some foundational definitions in the style of a reference work. We will then proceed with defining the symplectic group, and lastly the symplectic Stiefel manifold. Though the goal of this report is to perform experiments on the symplectic Stiefel manifold, this manifold is interlinked with the symplectic group. Namely, it is a special kind of submanifold, called a quotient manifold, of the symplectic group. After defining necessary concepts on the symplectic group, we will leverage this property to define a right-invariant framework on the symplectic Stiefel manifold. This will enable us to define geodesics, the Riemannian gradient, and ultimately the Riemannian Hessian on the Symplectic Stiefel manifold. 
 
 The theory presented in this report is based on the works of Bendokat and Zimmermann \cite{BendokatZimmermann2021}, and Jensen and Zimmermann \cite{JensenZimmermann2024}, with the goal of reproducing some of their findings. Other references will be mentioned as needed, and we will strive to clearly indicate when a section is based on original work. 
@@ -7,8 +7,8 @@ The theory presented in this report is based on the works of Bendokat and Zimmer
 \import{./Theory_subsections/}{Symplectic_group.tex}
 \import{./Theory_subsections/}{SymplecticStiefel.tex}
 
-\section{Right-Invariant Framework on the Symplectic Stiefel}
-One of the key insights of Bendokat and Zimmermann \cite[p.~11]{BendokatZimmermann2021} is that using a right invariant framework one is able to construct geodesics on $\mathrm{SpSt}(2n, 2k)$. Following in their footsteps, we will first define a right-invariant metric on $\mathrm{Sp}(2n)$ and its corresponding geodesics, then transport this metric to $\mathrm{SpSt}(2n, 2k)$. This will allow us to define geodesics on $\mathrm{SpSt}(2n, 2k)$. Finally, through this framework we will be able to define the Riemannian gradient, hessian, and other tools necessary for the implementation of the optimization algorithms on the $\mathrm{SpSt}(2n, 2k)$ that we will investigate in this report. 
+\section{Right-Invariant Framework on the Symplectic Stiefel}\label{sec:right_invariant_framework}
+One of the key insights of Bendokat and Zimmermann \cite[p.~11]{BendokatZimmermann2021} is that using a right invariant framework one is able to construct geodesics on $\mathrm{SpSt}(2n, 2k)$. Following in their footsteps, we will first define a right-invariant metric on $\mathrm{Sp}(2n)$ and its corresponding geodesics, then transport this metric to $\mathrm{SpSt}(2n, 2k)$. This will allow us to define geodesics on $\mathrm{SpSt}(2n, 2k)$. Finally, through this framework we will be able to define the Riemannian gradient, Hessian, and other tools necessary for the implementation of the optimization algorithms on the $\mathrm{SpSt}(2n, 2k)$ that we will investigate in this report. 
 
 \import{./Theory_subsections/}{Right_invariant_framework.tex}
 \import{./Theory_subsections/}{Geodesics.tex}

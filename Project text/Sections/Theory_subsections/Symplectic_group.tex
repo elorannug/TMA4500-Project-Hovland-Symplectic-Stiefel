@@ -8,7 +8,7 @@ The real \textit{symplectic group} is the space overarching the symplectic Stief
 \end{equation*}
 where $I_{n}$ denotes the $n\times n$ identity matrix. Note that throughout this report, if it is clear from the context, the subscript for $I$ and $J$ will be omitted for the sake of notational clarity.  $J_{2n}$ has some properties we will take advantage of frequently:
 \begin{equation}\label{eq:J_2n_properties}
-    J_{2n} ^{\mathrm{T}}=-J_{2n}=J_{2n}^{-1}
+    J_{2n} ^{\mathrm{T}}=-J_{2n}=J_{2n}^{-1}.
 \end{equation}
 The symplectic group is defined as the set of matrices which define the symplectic structure in the following sense. We define the real symplectic group as %is a quotient space of the general linear group (defined in Definition \ref{def:general_linear_group}). 
 \begin{equation}\label{eq:sp_def}
@@ -49,7 +49,7 @@ Now, for a general $p \in \mathrm{Sp}(2n)$, $c(t)=pc_{I}(t)\in \mathrm{Sp}(2n)$,
 \begin{equation}\label{eq:sp_tangent_space}
 \begin{split}
 T_{p}\mathrm{Sp}(2n)&=\{\Omega p\in \mathbb{R}^{2n\times2n} \;|\; \Omega\in\mathfrak{sp}(2n)\},\\
-&=\{\Omega p\in \mathbb{R}^{2n\times2n} \;|\; \Omega\in\mathfrak{sp}(2n)\}.
+&=\{ p\Omega\in \mathbb{R}^{2n\times2n} \;|\; \Omega\in\mathfrak{sp}(2n)\}.
 \end{split}
 \end{equation}
 %
@@ -67,27 +67,3 @@ We again take the derivative of to get
 where we used that $c(0)=0$, and the definition of $\Omega$. Now, multiplying \eqref{eq:sp_tangent_space_derivation_3} by $J^{\mathrm{T}}p$ from the left, and simplifying we again end up with $\Omega^{+}=-\Omega$, verifying our claim.
 
 Now that we have defined the symplectic group, and its components that we will use throughout this report, we will move on to defining the symplectic Stiefel manifold.
-
-
-
-
-
-
-
-
-
-
-
-
-% The Lie algebra of $\mathrm{Sp}(2n)$ is the symplectic groups' tangent space at the identity. It is given by 
-% \begin{equation}\label{eq:sp_Lie_algebra}
-%     \mathfrak{sp}(2n)\coloneqq \{\Omega\in \mathbb{R}^{2n\times2n} \;|\; \Omega^{+}=-\Omega\},
-% \end{equation}
-% where $\Omega$ is called the Hamiltonian matrix. 
-% Now we can define the tangent space of $\mathrm{Sp}(2n)$ at any point $p$ \todo{maybe explain a little more how we get this tangent space} as
-% \begin{equation}\label{eq:sp_tangent_space}
-%     T_{p}\mathrm{Sp}(2n)=\{\Omega p\in \mathbb{R}^{2n\times2n} \;|\; \Omega\in\mathfrak{sp}(2n)\}.
-% \end{equation}
-
-
-

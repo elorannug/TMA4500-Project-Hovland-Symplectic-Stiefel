@@ -1,5 +1,7 @@
-\section{Algorithms}
-In this section, we introduce the algorithms of interest in this Specialization project. They are used by Jensen and Zimmermann for optimization on $\mathrm{SpSt}(2n, 2k)$. One of our goals is to study the feasibility of these algorithms by attempting to reproduce some of the findings of Bendokat and Zimmermann \cite{BendokatZimmermann2021}, and Jensen and Zimmermann \cite{JensenZimmermann2024}. 
+\section{Algorithms}\label{sec:Algorithms}
+Now that we have defined the necessary theory, we can describe the algorithms of interest in this project. These algorithms use the right-invariant framework on $\mathrm{SpSt}(2n, 2k)$ to perform Riemannian optimization. By this we mean that, either through utilizing the geodesics or the Riemannian Hessian, the algorithms leverage this information to optimize some function defined on $\mathrm{SpSt}(2n, 2k)$.
+
+In this section, we introduce the algorithms of interest in this specialization project. The algorithms we investigate are the Riemannian gradient descent algorithm, and the Riemannian trust-region method. They are used by Jensen and Zimmermann for optimization on $\mathrm{SpSt}(2n, 2k)$. One of our goals is to study the feasibility of these algorithms by attempting to reproduce some of the findings of Jensen and Zimmermann \cite{JensenZimmermann2024} as well as Bendokat and Zimmermann \cite{BendokatZimmermann2021}. After introducing the two algorithms, we will outline how we implemented them, and how we conducted our experiments. 
 
 \import{./Algorithms_subsections/}{Gradient_descent.tex}
 \import{./Algorithms_subsections/}{Trust_region.tex}

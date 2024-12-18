@@ -1,16 +1,17 @@
 \subsection{Right-invariant metric}
-We begin by defining the point-wise right-invariant metric on $\mathrm{Sp}(2n)$ as the mapping $g_{p}^{\mathrm{Sp}}\colon T_{p}\mathrm{Sp}(2n)\times T_{p}\mathrm{Sp}(2n)\xrightarrow{}\mathbb{R}$, 
+In this section we will define a right-invariant metric on $\mathrm{Sp}(2n)$, which will allow us to define a right-invariant metric on $\mathrm{SpSt}(2n, 2k)$. We begin by defining the point-wise right-invariant metric on $\mathrm{Sp}(2n)$ as the mapping 
 \begin{equation}\label{eq:sp_metric}
-    g_{p}^{\mathrm{Sp}}(X_{1},X_{2})\coloneqq\frac{1}{2}\operatorname{tr}((X_{1}p^{+})^{T}X_{2}p^{+}),\quad X_{1},X_{2}\in T_{p}\mathrm{Sp}(2n).
+    \begin{gathered}
+        g_{p}^{\mathrm{Sp}}\colon T_{p}\mathrm{Sp}(2n)\times T_{p}\mathrm{Sp}(2n)\xrightarrow{}\mathbb{R},\\
+        g_{p}^{\mathrm{Sp}}(X_{1},X_{2})\coloneqq\frac{1}{2}\operatorname{tr}((X_{1}p^{+})^{T}X_{2}p^{+}),\quad X_{1},X_{2}\in T_{p}\mathrm{Sp}(2n).
+    \end{gathered}
 \end{equation}
-We note that by metric we define it as we did in Definition \ref{def:riemannian_manifold}. It is right-invariant in the sense that
+We note that by "metric" we define it as in Definition \ref{def:riemannian_manifold}. It is right-invariant in the sense that
 $g_{pq}^{\mathrm{Sp}}(X_{1}q,X_{2}q)=\tfrac{1}{2}\mathrm{tr}((X_{1}qq^{+}p^{+})^{T}X_{2}qq^{+}p^{+})=g_{p}^{\mathrm{Sp}}(X_{1},X_{2})$ for all $p\in \mathrm{Sp}(2n)$.
-Now \todo{rewrite these two sentences}that we have defined $g_{p}^{\mathrm{Sp}}$, we want to, in a sense, transport it to $\mathrm{SpSt}(2n, 2k)$ in a way that preserves the right-invariance. To achieve this we will use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(2n, 2k)$ through \ref{eq:sp_metric}. Split $T_{p}\mathrm{Sp}(2n)$ into to parts: the horizontal- and vertical part, with respect to $g^\mathrm{Sp}_{p}$ and $\pi$: % TODO: Define \pi! BZ (3.2)
+Now that we have defined $g_{p}^{\mathrm{Sp}}$, we want to, in a sense, transport it to $\mathrm{SpSt}(2n, 2k)$ in a way that preserves the right-invariance. To achieve this we will use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(2n, 2k)$ through \ref{eq:sp_metric}. Split $T_{p}\mathrm{Sp}(2n)$ into to parts: the horizontal- and vertical part, with respect to $g^\mathrm{Sp}_{p}$ and $\pi$: 
 \begin{equation}\label{eq:spst_split}
     T_{p}\mathrm{Sp}(2n)=\operatorname{Ver}_{p}\mathrm{Sp}(2n)\oplus \operatorname{Hor}_{p}\mathrm{Sp}(2n).
 \end{equation}
-%
-%
 %
 Noting that $\mathfrak{sp}(2n)=T_{I}\mathrm{Sp}(2n)$, we can express these spaces through $\mathfrak{sp}(2n)$ as
 %
@@ -25,21 +26,31 @@ where horizontal- and vertical space is defined as in Definition \ref{def:horizo
 \operatorname{Hor}_{p}\mathrm{Sp}(2n)=\left\{ \overline{\Omega}p\;\middle|\;\Omega r+r\Omega-r\Omega r=\overline{\Omega}\in \operatorname{Hor}\mathfrak{sp}(2n) \right\},
 \end{equation*}
 %
-where $r=J_{2n}^{\mathrm{T}}\pi(p)\pi (p)^+J_{2n}$. From this quotient perspective, for $p=\pi(q)$ where $q\in \mathrm{Sp}(2n)$, we can express vectors from $T_{p}\mathrm{SpSt}(2n, 2k)$ through $\operatorname{Hor}_{p}\mathrm{Sp}(2n)$. Following \cite[p.~5]{JensenZimmermann2024} any $X\in T_{p}\mathrm{SpSt}(2n, 2k)$ and a specific $p=\pi (q)$, there exists a unique horizontal lift (see Definition \ref{})
+where $r=J_{2n}^{\mathrm{T}}\pi(p)\pi (p)^+J_{2n}$. From this quotient perspective, for $p=\pi(q)$ where $q\in \mathrm{Sp}(2n)$, we can express vectors from $T_{p}\mathrm{SpSt}(2n, 2k)$ through $\operatorname{Hor}_{p}\mathrm{Sp}(2n)$. Following \cite[p.~5]{JensenZimmermann2024} any $X\in T_{p}\mathrm{SpSt}(2n, 2k)$ and a specific $p=\pi (q)$, there exists a unique horizontal lift (see Definition \ref{def:horizontal_vertical_space})
 %
-\begin{align}
-\mathfrak{h}_{q}(X)&=\overline{\Omega}(X)q, \\
-\intertext{ where }
-\overline{\Omega}(X)&=X(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}+J_{2n}p(p^{\mathrm{T}}p)^{-1}X^{\mathrm{T}}\big(I_{2n}-J_{2n}^{\mathrm{T}}p(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}J_{2n}\big)J_{2n}.\label{eq:bar_omega}
-\end{align}
+\begin{equation}\label{eq:horizontal_lift_spst}
+    \mathfrak{h}_{q}(X)=\overline{\Omega}(X)q,
+\end{equation}
+where
+\begin{equation}\label{eq:bar_omega}
+    \overline{\Omega}(X)=X(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}+J_{2n}p(p^{\mathrm{T}}p)^{-1}X^{\mathrm{T}}\big(I_{2n}-J_{2n}^{\mathrm{T}}p(p^{\mathrm{T}}p)^{-1}p^{\mathrm{T}}J_{2n}\big)J_{2n}.
+\end{equation}
 %
+By \cite[Thm.~2.28]{Lee2018}, we see that $\mathrm{SpSt}(2n, 2k)$ has a unique smooth manifold structure and a unique Riemannian metric such that $\pi$ is a Riemannian submersion. The point-wise right-invariant Riemannian metric on $\mathrm{SpSt}(2n, 2k)$ can then be defined using \eqref{eq:horizontal_lift_spst} as the mapping 
 %
+\begin{equation*}
+    \begin{gathered}
+        g_{p}\colon T_{p}\mathrm{SpSt}(2n, 2k)\times T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}, \\
+        g_{p}(X_{1},X_{2})\coloneqq g^{\mathrm{Sp}}_{p}(\mathfrak{h}_{q}(X_{1}),\mathfrak{h}_{q}(X_{2})).
+    \end{gathered}
+\end{equation*}
 %
-%
-By \cite[Thm.~2.28]{Lee2018}, we see that $\mathrm{SpSt}(2n, 2k)$ has a unique smooth manifold structure and a unique Riemannian metric such that $\pi$ is a Riemannian submersion. The point-wise right-invariant Riemannian metric on $\mathrm{SpSt}(2n, 2k)$ can then be defined as the mapping $g_{p}\colon T_{p}\mathrm{SpSt}(2n, 2k)\times T_{p}\mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, $g_{p}(X_{1},X_{2})\coloneqq g^{\mathrm{Sp}}_{p}(\mathfrak{h}_{q}(X_{1}),\mathfrak{h}_{q}(X_{2}))$. More explicitly
+Expressing the mapping explicitly, we get the following expression for the right-invariant metric on $\mathrm{SpSt}(2n, 2k)$:
 \begin{equation}\label{eq:spst_metric}
     g_{p}(X_{1},X_{2})=\operatorname{tr}\left(X_{1}^{T}\left(I_{2n}- \frac{1}{2}J_{2n}^{T}p(p^{T}p)^{-1}p^{T}J_{2n}\right)X_{2}(p^{T}p)^{-1}\right),
 \end{equation}
 for $X_{1},X_{2}\in T_{p}\mathrm{SpSt}(2n, 2k)$.
+
+In the next section we will define an explicit expression for the geodesics on $\mathrm{SpSt}(2n, 2k)$ using the right-invariant metric we defined in this section. 
 
 

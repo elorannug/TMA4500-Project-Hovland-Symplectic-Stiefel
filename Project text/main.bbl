@@ -422,6 +422,38 @@
       \verb arXiv:2404.08463v2
       \endverb
     \endentry
+    \entry{Kårstad2024}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=d39272e843b699cdd8fa0818d780e551}{%
+           family={Kårstad},
+           familyi={K\bibinitperiod},
+           given={Jon\bibnamedelima Arnt},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{d39272e843b699cdd8fa0818d780e551}
+      \strng{fullhash}{d39272e843b699cdd8fa0818d780e551}
+      \strng{fullhashraw}{d39272e843b699cdd8fa0818d780e551}
+      \strng{bibnamehash}{d39272e843b699cdd8fa0818d780e551}
+      \strng{authorbibnamehash}{d39272e843b699cdd8fa0818d780e551}
+      \strng{authornamehash}{d39272e843b699cdd8fa0818d780e551}
+      \strng{authorfullhash}{d39272e843b699cdd8fa0818d780e551}
+      \strng{authorfullhashraw}{d39272e843b699cdd8fa0818d780e551}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Template Project NTNU}
+      \field{urlday}{11}
+      \field{urlmonth}{9}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://no.overleaf.com/latex/templates/template-project-ntnu/zjystqvqztpg
+      \endverb
+      \verb{url}
+      \verb https://no.overleaf.com/latex/templates/template-project-ntnu/zjystqvqztpg
+      \endverb
+    \endentry
     \entry{Lee2018}{book}{}{}
       \name{author}{1}{}{%
         {{hash=36896354ee3aedc1a13d683ea773634e}{%
@@ -486,38 +518,33 @@
       \verb 10.1007/978-1-4419-9982-5
       \endverb
     \endentry
-    \entry{imt_software_wiki}{online}{}{}
+    \entry{ONeill1983}{book}{}{}
       \name{author}{1}{}{%
-        {{hash=178c5578ed7109d0caf64717be9612fc}{%
-           family={NTNU},
-           familyi={N\bibinitperiod},
-           given={Department\bibnamedelimb of\bibnamedelimb Marine\bibnamedelima Technology},
-           giveni={D\bibinitperiod\bibinitdelim o\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=c45d2dda92e5146221474a432b8dcf01}{%
+           family={O'Neill},
+           familyi={O\bibinitperiod},
+           given={Barett},
+           giveni={B\bibinitperiod}}}%
       }
-      \strng{namehash}{178c5578ed7109d0caf64717be9612fc}
-      \strng{fullhash}{178c5578ed7109d0caf64717be9612fc}
-      \strng{fullhashraw}{178c5578ed7109d0caf64717be9612fc}
-      \strng{bibnamehash}{178c5578ed7109d0caf64717be9612fc}
-      \strng{authorbibnamehash}{178c5578ed7109d0caf64717be9612fc}
-      \strng{authornamehash}{178c5578ed7109d0caf64717be9612fc}
-      \strng{authorfullhash}{178c5578ed7109d0caf64717be9612fc}
-      \strng{authorfullhashraw}{178c5578ed7109d0caf64717be9612fc}
-      \field{sortinit}{N}
-      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \list{publisher}{1}{%
+        {Academic Press}%
+      }
+      \strng{namehash}{c45d2dda92e5146221474a432b8dcf01}
+      \strng{fullhash}{c45d2dda92e5146221474a432b8dcf01}
+      \strng{fullhashraw}{c45d2dda92e5146221474a432b8dcf01}
+      \strng{bibnamehash}{c45d2dda92e5146221474a432b8dcf01}
+      \strng{authorbibnamehash}{c45d2dda92e5146221474a432b8dcf01}
+      \strng{authornamehash}{c45d2dda92e5146221474a432b8dcf01}
+      \strng{authorfullhash}{c45d2dda92e5146221474a432b8dcf01}
+      \strng{authorfullhashraw}{c45d2dda92e5146221474a432b8dcf01}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{IMT Software Wiki - LaTeX}
-      \field{urlday}{15}
-      \field{urlmonth}{9}
-      \field{urlyear}{2020}
-      \field{urldateera}{ce}
-      \true{nocite}
-      \verb{urlraw}
-      \verb https://www.ntnu.no/wiki/display/imtsoftware/LaTeX
-      \endverb
-      \verb{url}
-      \verb https://www.ntnu.no/wiki/display/imtsoftware/LaTeX
-      \endverb
+      \field{isbn}{9780125267403}
+      \field{title}{Semi-Riemannian Geometry With Applications to Relativity}
+      \field{volume}{103}
+      \field{year}{1983}
     \endentry
     \entry{Tu2017}{book}{}{}
       \name{author}{1}{}{%
@@ -550,7 +577,6 @@
       \endverb
     \endentry
   \enddatalist
-  \missing{same as JZ}
 \endrefsection
 \endinput
 

@@ -10,9 +10,9 @@ From \cite[p.~7]{JensenZimmermann2024} define the $\textit{Cayley transformation
 Though it is only an approximation, it has the property that $\mathrm{Cay}\colon\mathfrak{sp}(2n)\to \mathrm{Sp}(2n)$. Inserting this into \eqref{eq:geodesic_spst} gives us the \textit{Cayley retraction} given by
 %
 \begin{equation*}
-\hat{\mathcal{R}}_{p}(X)=\mathrm{Cay}\left( \frac{1}{2}\big(\overline{\Omega}(X)-\overline{\Omega}(X)^{\mathrm{T}}\big) \right)\mathrm{Cay}\left( \frac{1}{2}\overline{\Omega}(X)^{\mathrm{T}} \right)p.
+\hat{\mathcal{R}}_{p}(X)=\mathrm{Cay}\left( \frac{1}{2}\big(\overline{\Omega}(X)-\overline{\Omega}(X)^{\mathrm{T}}\big) \right)\mathrm{Cay}\left( \frac{1}{2}\overline{\Omega}(X)^{\mathrm{T}} \right)p,
 \end{equation*}
-However, we will proceed with the even simpler, yet shown to be sufficient, retraction presented in \cite[p.~20]{BendokatZimmermann2021}:
+where we define the notion of retraction in Definition \ref{def:retraction}. However, we will proceed with the even simpler, yet shown to be sufficient, retraction presented in \cite[p.~20]{BendokatZimmermann2021}:
 %
 \begin{equation}
     \label{eq:cayley_retraction}
@@ -47,10 +47,10 @@ To approximate the Riemannian Hessian defined in \eqref{eq:riemannian_hessian} w
 \operatorname{Hess}f(p)[X]=\operatorname{Proj}_{p}(\operatorname{D}\overline{\operatorname{grad}}f(p)[X]),
 \end{equation}
 %
-where $\overline{\operatorname{grad}}f(p)$ is a smooth extension of $\operatorname{grad}f(p)$, and $\mathrm{Proj}_{p}(\cdot)$ is the projection onto the tangent space of $p$. It is defined explicitly in \cite[Lemma~2.3]{JensenZimmermann2024}, but we will solve it numerically through the following optimization problem. For $A\in \mathbb{R}^{2n\times 2k}$,
+where $\overline{\operatorname{grad}}f(p)$ is a smooth extension of $\operatorname{grad}f(p)$, and $\mathrm{Proj}_{p}(\cdot)$ is the projection onto the tangent space of $p$. The projection is defined explicitly in \cite[Lemma~2.3]{JensenZimmermann2024}, but we will solve it numerically through the following optimization problem. For $q\in \mathbb{R}^{2n\times 2k}$,
 %
 \begin{equation*}
-\operatorname{Proj}_{p}(A)\approx \operatorname*{min}_{B\in \mathbb{R}^{2n\times2k}} \frac{1}{2}\lvert \lvert B-A \rvert  \rvert ^{2},\quad\text{subject to}\quad B^{\mathrm{T}}Jp+p^{\mathrm{T}}JB=0.
+\operatorname{Proj}_{p}(A)\approx \operatorname*{min}_{r\in \mathbb{R}^{2n\times2k}} \frac{1}{2}\lvert \lvert r-q \rvert  \rvert ^{2},\quad\text{subject to}\quad r^{\mathrm{T}}Jp+p^{\mathrm{T}}Jr=0.
 \end{equation*}
 %
-Now that we have introduced the Cayley retraction, the pseudo-Riemannian geodesic, and the approximate Hessian, we have increased our toolbox in applying the theoretical results to optimization problems. The last thing on our agenda before we can conduct our experiments is to introduce the optimization algorithms we will use. 
+Having introduced the Cayley retraction, the pseudo-Riemannian geodesic, and the approximate Hessian, we have increased our toolbox in applying the theoretical results to optimization problems. The last thing on our agenda before we can conduct our experiments is to introduce the optimization algorithms we will use. 

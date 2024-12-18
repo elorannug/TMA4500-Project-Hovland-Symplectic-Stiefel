@@ -1,24 +1,24 @@
 \babel@toc {british}{}\relax 
-\contentsline {section}{List of Figures}{i}{section*.2}%
-\contentsline {section}{List of Tables}{ii}{section*.3}%
+\contentsline {section}{List of Figures}{ii}{section*.2}%
+\contentsline {section}{List of Tables}{iii}{section*.3}%
 \contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
-\contentsline {section}{\numberline {2}Introductory Theory}{1}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Foundational definitions}{1}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}The Symplectic group}{3}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}The Symplectic Stiefel manifold}{4}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Right-Invariant Framework on the Symplectic Stiefel}{5}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Right-invariant metric}{5}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Geodesics}{6}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}The Riemannian gradient}{6}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}The Riemannian Hessian}{7}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Moving from Theory to Application}{8}{subsection.3.5}%
-\contentsline {section}{\numberline {4}Algorithms}{9}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Riemannian gradient descent}{9}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Riemannian trust-region method}{10}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Implementation}{12}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Numerical Experiments}{12}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Nearest Symplectic Matrix Problem - Retraction comparison}{12}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Nearest symplectic matrix problem - 2nd order}{13}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}The Proper Symplectic Decomposition Problem}{15}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Conclusion}{16}{section.6}%
-\contentsline {section}{Bibliography}{18}{section*.17}%
+\contentsline {section}{\numberline {2}Introductory Theory}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Foundational definitions}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}The Symplectic group}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}The Symplectic Stiefel manifold}{5}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Right-Invariant Framework on the Symplectic Stiefel}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Right-invariant metric}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Geodesics}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}The Riemannian gradient}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}The Riemannian Hessian}{9}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Moving from Theory to Application}{10}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Algorithms}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Riemannian gradient descent}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Riemannian trust-region method}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Implementation}{13}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Numerical Experiments}{14}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Nearest Symplectic Matrix Problem - Retraction comparison}{14}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Nearest Symplectic Matrix Problem - 2nd Order}{16}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}The Proper Symplectic Decomposition Problem}{16}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Conclusion}{18}{section.6}%
+\contentsline {section}{Bibliography}{20}{section*.9}%

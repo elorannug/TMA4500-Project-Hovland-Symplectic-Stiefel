@@ -1,5 +1,5 @@
 \subsection{Riemannian trust-region method}
-Since the gradient descent method only uses first order information, a natural question would be to investigate how a method that utilizes second order information would perform. The criterion for this second order method to be considered better, for a specific problem, than GD would be that it despite the (expected) increased computing time per step, it would converge with few enough steps as to still beat CG. 
+Since the gradient descent method only uses first order information, a natural question would be to investigate how a method that utilizes second order information would perform. The criterion for this second order method to be considered better, for a specific problem, than GD would be that it, despite the (expected) increased computing time per step, would converge with few enough steps as to still beat GD. 
 
 In choosing a second order method, the simplest choice would be a Riemannian version of Newton's method (NM). Despite it's simple design, NM is known to be quite unstable, and need to be sufficiently close to a local minima to guarantee convergence \cite[p.~122]{Boumal2023}. The trust-region method (TR) addresses several of the problems with NM, while still having comparatively fast convergence properties as NM locally. 
 
@@ -22,7 +22,7 @@ to find the candidate step $X_{k}$,  where candidate for next iterate then is $\
 % Source boumal. Algorithm 6.3 
 \begin{algorithm}[H]
     \caption{Riemannian Trust-region method}\label{alg:Trust_region}
-    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, maximum number of iterations $N\in \mathbb{N}$,  maximal radius $\overline{\Delta}>0$, initial radius $\Delta_{0}\in(0,\overline{\Delta})$, ratio of model improvement threshold $\gamma_{\text{min}}>0$, tolerance parameters $\epsilon>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with gradient $\operatorname*{grad}_{f}$ where $\langle \cdot,\cdot \rangle$ denotes the Euclidean inner product.
+    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, maximum number of iterations $N\in \mathbb{N}$,  maximal radius $\overline{\Delta}>0$, initial radius $\Delta_{0}\in(0,\overline{\Delta})$, ratio of model improvement threshold $\gamma_{\text{min}}>0$, tolerance parameter $\epsilon>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with Riemannian gradient $\operatorname{grad}f(p)$, and $\lvert \lvert \cdot,\cdot \rvert  \rvert_{\text{F}}$ denotes the Frobenius norm.
     \begin{algorithmic}[1]
         \For{$0\leq k\leq N$}
         \State Find $X_{k}$ through solving \eqref{eq:TR_subproblem}
@@ -58,4 +58,5 @@ Convergence and stability of TR is presented in-depth in \cite[p.~147]{Boumal202
 \end{equation*}
 %
 In other words, this means that for all $\epsilon>0$ and $K$ there exists $k\geq K$ such that $\lvert \lvert \operatorname{grad}f(p_{k}) \rvert \rvert_{p_{k}}\leq\epsilon$. 
-Now that we have defined the Riemannian counterparts for GD and TR, we have all of the tools necessary to conduct our experiments. In the nect section we will discuss some minor details around the implementation before moving on to the actual experiments.
+
+Now that we have defined the Riemannian counterparts for GD and TR, we have all of the tools necessary to conduct our experiments. In the next section we will discuss some minor details around the implementation before moving on to the actual experiments.

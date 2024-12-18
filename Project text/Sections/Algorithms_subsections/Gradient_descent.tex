@@ -22,7 +22,7 @@ The step-size $t_{k}$ is calculated as $t_{k}=\gamma_{k}\delta^{h}$, where $\gam
 % org/10.1137/20M1348522.
 \begin{algorithm}[H]
     \caption{Riemannian Gradient descent}\label{alg:grad_descent}
-    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, parameters $\beta, \gamma \in(0,1)$, steplength range $0<\gamma_{\text{min}}<\gamma_{\text{max}}$, initial step size $\gamma_{0}=f(p_{0})$, maximum number of iterations $N\in \mathbb{N}$, step parameters $h_{\text{min}}<h_{\text{max}}\in \mathbb{Z}$, tolerance parameters $\epsilon, \epsilon_{p}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with gradient $\operatorname*{grad}_{f}$ where $\langle \cdot,\cdot \rangle$ denotes the Euclidean inner product.
+    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, parameters $\beta, \gamma \in(0,1)$, steplength range $0<\gamma_{\text{min}}<\gamma_{\text{max}}$, initial step size $\gamma_{0}=f(p_{0})$, maximum number of iterations $N\in \mathbb{N}$, step parameters $h_{\text{min}}<h_{\text{max}}\in \mathbb{Z}$, tolerance parameters $\epsilon, \epsilon_{p}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with Riemannian gradient $\operatorname{grad}f(p)$, and $\lvert \lvert \cdot,\cdot \rvert  \rvert_{\text{F}}$ denotes the Frobenius norm.
     \begin{algorithmic}[1]
         \For{$0\leq k\leq N$}
         \State $X_{k}=-\operatorname{grad}f(p_{k})$
@@ -37,4 +37,6 @@ The step-size $t_{k}$ is calculated as $t_{k}=\gamma_{k}\delta^{h}$, where $\gam
     \textbf{Output:} Iterates $\{p_{k}\}$
 \end{algorithm}
 
-For robustness it is important to know if this algorithm behaves properly, in the sense that we want it to reliably converge to critical points of $f$. It is shown in \cite[Cor.~5.8]{GaoSonAbsilStykel2021} that for $\mathrm{SpSt}(2n, 2k)$ Algorithm \ref{alg:grad_descent} generates an infinite sequence of iterates $\{p_{k}\}$\cite[Prop.~5.6]{GaoSonAbsilStykel2021}. It can ve shown that every accumulation point $p^*$ of $\left\{ p_{k} \right\}$ is a critical point of $f$, meaning $\operatorname{grad}f(p^{*})=0$. 
+For robustness it is important to know if this algorithm behaves properly, in the sense that we want it to reliably converge to critical points of $f$. It is shown in \cite[Cor.~5.8]{GaoSonAbsilStykel2021} that for $\mathrm{SpSt}(2n, 2k)$ Algorithm \ref{alg:grad_descent} generates an infinite sequence of iterates $\{p_{k}\} $\cite[Prop.~5.6]{GaoSonAbsilStykel2021}. It can be shown that every accumulation point $p^*$ of $\left\{ p_{k} \right\}$ is a critical point of $f$, meaning $\lvert \lvert\operatorname{grad}f(p^{*})\rvert \rvert=0$. 
+
+Having outlined the first order method Riemannian gradient descent, the next section will introduce the second order method Riemannian trust-region.

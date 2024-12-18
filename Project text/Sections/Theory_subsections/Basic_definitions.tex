@@ -1,8 +1,5 @@
 \subsection{Foundational definitions}
-% TODO: Give intro to section. What will be covered?
-This section is designed to be a reference work to set notation, and to make the rest of the report more readable in the sense that we do not take detours to define basic properties. 
-
-Note that even though the elements of the symplectic group and symplectic stiefel manifold are matrices, the word "point" will be used to refer to a specific matrix, as the specific matrix is a point on the matrix manifold.
+This section is designed to be a reference work to set notation, and to make the rest of the report more readable in the sense that we do not take detours to define basic properties. Note that even though the elements of the symplectic group and symplectic stiefel manifold are matrices, the word "point" will be used to refer to a specific matrix, as the specific matrix is a point on the matrix manifold.
 
 
 % \begin{definition}[General Linear group]\label{def:general_linear_group}
@@ -25,7 +22,7 @@ Note that even though the elements of the symplectic group and symplectic stiefe
     \begin{equation*}
         \mathcal{M}/\sim~ \coloneqq \{[p] \;|\; p\in \mathcal{M}\}
     \end{equation*}
-    is called the \textup{quotient of }$\mathcal{M}$\textup{ by }$\sim$. It is the set of all equivalence classes of $\sim$ in $\mathcal{M}$. The mapping $\pi\colon \mathcal{M}\xrightarrow{}\mathcal{M}/\sim$ called the \textup{natural-} or \textup{canonical projection}, defined by $p\mapsto[p]$ . 
+    is called the \textup{quotient of }$\mathcal{M}$\textup{ by }$\sim$. It is the set of all equivalence classes of $\sim$ in $\mathcal{M}$. The mapping $\pi\colon \mathcal{M}\xrightarrow{}\mathcal{M}/\sim$ called the \textup{natural-} or \textup{canonical projection}, defined by $p\mapsto[p]$. 
 \end{definition}
 
 \begin{definition}[Tangent Space]\label{def:tangent_space}
@@ -67,7 +64,7 @@ Note that even though the elements of the symplectic group and symplectic stiefe
     \begin{equation*}
         \mathcal{V}_{\overline{p}}=T_{\overline{p}}(\pi^{-1}(p))=\operatorname{ker}(\operatorname{D}\pi(p))
     \end{equation*}
-    \cite[p.~4]{JensenZimmermann2024}named the \textup{vertical space} at $\overline{p}$. Note that Canonically chosen as the orthogonal complement of $\mathcal{V}_{\overline{p}}$ in $T_{\overline{p}}\overline{\mathcal{M}}$, the \textup{horizontal space} \cite[p.~48]{AbsilMahonySepulchre2008} is defined as %  p.48
+    \cite[p.~4]{JensenZimmermann2024} named the \textup{vertical space} at $\overline{p}$. Canonically chosen as the orthogonal complement of $\mathcal{V}_{\overline{p}}$ in $T_{\overline{p}}\overline{\mathcal{M}}$, the \textup{horizontal space} \cite[p.~48]{AbsilMahonySepulchre2008} is defined as %  p.48
     \begin{equation*}
         \mathcal{H}_{\overline{p}}\coloneqq \mathcal{V}_{\overline{p}}^\perp=\{Y_{\overline{p}}\in T_{\overline{p}}\overline{\mathcal{M}} \;|\; \overline{g}(Y_{\overline{p}},Z_{\overline{p}})=0\quad\forall\quad Z_{\overline{p}}\in \mathcal{V}_{\overline{p}} \}.
     \end{equation*}
@@ -82,10 +79,14 @@ Note that even though the elements of the symplectic group and symplectic stiefe
     such that the following properties hold. Given $X,Y,Z\in \mathfrak{X}(\mathcal{M})$, and $f\in \mathcal{C}^{\infty}(M)$, $\nabla_{X}Y$has the following properties:
     \begin{enumerate}
         \item (first argument linearity) $\nabla_{fX}Y=f \nabla_{X}Y$, 
-        \item \todo{In JZ this was stated wrongly}(Leibnitz) $\nabla_{X}(fY)=(Xf)Y+f \nabla_{X}Y$, 
-        \item (torsion free) $\nabla_{X}Y-\nabla_{Y}X=[X,Y]$, where $[\cdot,\cdot]$ is the \todo{citation}Lie bracket, and
+        \item (Leibnitz) $\nabla_{X}(fY)=(Xf)Y+f \nabla_{X}Y$, 
+        \item (torsion free) $\nabla_{X}Y-\nabla_{Y}X=[X,Y]$, where $[\cdot,\cdot]$ is the Lie bracket \cite[p.~186]{Lee2012:1}, and
         \item (metric compatibility) $Z \langle X,Y\rangle=\langle \nabla_{Z}X,Y\rangle+\langle X,\nabla_{Z}Y\rangle$.
     \end{enumerate}
+\end{definition}
+
+\begin{definition}[Geodesics]\label{def:geodesic}
+    By \cite[Def.~14.1]{Tu2017} assume we have a Riemannian manifold $\mathcal{M}$ equipped with an affine connection $\nabla$ (as in Definition \ref{def:riemannian_connection}). A curve $c\colon I\to \mathcal{M}$, where $I$ is an open, closed or half-open interval of $\mathbb{R}$, is a \textup{geodesic} if the covariant derivative (defined in Section \ref{sec:riemannian_hessian}) of $c'(t)$ is zero for all $t$. 
 \end{definition}
 
 \begin{definition}[Riemannian gradient]\label{def:riemannian_gradient}
@@ -99,7 +100,7 @@ Note that even though the elements of the symplectic group and symplectic stiefe
 \end{definition}
 
 \begin{definition}[Christoffel symbols]\label{def:christoffel_symbols}
-    The method we will employ to completely describe a connection (as defined in Definition \ref{def:riemannian_connection}) locally is to describe them through $\textup{Christoffel symbols}$. Following the definition of \cite[p.~100]{Tu2017}, let $\nabla$ be an affine connection on $\mathcal{M}$. Denote a \todo{do i need a source to define this?}coordinate vector field on the coordinate open set $(U,p^{1},\dots,p^{n})\subseteq\mathcal{M}$ by $\partial_{i}\coloneqq \partial/\partial p^i$. In this coordinate frame there exist the numbers called Christoffel symbols, $\Gamma_{ij}^{k}$, defined through the following
+    The method we will employ to completely describe a connection (as defined in Definition \ref{def:riemannian_connection}) locally is to describe them through $\textup{Christoffel symbols}$. Following the definition in \cite[p.~100]{Tu2017}, let $\nabla$ be an affine connection on $\mathcal{M}$. Denote a coordinate vector field on the coordinate open set $(U,p^{1},\dots,p^{n})\subseteq\mathcal{M}$ by $\partial_{i}\coloneqq \partial/\partial p^i$ as in \cite[Appendix~A.3]{Tu2017}. In this coordinate frame there exist the numbers called Christoffel symbols, $\Gamma_{ij}^{k}$, defined through the following
     \begin{equation*}
         \nabla_{\partial_{i}}\partial_{j}=\sum\limits_{k=1}^{n}\Gamma_{ij}^{k}\partial_{k}\eqqcolon\mathbf{\Gamma}_{ij}^{\mathrm{T}}\mathbf{\partial}.    
     \end{equation*}
