@@ -1,7 +1,8 @@
 \subsection{The Riemannian gradient}
-Another component to many optimization algorithms is the gradient. In the Euclidean setting the gradient of the cost function is a vector that points in the direction of the steepest ascent. Analogously, the Riemannian gradient points in the direction of the steepest ascent on the manifold. We define the notion of a Riemannian gradient rigorously in Definition \ref{def:riemannian_gradient}. A useful analogy of what this means is to consider the sphere, and some cost function defining a hilly surface on the sphere. The riemannian gradient would then point in the direction towards the closest highest point, whereas the taking the negative of the riemannian gradient would point towards the closest valley floor. In this section we will state the Riemannian gradient explicitly, and prove that it satisfies necessary properties. 
+One component to many optimization algorithms is the gradient. In the Euclidean setting the gradient of the cost function is a vector that points in the direction of the steepest ascent. Analogously, the Riemannian gradient points in the direction of the steepest ascent on the manifold. We define the notion of a Riemannian gradient rigorously in Definition~\ref{def:riemannian_gradient}. In this section we will state the Riemannian gradient explicitly, and prove that it satisfies necessary properties. 
+%A useful analogy of what this means is to consider the sphere, and some cost function defining a hilly surface on the sphere. The riemannian gradient would then point in the direction towards the closest highest point, whereas the taking the negative of the riemannian gradient would point towards the closest valley floor.
 \begin{proposition}
-    Given a function $f\colon \mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, the \text{Riemannian gradient} (as in Definition \ref{def:riemannian_gradient}) with respect to $g_{p}$ is given by
+    Given a function $f\colon \mathrm{SpSt}(2n, 2k)\xrightarrow{}\mathbb{R}$, the \text{Riemannian gradient} (as in Definition~\ref{def:riemannian_gradient}) with respect to $g_{p}$ is given by
     \begin{equation}\label{eq:rie_grad}
         \operatorname{grad}f(p)=\nabla f(p)p^{T}p+J_{2n}p(\nabla f(p))^{T}J_{2n}p,
     \end{equation}
@@ -38,7 +39,7 @@ Another component to many optimization algorithms is the gradient. In the Euclid
     Inserting \eqref{eq:proof_rie_grad_spst_property} into our expression we end up with:
     \begin{equation*}
         \begin{split}
-            \operatorname{d}f_{p}(X)&= \operatorname{d}f_{p}(X)+\tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J \nabla f(p)X ^{\mathrm{T}}J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}\big)+\tfrac{1}{2}\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p) p ^{\mathrm{T}}J ^{\mathrm{T}}X(p ^{\mathrm{T}}p)^{-1}\big),
+            g_{p}(\operatorname{grad}f(p),X)&= \operatorname{d}f_{p}(X)+\tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J \nabla f(p)X ^{\mathrm{T}}J ^{\mathrm{T}}p(p ^{\mathrm{T}}p)^{-1}\big)+\tfrac{1}{2}\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p) p ^{\mathrm{T}}J ^{\mathrm{T}}X(p ^{\mathrm{T}}p)^{-1}\big),
         % g_{p}(\operatorname{grad}f(p),X)&= \operatorname{d}f_{p}(X)+\tfrac{1}{2} \mathrm{tr}\big(p ^{\mathrm{T}}J \nabla f(p)\underbrace{X ^{\mathrm{T}}J ^{\mathrm{T}}p}_{=-X ^{\mathrm{T}}Jp}(p ^{\mathrm{T}}p)^{-1}\big)\\
         % &+\tfrac{1}{2}\mathrm{tr}\big(p ^{\mathrm{T}}J ^{\mathrm{T}}\nabla f(p) \underbrace{p ^{\mathrm{T}}J ^{\mathrm{T}}X}_{=-p^ {\mathrm{T}}JX}(p ^{\mathrm{T}}p)^{-1}\big)=\operatorname{d}f_{p}(X),
         \end{split}

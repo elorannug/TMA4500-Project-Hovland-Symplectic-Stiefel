@@ -499,7 +499,7 @@ begin
 	if run_diag
 		@benchmark gradient_descent(M, cost_function, r_grad, U0;
 		stepsize = stepsize, return_state = true, 
-		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol) | StopWhenStepsizeLess(10.0^-11))
+		stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol))
 	end
 end
 
@@ -512,9 +512,14 @@ md"""
 begin # Anal. Hess, TR-1
 	if run_diag
 		@benchmark trust_regions(M, cost_function, r_grad, r_hess, U0;
+		acceptance_rate = 0.1,
+		max_trust_region_radius = sqrt(min(2n,2k)),
+		reduction_threshold = 0.25,
+		trust_region_radius = sqrt(min(2n,2k))/8,
+		# Removed StopWHenModelIncreased() from subproblem stopping criterion
+		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 		return_state = true,
-		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
-		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0))
+		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol))
 	end
 end
 
@@ -527,19 +532,39 @@ md"""
 begin # Approx Hess, TR-2
 	if run_diag
 		@benchmark trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
+		acceptance_rate = 0.1,
+		max_trust_region_radius = sqrt(min(2n,2k)),
+		reduction_threshold = 0.25,
+		trust_region_radius = sqrt(min(2n,2k))/8,
+		# Removed StopWHenModelIncreased() from subproblem stopping criterion
+		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 		return_state = true,
-		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
-		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0))
+		stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol))
 	end
 end
 
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
+# ╠═╡ disabled = true
 #=╠═╡
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
-# Init. step size as in paper
+stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
+  ╠═╡ =#
 
-# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
-# curcomvent calculation of injectivity radius 
+# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
+# ╠═╡ disabled = true
+#=╠═╡
+function Ω(P, X) # Seems to work the same as MATLAB JZ
+	J = SymplecticElement(1)
+	invPTP = inv(P'*P) # Storing to not compute 3 times
+	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
+end
+  ╠═╡ =#
+
+# ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
+#=╠═╡
+begin
+	Random.seed!(seed)
+	U0 = rand(M)
+end
   ╠═╡ =#
 
 # ╔═╡ 5895c078-5f50-4783-9ecd-acdacc38ab5d
@@ -561,27 +586,18 @@ begin # n = 2, k = 1
 end
   ╠═╡ =#
 
-# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
-# ╠═╡ disabled = true
-#=╠═╡
-function Ω(P, X) # Seems to work the same as MATLAB JZ
-	J = SymplecticElement(1)
-	invPTP = inv(P'*P) # Storing to not compute 3 times
-	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
-end
-  ╠═╡ =#
-
 # ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
 #=╠═╡
 A = rand_A/norm(rand_A)
   ╠═╡ =#
 
-# ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
 #=╠═╡
-begin
-	Random.seed!(seed)
-	U0 = rand(M)
-end
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
+# Init. step size as in paper
+
+# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
+# curcomvent calculation of injectivity radius 
   ╠═╡ =#
 
 # ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
@@ -625,12 +641,6 @@ begin # n = 4, k = 1
 	0.0773827859190266 0.15919402104081007
 	0.18553779175069454 0.04534051646419934]
 end;
-  ╠═╡ =#
-
-# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
-# ╠═╡ disabled = true
-#=╠═╡
-stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
   ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001

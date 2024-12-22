@@ -8,70 +8,251 @@ The final experiment we will conduct is to apply GD, TR-1 and TR-2 to the proble
 In most applications $k\ll n$. For a point $p\in \mathrm{SpSt}(2n, 2k)$ and $X\in T_{p}\mathrm{SpSt}(2n, 2k)$, Euclidean gradient and Hessian are, respectively,
 %
 \begin{align*}
-\nabla f(p)&=-2\big((I-pp^{+})ss^{\mathrm{T}}J^{\mathrm{T}}pJ-Jss^{\mathrm{T}}(I-pp^{+})^{\mathrm{T}}pJ\big), \\
-\nabla^{2}f(p)[X]&=-2(\alpha(p,X)pJ+\eta XJ-\alpha(p,X)^{\mathrm{T}}pJ-\eta ^{\mathrm{T}}XJ),
+\nabla f(p)&=-2\big(\eta(p)pJ-\eta(p)^{\mathrm{T}}pJ\big), \\
+\nabla^{2}f(p)[X]&=-2\big(\alpha(p,X)pJ+\eta(p) XJ-\alpha(p,X)^{\mathrm{T}}pJ-\eta(p)^{\mathrm{T}}XJ\big),
 \end{align*}
 %
-where $\alpha(p,X)=\beta(p,X)ss^{\mathrm{T}}J$ where $\beta(p,X)=\operatorname{D}(I-pp^{+})[X]=-Xp^{+}-(Xp^{+})^{+}$, and $\eta=(I-pp^{+})SS^{\mathrm{T}}J^{\mathrm{T}}$. To construct $s$, we generate a matrix $u\in \mathrm{SpSt}(2n, 2r)$ as well as another matrix $v\in \mathbb{R}^{2r\times 2m}$, which we normalize; $v=v\cdot \lvert \lvert v \rvert \rvert_{\mathrm{F}}^{-1}$. From these two matrices we generate $s=u\cdot v$. For the optimization run we choose $n=100$, $k=10$, $r=20$, and $m=30$. The results are displayed in Figure \ref{fig:symplectic_decomposition}.
+where $\alpha(p,X)=\beta(p,X)ss^{\mathrm{T}}J^{\mathrm{T}}$, $\beta(p,X)=\operatorname{D}(I-pp^{+})[X]=-Xp^{+}+(-Xp^{+})^{+}$, and \\$\eta(p)=(I-pp^{+})ss^{\mathrm{T}}J^{\mathrm{T}}$. To construct $s$, we generate a matrix $u\in \mathrm{SpSt}(2n, 2r)$ as well as another matrix $v\in \mathbb{R}^{2r\times 2m}$, which we normalize; $v=v\cdot \lvert \lvert v \rvert \rvert_{\mathrm{F}}^{-1}$. From these two matrices we generate $s=u\cdot v$. For the optimization run we choose $n=100$, $k=10$, $r=20$, and $m=30$. The results are displayed in Figure~\ref{fig:symplectic_decomposition}.
+
+% \begin{figure}
+%     \begin{tikzpicture}[
+%         every mark/.append style={mark size=1.5pt}
+%     ]
+%         \begin{groupplot}[
+%             group style = {
+%                 group size = 2 by 1,
+%                 horizontal sep=1.75cm },
+%             width = 0.48\textwidth,
+%             height = 0.4\textwidth,        
+%             xlabel={Iteration}
+%         ]
+%         % (1,1)
+%         \nextgroupplot[
+%             title = {Convergence of $f(p)$},
+%             ylabel={$f(p)$},
+%             xmode=log,
+%             ymode=log]
+%             \addplot table [
+%                 x=iterations, 
+%                 y=cost_GD, 
+%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+%             \addlegendentry{GD}
+
+%             \addplot table [
+%                 x=iteration_TR_hess, 
+%                 y=cost_TR_hess, 
+%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+%             \addlegendentry{TR-1}
+
+%             \addplot table [
+%                 x=iteration_TR_hess_approx, 
+%                 y=cost_TR_hess_approx, 
+%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+%             \addlegendentry{TR-2}
+%         % (1,2)
+%         \nextgroupplot[
+%             title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
+%             ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
+%             ymode=log,
+%             xmode=log]
+%             \addplot table [
+%                 x=iterations, 
+%                 y=gradient_GD, 
+%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+%             \addlegendentry{GD}
+
+%             \addplot table [
+%                 x=iteration_TR_hess, 
+%                 y=gradient_TR_hess, 
+%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+%             \addlegendentry{TR-1}
+
+%             \addplot table [
+%                 x=iteration_TR_hess_approx, 
+%                 y=gradient_TR_hess_approx, 
+%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+%             \addlegendentry{TR-2}
+%         \end{groupplot}
+%     \end{tikzpicture}
+%         \caption[Proper Symplectic Decomposition Comparison]{The proper symplectic decomposition problem attempted solved by GD, TR-1 and TR-2 on $\mathrm{SpSt}(2n, 2k)$, with $n=100$, $k=10$, $r=20$, and $m=30$. None of the algorithms converged. }\label{fig:symplectic_decomposition}
+% \end{figure}
 
 \begin{figure}
-    \begin{tikzpicture}
+    \begin{tikzpicture}[
+        every mark/.append style={mark size=1.5pt}
+    ]
         \begin{groupplot}[
             group style = {
-                group size = 2 by 1,
-                horizontal sep=1.75cm },
+                group size = 2 by 3,
+                horizontal sep=1.75cm,
+                vertical sep=1.5cm},
+            log basis x={10},
             width = 0.48\textwidth,
-            height = 0.4\textwidth,        
-            xlabel={Iteration}
+            height = 0.4\textwidth
         ]
         % (1,1)
         \nextgroupplot[
-            title = {Convergence of $f(p)$},
+            title = {Convergence of $f(p)$, for $k=1$},
             ylabel={$f(p)$},
             xmode=log,
             ymode=log]
             \addplot table [
                 x=iterations, 
                 y=cost_GD, 
-                col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k1r4m10.csv};
             \addlegendentry{GD}
 
             \addplot table [
                 x=iteration_TR_hess, 
                 y=cost_TR_hess, 
-                col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k1r4m10.csv};
             \addlegendentry{TR-1}
 
             \addplot table [
                 x=iteration_TR_hess_approx, 
                 y=cost_TR_hess_approx, 
-                col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k1r4m10.csv};
             \addlegendentry{TR-2}
         % (1,2)
         \nextgroupplot[
-            title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
+            title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, for $k=1$},
             ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
             ymode=log,
-            xmode=log]
+            xmode=log,
+            legend pos=south east]
             \addplot table [
                 x=iterations, 
                 y=gradient_GD, 
-                col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k1r4m10.csv};
             \addlegendentry{GD}
 
             \addplot table [
                 x=iteration_TR_hess, 
                 y=gradient_TR_hess, 
-                col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k1r4m10.csv};
             \addlegendentry{TR-1}
 
             \addplot table [
                 x=iteration_TR_hess_approx, 
                 y=gradient_TR_hess_approx, 
-                col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k1r4m10.csv};
+            \addlegendentry{TR-2}
+        % (2,1)
+        \nextgroupplot[
+            title = {Convergence of $f(p)$, for $k=2$},
+            ylabel={$f(p)$},
+            xmode=log,
+            ymode=log]
+            \addplot table [
+                x=iterations, 
+                y=cost_GD, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k2r4m10.csv};
+            \addlegendentry{GD}
+
+            \addplot table [
+                x=iteration_TR_hess, 
+                y=cost_TR_hess, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k2r4m10.csv};
+            \addlegendentry{TR-1}
+
+            \addplot table [
+                x=iteration_TR_hess_approx, 
+                y=cost_TR_hess_approx, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k2r4m10.csv};
+            \addlegendentry{TR-2}
+        % (2,2)
+        \nextgroupplot[
+            title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, for $k=2$},
+            ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
+            ymode=log,
+            xmode=log,
+            legend pos=south east]
+            \addplot table [
+                x=iterations, 
+                y=gradient_GD, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k2r4m10.csv};
+            \addlegendentry{GD}
+
+            \addplot table [
+                x=iteration_TR_hess, 
+                y=gradient_TR_hess, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k2r4m10.csv};
+            \addlegendentry{TR-1}
+
+            \addplot table [
+                x=iteration_TR_hess_approx, 
+                y=gradient_TR_hess_approx, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k2r4m10.csv};
+            \addlegendentry{TR-2}
+        % (3,1)
+        \nextgroupplot[
+            title = {Convergence of $f(p)$, for $k=3$},
+            ylabel={$f(p)$},
+            xlabel={Iteration},
+            xmode=log,
+            ymode=log]
+            \addplot table [
+                x=iterations, 
+                y=cost_GD, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k3r4m10.csv};
+            \addlegendentry{GD}
+
+            \addplot table [
+                x=iteration_TR_hess, 
+                y=cost_TR_hess, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k3r4m10.csv};
+            \addlegendentry{TR-1}
+
+            \addplot table [
+                x=iteration_TR_hess_approx, 
+                y=cost_TR_hess_approx, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k3r4m10.csv};
+            \addlegendentry{TR-2}
+        % (3,2)
+        \nextgroupplot[
+            title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, for $k=3$},
+            ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
+            xlabel={Iteration},
+            ymode=log,
+            xmode=log,
+            legend pos=south east]
+            \addplot table [
+                x=iterations, 
+                y=gradient_GD, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k3r4m10.csv};
+            \addlegendentry{GD}
+
+            \addplot table [
+                x=iteration_TR_hess, 
+                y=gradient_TR_hess, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k3r4m10.csv};
+            \addlegendentry{TR-1}
+
+            \addplot table [
+                x=iteration_TR_hess_approx, 
+                y=gradient_TR_hess_approx, 
+                col sep=comma]{../2nd_order_symplectic_decomposition_n100k3r4m10.csv};
             \addlegendentry{TR-2}
         \end{groupplot}
     \end{tikzpicture}
-        \caption[Proper Symplectic Decomposition Comparison]{The proper symplectic decomposition problem attempted solved by GD, TR-1 and TR-2 on $\mathrm{SpSt}(2n, 2k)$, with $n=100$, $k=10$, $r=20$, and $m=30$. None of the algorithms converged. }\label{fig:symplectic_decomposition}
+    \caption[The proper symplectic decomposition problem]{The proper symplectic decomposition problem attempted solved by GD, and solved by TR-1 and TR-2. The figures show $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ on $\mathrm{SpSt}(2n, 2k)$ as a function of iteration for all three algorithms, with $n=100$, $r=4$, and $m=10$ for $k={1,2,4}$.}
+    \label{fig:symplectic_decomposition}
 \end{figure}
-It is clear from Figure \ref{fig:symplectic_decomposition} that none of the algorithms converge as expected from the theory. We observe that all three algorithms are stopped by the maximum iteration count set at $10^{3}$ iterations. In addition, all three algorithms follow the pattern of very low convergence rate. The last thing all three algorithms share, is that they all have some temporary increase in the value of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$. This is not infeasible for TR-1 and TR-2, but quite odd for GD. Similarly to Figure \ref{fig:nearest_symplectic_matrix_2nd_order}, the values of TR-1 and TR-2 have, for both $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, almost the same function value for all steps. 
+%
+\begin{table}
+    \centering
+    \caption[The proper symplectic decomposition problem timetable]{The proper symplectic decomposition problem attempted solved by GD, and solved by TR-1 and TR-2. The table summarizes time to converge for all the algorithms on $\mathrm{SpSt}(2n, 2k)$, with $n=100$, $r=4$, and $m=10$ for $k={1,2,4}$.}\label{tbl:symplectic_decomposition}
+    \begin{tabular}{l S[table-format=1.1] S[table-format=2.1] S[table-format=1.1]}
+        \toprule
+        & \multicolumn{3}{c}{\textbf{Runtime (s)}} \\ 
+        \cmidrule(l){2-4}
+        & {GD} & {TR-1} & {TR-2} \\
+        \midrule
+        $k=1$ & 3.8 & 1.5 & 2.6 \\
+        $k=2$ & 3.7 & 11  & 4.7 \\
+        $k=3$ & 4.1 & 19  & 7.0 \\
+        \bottomrule       
+    \end{tabular}
+\end{table}
+%The proper symplectic decomposition problem attempted solved by GD, TR-1 and TR-2 on $\mathrm{SpSt}(2n, 2k)$, with $n=100$, $k=10$, $r=20$, and $m=30$
+It is clear from Figure~\ref{fig:symplectic_decomposition} that none of the algorithms converge as expected from the theory. We observe that all three algorithms are stopped by the maximum iteration count set at $10^{3}$ iterations. In addition, all three algorithms follow the pattern of very low convergence rate. The last thing all three algorithms share, is that they all have some temporary increase in the value of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$. This is not infeasible for TR-1 and TR-2, but quite odd for GD. Similarly to Figure~\ref{fig:nearest_symplectic_matrix_2nd_order}, the values of TR-1 and TR-2 have, for both $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, almost the same function value for all steps. 

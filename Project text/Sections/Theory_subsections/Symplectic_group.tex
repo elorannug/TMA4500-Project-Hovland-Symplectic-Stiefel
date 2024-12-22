@@ -1,5 +1,5 @@
-\subsection{The Symplectic group}
-The real \textit{symplectic group} is the space overarching the symplectic Stiefel manifold. In this section we will therefore define the necessary concepts for this group in preparation for the symplectic Stiefel manifold. Following \cite[p.~3]{BendokatZimmermann2021}, to be able to define the symplectic group we first need some preliminary definitions. Define the \textit{symplectic identity} as the following block matrix,
+\subsection{The Real Symplectic group}
+The \textit{real symplectic group} is a space containing the symplectic Stiefel manifold. In this section we will therefore define the necessary concepts for this group in preparation for the symplectic Stiefel manifold. Following \cite[p.~3]{BendokatZimmermann2021}, to be able to define the symplectic group we first need some preliminary definitions. Define the \textit{symplectic identity} as the following block matrix,
 \begin{equation*}
     J_{2n}\coloneqq\begin{bmatrix}
         0_{n} & I_{n} \\
@@ -10,15 +10,15 @@ where $I_{n}$ denotes the $n\times n$ identity matrix. Note that throughout this
 \begin{equation}\label{eq:J_2n_properties}
     J_{2n} ^{\mathrm{T}}=-J_{2n}=J_{2n}^{-1}.
 \end{equation}
-The symplectic group is defined as the set of matrices which define the symplectic structure in the following sense. We define the real symplectic group as %is a quotient space of the general linear group (defined in Definition \ref{def:general_linear_group}). 
+The symplectic group is defined as the set of matrices which satisfy the symplectic condition in the following sense. We define the real symplectic group as %is a quotient space of the general linear group (defined in Definition~\ref{def:general_linear_group}). 
 \begin{equation}\label{eq:sp_def}
     \mathrm{Sp}(2n)\coloneqq \{p\in \mathbb{R}^{2n\times2n} \;|\; p^{+}p=I_{2n}\},
 \end{equation}
-where $^{+}$ is defined as the \textit{symplectic inverse} of any matrix $q\in\mathbb{R}^{2n\times2k}$ such that 
+where $\cdot^{+}$ is defined as the \textit{symplectic inverse} of any matrix $q\in\mathbb{R}^{2n\times2k}$ such that 
 \begin{equation}\label{eq:symplectic_inverse}
     q^{+}\coloneqq J_{2k}^{\mathrm{T}}q ^{\mathrm{T}}J_{2n}.
 \end{equation}
-Finding the tangent space of $\mathrm{Sp}(2n)$ follows  intuitively from the definition, which we will verify ourselves in the following derivation. Let us first look at the tangent space at the identity. Assume we have a curve $c_{I}(t)\in \mathrm{Sp}(2n)$, such that $c_{I}(0)=I$ and $\dot{c}_{I}(0)\coloneqq\tfrac{d}{dt}c_{I}(t)|_{t=0}=X$. Since $c_{I}(t)$ is a curve on $\mathrm{Sp}(2n)$, by \eqref{eq:sp_def} it must satisfy the following condition:
+Finding the tangent space of $\mathrm{Sp}(2n)$ follows  intuitively from the definition, which we will verify ourselves in the following derivation. We begin by defining the tangent space at the identity. Define the curve $c_{I}(t)\in \mathrm{Sp}(2n)$, such that $c_{I}(0)=I$ and $\dot{c}_{I}(0)\coloneqq\tfrac{d}{dt}c_{I}(t)|_{t=0}=X$. Since $c_{I}(t)$ is a curve on $\mathrm{Sp}(2n)$, by \eqref{eq:sp_def} it must satisfy the following condition:
 %
 \begin{equation}\label{eq:sp_condition_derivation}
 c_{I}(t)^{\mathrm{T}}J_{2n}c_{I}(t)=J_{2n}.
@@ -64,6 +64,6 @@ We again take the derivative of to get
 \begin{equation}\label{eq:sp_tangent_space_derivation_3}
 \Omega ^{\mathrm{T}}p^{\mathrm{T}}Jp+p^{\mathrm{T}}Jp\Omega=0,
 \end{equation}
-where we used that $c(0)=0$, and the definition of $\Omega$. Now, multiplying \eqref{eq:sp_tangent_space_derivation_3} by $J^{\mathrm{T}}p$ from the left, and simplifying we again end up with $\Omega^{+}=-\Omega$, verifying our claim.
+where we used that $c(0)=I$, and the definition of $\Omega$. Now, multiplying \eqref{eq:sp_tangent_space_derivation_3} by $J^{\mathrm{T}}p$ from the left, and simplifying we again end up with $\Omega^{+}=-\Omega$, verifying our claim.
 
 Now that we have defined the symplectic group, and its components that we will use throughout this report, we will move on to defining the symplectic Stiefel manifold.

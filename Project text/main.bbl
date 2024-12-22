@@ -264,6 +264,38 @@
       \verb 10.1016/c2017-0-00728-0
       \endverb
     \endentry
+    \entry{BenchmarkTools:2016}{online}{}{}
+      \name{author}{2}{}{%
+        {{hash=69bd6c70a08a67d2841abb1b24a5ccfa}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Jiahao},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d8a5df654714218c1b828ffab66545f1}{%
+           family={Revels},
+           familyi={R\bibinitperiod},
+           given={Jarrett},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{9162f41ecdba576d7faa1a6d6e27bc25}
+      \strng{fullhash}{9162f41ecdba576d7faa1a6d6e27bc25}
+      \strng{fullhashraw}{9162f41ecdba576d7faa1a6d6e27bc25}
+      \strng{bibnamehash}{9162f41ecdba576d7faa1a6d6e27bc25}
+      \strng{authorbibnamehash}{9162f41ecdba576d7faa1a6d6e27bc25}
+      \strng{authornamehash}{9162f41ecdba576d7faa1a6d6e27bc25}
+      \strng{authorfullhash}{9162f41ecdba576d7faa1a6d6e27bc25}
+      \strng{authorfullhashraw}{9162f41ecdba576d7faa1a6d6e27bc25}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arXiv}
+      \field{title}{Robust benchmarking in noisy environments}
+      \field{year}{2016}
+      \verb{eprint}
+      \verb arXiv:1608.04295
+      \endverb
+    \endentry
     \entry{Edelman1998}{article}{}{}
       \name{author}{3}{}{%
         {{hash=01a6ca61fcd12a3a071ec49304df57f8}{%

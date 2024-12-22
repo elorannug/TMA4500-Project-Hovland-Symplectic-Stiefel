@@ -6,9 +6,9 @@ In this section we will define a right-invariant metric on $\mathrm{Sp}(2n)$, wh
         g_{p}^{\mathrm{Sp}}(X_{1},X_{2})\coloneqq\frac{1}{2}\operatorname{tr}((X_{1}p^{+})^{T}X_{2}p^{+}),\quad X_{1},X_{2}\in T_{p}\mathrm{Sp}(2n).
     \end{gathered}
 \end{equation}
-We note that by "metric" we define it as in Definition \ref{def:riemannian_manifold}. It is right-invariant in the sense that
+It is right-invariant in the sense that
 $g_{pq}^{\mathrm{Sp}}(X_{1}q,X_{2}q)=\tfrac{1}{2}\mathrm{tr}((X_{1}qq^{+}p^{+})^{T}X_{2}qq^{+}p^{+})=g_{p}^{\mathrm{Sp}}(X_{1},X_{2})$ for all $p\in \mathrm{Sp}(2n)$.
-Now that we have defined $g_{p}^{\mathrm{Sp}}$, we want to, in a sense, transport it to $\mathrm{SpSt}(2n, 2k)$ in a way that preserves the right-invariance. To achieve this we will use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(2n, 2k)$ through \ref{eq:sp_metric}. Split $T_{p}\mathrm{Sp}(2n)$ into to parts: the horizontal- and vertical part, with respect to $g^\mathrm{Sp}_{p}$ and $\pi$: 
+Now that we have defined $g_{p}^{\mathrm{Sp}}$, we can define a metric $\mathrm{SpSt}(2n, 2k)$ in a way that preserves the right-invariance. To achieve this we will use a \textit{horizontal lift} to define a metric on $\mathrm{SpSt}(2n, 2k)$ through \eqref{eq:sp_metric}. Split $T_{p}\mathrm{Sp}(2n)$ into to parts: the horizontal- and vertical part, with respect to $g^\mathrm{Sp}_{p}$ and $\pi$: 
 \begin{equation}\label{eq:spst_split}
     T_{p}\mathrm{Sp}(2n)=\operatorname{Ver}_{p}\mathrm{Sp}(2n)\oplus \operatorname{Hor}_{p}\mathrm{Sp}(2n).
 \end{equation}
@@ -20,13 +20,13 @@ Noting that $\mathfrak{sp}(2n)=T_{I}\mathrm{Sp}(2n)$, we can express these space
 \operatorname{Hor}_{p}\mathrm{Sp}(2n)&\coloneqq\left\{ \Omega p\;\middle|\;\Omega \in \operatorname{Hor}\mathfrak{sp}(2n) \right\},
 \end{align*}
 %
-where horizontal- and vertical space is defined as in Definition \ref{def:horizontal_vertical_space}. Explicit expressions of $\operatorname{Ver}\mathfrak{sp}(2n)$ and $\operatorname{Hor}\mathfrak{sp}(2n)$ is given in \cite[p.~11]{BendokatZimmermann2021}. We will only need the horizontal space to define our desired geodesic, so we will only explicitly state $\operatorname{Hor}\mathrm{Sp}(2n)$. It is expressed as
+where horizontal- and vertical space is defined as in Definition~\ref{def:horizontal_vertical_space}. Explicit expressions of $\operatorname{Ver}\mathfrak{sp}(2n)$ and $\operatorname{Hor}\mathfrak{sp}(2n)$ is given in \cite[p.~11]{BendokatZimmermann2021}. We will only need the horizontal space to define our desired metric, so we will only explicitly state $\operatorname{Hor}\mathrm{Sp}(2n)$. It is expressed as
 %
 \begin{equation*}
 \operatorname{Hor}_{p}\mathrm{Sp}(2n)=\left\{ \overline{\Omega}p\;\middle|\;\Omega r+r\Omega-r\Omega r=\overline{\Omega}\in \operatorname{Hor}\mathfrak{sp}(2n) \right\},
 \end{equation*}
 %
-where $r=J_{2n}^{\mathrm{T}}\pi(p)\pi (p)^+J_{2n}$. From this quotient perspective, for $p=\pi(q)$ where $q\in \mathrm{Sp}(2n)$, we can express vectors from $T_{p}\mathrm{SpSt}(2n, 2k)$ through $\operatorname{Hor}_{p}\mathrm{Sp}(2n)$. Following \cite[p.~5]{JensenZimmermann2024} any $X\in T_{p}\mathrm{SpSt}(2n, 2k)$ and a specific $p=\pi (q)$, there exists a unique horizontal lift (see Definition \ref{def:horizontal_vertical_space})
+where $r=J_{2n}^{\mathrm{T}}\pi(p)\pi (p)^+J_{2n}$. From this quotient perspective, for $p=\pi(q)$ where $q\in \mathrm{Sp}(2n)$, we can express vectors from $T_{p}\mathrm{SpSt}(2n, 2k)$ through $\operatorname{Hor}_{p}\mathrm{Sp}(2n)$. Following \cite[p.~5]{JensenZimmermann2024} any $X\in T_{p}\mathrm{SpSt}(2n, 2k)$ and a specific $p=\pi (q)$, there exists a unique horizontal lift (see Definition~\ref{def:horizontal_vertical_space})
 %
 \begin{equation}\label{eq:horizontal_lift_spst}
     \mathfrak{h}_{q}(X)=\overline{\Omega}(X)q,

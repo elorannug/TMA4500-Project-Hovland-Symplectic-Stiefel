@@ -116,19 +116,10 @@ function cay(X::Matrix{Float64})
 	return (I(size(X,1)) + X) * inv(I(size(X,1)) - X)
 end
 
-# ╔═╡ 2e862045-402d-4e6c-9c1f-b2f56e7a5420
-#=╠═╡
-U0 = cay(Ω / 2) * E;
-  ╠═╡ =#
-
-# ╔═╡ 6312db82-ac57-4f28-8f4c-43ddb10e6233
-begin
-	Random.seed!(seed)
-	U0 = rand(M)
-end
-
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
+#=╠═╡
 is_point(M, U0) # Not throwing an error, so it is in SpSt
+  ╠═╡ =#
 
 # ╔═╡ 62da690c-5fa0-48ac-b3dd-1a8272e9d18c
 md"""
@@ -287,7 +278,9 @@ end
 M_pseudo = MetricManifold(SymplecticStiefel(2*n,2*k),OGPseudoRieMetric())
 
 # ╔═╡ feec9ded-778f-4ffa-ad45-1622fa65f0f7
+#=╠═╡
 is_point(M_pseudo, U0)
+  ╠═╡ =#
 
 # ╔═╡ a8971fce-7b45-4a50-9c63-9d726b460a5f
 md"""
@@ -323,29 +316,16 @@ end
 end
 
 # ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+#=╠═╡
 stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0))
 # Init. step size as in paper
 # curcomvent calculation of injectivity radius 
-
-# ╔═╡ a6befb63-914f-4c9e-af87-f782d2cac03e
-stepsize_pseudo = ArmijoLinesearch(M_pseudo; initial_stepsize = cost_function(M_pseudo, U0), retraction_method=ExponentialRetraction())
-
-# ╔═╡ 42206059-b75a-478f-b3d4-55aaa059a438
-# ╠═╡ disabled = true
-#=╠═╡
-function rie_grad_cost_function(M, P)
-    grad_P = euclid_grad_cost_function(M,P)
-    J2n = Manifolds.SymplecticElement(1.0)  # Create the J_{2n} matrix
-    X = grad_P * transpose(P) * P + J2n * P * transpose(grad_P) * J2n * P
-	# Just a typo for the gradient to be good
-    return X
-end
   ╠═╡ =#
 
-# ╔═╡ e7094d80-c194-4559-94fc-e3a92043bfa7
-function rie_grad_cost_function(M,p)
-	riemannian_gradient(M, p, euclid_grad_cost_function(M, p))
-end
+# ╔═╡ a6befb63-914f-4c9e-af87-f782d2cac03e
+#=╠═╡
+stepsize_pseudo = ArmijoLinesearch(M_pseudo; initial_stepsize = cost_function(M_pseudo, U0), retraction_method=ExponentialRetraction())
+  ╠═╡ =#
 
 # ╔═╡ 61e52cc4-8fcd-439d-a519-44ed4beb8142
 # ╠═╡ disabled = true
@@ -357,6 +337,7 @@ check_gradient(M, cost_function, rie_grad_cost_function; plot=false)
 no_iterations = 1000
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
+#=╠═╡
 # Solver using cayely
 solver_default = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
@@ -367,8 +348,10 @@ solver_default = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
+  ╠═╡ =#
 
 # ╔═╡ 0e328c4b-1d86-4f0f-adc0-df483defef43
+#=╠═╡
 # Solver using esponential retraction
 solver_exp = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
@@ -379,6 +362,7 @@ solver_exp = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",100,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()]);
+  ╠═╡ =#
 
 # ╔═╡ 3edf1102-53ab-4d40-b84d-335ae2e6c487
 begin
@@ -389,6 +373,7 @@ begin
 end
 
 # ╔═╡ 1404149f-158f-42bf-9960-e4480ee9682b
+#=╠═╡
 begin
 	
 counter.count *= 0 # Reset counter for subsequent reruns
@@ -407,6 +392,7 @@ if counter.count > 0
     @warn "H⁺H was detected as non-invertible in $(counter.count) iterations."
 end=#
 end
+  ╠═╡ =#
 
 # ╔═╡ cec180d8-b0eb-467c-9318-47539c541112
 # ╠═╡ disabled = true
@@ -439,16 +425,24 @@ end
   ╠═╡ =#
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
+#=╠═╡
 get_record(solver_default);
+  ╠═╡ =#
 
 # ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
+#=╠═╡
 is_point(M, get_solver_result(solver_default); error=:warn)
+  ╠═╡ =#
 
 # ╔═╡ 55e812aa-ca8e-4481-9685-4aae67d89420
+#=╠═╡
 is_point(M, get_solver_result(solver_exp); error=:warn)
+  ╠═╡ =#
 
 # ╔═╡ 4b6034e4-18a8-47bd-9221-f52569e5f54b
+#=╠═╡
 is_point(M, get_solver_result(solver_other); error=:warn)
+  ╠═╡ =#
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
@@ -456,6 +450,7 @@ md"""
 """
 
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
+#=╠═╡
 begin
 iterations_default = [rec[1] for rec in get_record(solver_default)]
 cost_vals_default =  [rec[2] for rec in get_record(solver_default)]
@@ -471,8 +466,10 @@ gradient_vals_other = [rec[3] for rec in get_record(solver_other)]
 
 print("Fetching vectors for plotting")
 end;
+  ╠═╡ =#
 
 # ╔═╡ 0743dca6-d316-4cce-b86f-8d06abd77762
+#=╠═╡
 begin
 	using CSV, DataFrames
 	# Saving data as dataframe to csv
@@ -505,20 +502,25 @@ begin
 	# Save to a CSV file
 	#CSV.write("Retraction_comparison_n1000k20.csv", data)
 end
+  ╠═╡ =#
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
+#=╠═╡
 begin
 plot(iterations_default, cost_vals_default; title = "Convergence plot for different retractions", xlabel = "# iterations", ylabel = "Cost", label = "Cayley", xaxis=:log10, yaxis=:log10)
 plot!(iterations_exp, cost_vals_exp, label = "Exponential")
 plot!(iterations_other, cost_vals_other, label = "Other retraction")
 end
+  ╠═╡ =#
 
 # ╔═╡ 7d511678-c208-446d-86e8-f064e18c0891
+#=╠═╡
 begin
 plot(iterations_default, gradient_vals_default; title = "|▽f| plot of different retractions", xlabel = "# iterations", ylabel = "|▽f|", label = "Cayley retraction", xaxis=:log10, yaxis=:log10)
 plot!(iterations_exp, gradient_vals_exp, label = "Exponential")
 plot!(iterations_other, gradient_vals_other, label = "Other")
 end
+  ╠═╡ =#
 
 # ╔═╡ 5a23ebce-129f-47d7-a1c4-29c0bb91b828
 md"""
@@ -568,6 +570,38 @@ md"""
 md"""
 We can see that the Cayley Retraction method is faster than projecting with the exponential map.
 """
+
+# ╔═╡ e7094d80-c194-4559-94fc-e3a92043bfa7
+#=╠═╡
+function rie_grad_cost_function(M,p)
+	riemannian_gradient(M, p, euclid_grad_cost_function(M, p))
+end
+  ╠═╡ =#
+
+# ╔═╡ 42206059-b75a-478f-b3d4-55aaa059a438
+# ╠═╡ disabled = true
+#=╠═╡
+function rie_grad_cost_function(M, P)
+    grad_P = euclid_grad_cost_function(M,P)
+    J2n = Manifolds.SymplecticElement(1.0)  # Create the J_{2n} matrix
+    X = grad_P * transpose(P) * P + J2n * P * transpose(grad_P) * J2n * P
+	# Just a typo for the gradient to be good
+    return X
+end
+  ╠═╡ =#
+
+# ╔═╡ 6312db82-ac57-4f28-8f4c-43ddb10e6233
+#=╠═╡
+begin
+	Random.seed!(seed)
+	U0 = rand(M)
+end
+  ╠═╡ =#
+
+# ╔═╡ 2e862045-402d-4e6c-9c1f-b2f56e7a5420
+#=╠═╡
+U0 = cay(Ω / 2) * E;
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """

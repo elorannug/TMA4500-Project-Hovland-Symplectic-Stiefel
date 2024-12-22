@@ -1,5 +1,5 @@
 \subsection{Riemannian gradient descent}
-The first algorithm we will define is Riemannian gradient descent (GD). Although seemingly simple, the Euclidean gradient descent (E-GD) is a powerful algorithm because of its simplicity. The lack of assumptions makes the algorithm easily applicable to a wide range of problems, and its simplicity also makes it computationally efficient. Initially following \cite[p.~56]{Boumal2023}, the E-GD is intuitivly transferred to the Riemannian framework. For the sequence $\left\{ p_{k} \right\}$ where $k\in \mathbb{N}$, we have the point $p_{k}\in \mathrm{SpSt}(2n, 2k)$, where the next point in the sequence is computed as 
+The first algorithm we will define is Riemannian gradient descent (GD). Although seemingly simple, the Euclidean gradient descent (E-GD) is a powerful algorithm because of its simplicity. THrough the use of only a few assumptions, the algorithm applicable to a wide range of problems, and its simplicity also makes it computationally efficient. Initially following \cite[p.~56]{Boumal2023}, the E-GD is intuitively transferred to the Riemannian framework. For the sequence $\left\{ p_{k} \right\}$ where $k\in \mathbb{N}$, we have the point $p_{k}\in \mathrm{SpSt}(2n, 2k)$, where the next point in the sequence is computed as 
 %
 \begin{equation*}
 p_{k+1}=\mathcal{R}_{p_{k}}(-t_{k}\operatorname{grad}f(p_{k})).
@@ -21,7 +21,7 @@ The step-size $t_{k}$ is calculated as $t_{k}=\gamma_{k}\delta^{h}$, where $\gam
 % Stiefel manifold, SIAM Journal on Optimization, 31 (2021), pp. 1546–1575, https://doi.
 % org/10.1137/20M1348522.
 \begin{algorithm}[H]
-    \caption{Riemannian Gradient descent}\label{alg:grad_descent}
+    \caption{Riemannian gradient descent}\label{alg:grad_descent}
     \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, parameters $\beta, \gamma \in(0,1)$, steplength range $0<\gamma_{\text{min}}<\gamma_{\text{max}}$, initial step size $\gamma_{0}=f(p_{0})$, maximum number of iterations $N\in \mathbb{N}$, step parameters $h_{\text{min}}<h_{\text{max}}\in \mathbb{Z}$, tolerance parameters $\epsilon, \epsilon_{p}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with Riemannian gradient $\operatorname{grad}f(p)$, and $\lvert \lvert \cdot,\cdot \rvert  \rvert_{\text{F}}$ denotes the Frobenius norm.
     \begin{algorithmic}[1]
         \For{$0\leq k\leq N$}

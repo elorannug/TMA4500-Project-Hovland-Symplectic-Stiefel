@@ -12,17 +12,17 @@ Though it is only an approximation, it has the property that $\mathrm{Cay}\colon
 \begin{equation*}
 \hat{\mathcal{R}}_{p}(X)=\mathrm{Cay}\left( \frac{1}{2}\big(\overline{\Omega}(X)-\overline{\Omega}(X)^{\mathrm{T}}\big) \right)\mathrm{Cay}\left( \frac{1}{2}\overline{\Omega}(X)^{\mathrm{T}} \right)p,
 \end{equation*}
-where we define the notion of retraction in Definition \ref{def:retraction}. However, we will proceed with the even simpler, yet shown to be sufficient, retraction presented in \cite[p.~20]{BendokatZimmermann2021}:
+where we define the notion of retraction in Definition~\ref{def:retraction}. However, we will proceed with the even simpler, yet shown to be sufficient, retraction presented in \cite[p.~20]{BendokatZimmermann2021}:
 %
 \begin{equation}
     \label{eq:cayley_retraction}
     \begin{split}
         \mathcal{R}_{p}(tX)&\coloneqq\mathrm{Cay}\left( \frac{t}{2}\tilde{\Omega}(p,X) \right)p \\
-        &=-p+(tq+2p)\left( \frac{t^{2}}{4}q^{+}q- \frac{t}{2}p^{+}X+I \right)^{-1},
+        &=-p+(tq+2p)\left( \frac{t^{2}}{4}q^{+}q- \frac{t}{2}r+I \right)^{-1},
     \end{split}
 \end{equation}
 %
-where $\tilde{\Omega}(p,X)\coloneqq\left( I- \frac{1}{2}pp^{+} \right)Xp^{+}-pX^{+}\left( I- \frac{1}{2}pp^{+} \right)$, and $q\coloneqq X-pp^{+}X$. In \eqref{eq:cayley_retraction},  the last equality comes from \cite[Prop.~5.2]{BendokatZimmermann2021}.
+where $\tilde{\Omega}(p,X)\coloneqq\left( I- \frac{1}{2}pp^{+} \right)Xp^{+}-pX^{+}\left( I- \frac{1}{2}pp^{+} \right)$, $r\coloneqq p^{+}X$, and $q\coloneqq X-pr$. In \eqref{eq:cayley_retraction},  the last equality comes from \cite[Prop.~5.2]{BendokatZimmermann2021}.
 
 Functioning as a numerical middle ground between the geodesic \eqref{eq:geodesic_spst} on $\mathrm{SpSt}(2n, 2k)$ and the Cayley retraction \eqref{eq:cayley_retraction}, we now define the pseudo-Riemannian geodesic described in \cite[p.~10]{BendokatZimmermann2021}. While invoking \cite{BendokatZimmermann2021} to explain the underlying theory, the pseudo-Riemannian geodesic is defined for $X\in \mathrm{SpSt}(2n, 2k)$ as 
 %
@@ -41,13 +41,13 @@ I_{2k} \\
 %
 where $q$ and $r$ are as above. 
 
-To approximate the Riemannian Hessian defined in \eqref{eq:riemannian_hessian} we include the following approximation from \cite[Corr.~5.16]{Boumal2023}. Since $\mathrm{SpSt}(2n, 2k)$ is a submanifold of a Euclidean space, then
+To approximate the Riemannian Hessian defined in \eqref{eq:riemannian_hessian} we include the following approximation from \cite[Corr.~5.16]{Boumal2023}. Since $\mathrm{SpSt}(2n, 2k)$ is a submanifold of a Euclidean space, if one uses the Euclidean metric, the Hessian can be expressed as
 %
 \begin{equation}\label{eq:approximate_hessian}
 \operatorname{Hess}f(p)[X]=\operatorname{Proj}_{p}(\operatorname{D}\overline{\operatorname{grad}}f(p)[X]),
 \end{equation}
 %
-where $\overline{\operatorname{grad}}f(p)$ is a smooth extension of $\operatorname{grad}f(p)$, and $\mathrm{Proj}_{p}(\cdot)$ is the projection onto the tangent space of $p$. The projection is defined explicitly in \cite[Lemma~2.3]{JensenZimmermann2024}, but we will solve it numerically through the following optimization problem. For $q\in \mathbb{R}^{2n\times 2k}$,
+where $\overline{\operatorname{grad}}f(p)$ is a smooth extension of $\operatorname{grad}f(p)$, and $\mathrm{Proj}_{p}(\cdot)$ is the projection onto the tangent space of $p$. Since we are using the metric $g_p$ defined in \eqref{eq:spst_metric}, \eqref{eq:approximate_hessian} is only an approximation of the Hessian defined in \eqref{eq:riemannian_hessian} \cite[p.~11]{JensenZimmermann2024}. The projection $\mathrm{Proj}_{p}(\cdot)$ is defined explicitly in \cite[Lemma~2.3]{JensenZimmermann2024}, but we will solve it numerically through the following optimization problem. For $q\in \mathbb{R}^{2n\times 2k}$,
 %
 \begin{equation*}
 \operatorname{Proj}_{p}(A)\approx \operatorname*{min}_{r\in \mathbb{R}^{2n\times2k}} \frac{1}{2}\lvert \lvert r-q \rvert  \rvert ^{2},\quad\text{subject to}\quad r^{\mathrm{T}}Jp+p^{\mathrm{T}}Jr=0.

@@ -30,13 +30,13 @@ md"""
 n = 100 
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 10
+k = 1
 
 # ╔═╡ 1b0763d0-3c2b-43bb-b663-c792f5f4ce24
-r = 20
+r = 4
 
 # ╔═╡ 0011fbe2-acd2-4798-8e82-9cd4b567423f
-m = 30 # Jensen picked 100
+m = 10 # Jensen picked 100
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
@@ -53,6 +53,23 @@ end;
 
 # ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
 S = rand_T * (rand_C/norm(rand_C))
+
+# ╔═╡ 262c70ed-3bf3-4181-943b-41b374c020ae
+#= begin # Function to make matrices transferrable to MATLAB
+	var_to_print = X0
+	@printf "["
+for i in 1:size(var_to_print, 1)
+    for j in 1:size(var_to_print, 2)
+        @printf("%.32f", var_to_print[i, j])
+        if j < size(var_to_print, 2)
+            @printf "  "
+        end
+    end
+	@printf "\n"
+end
+    @printf "]"
+end
+=#
 
 # ╔═╡ 6460d549-e79d-473e-82e9-92c261a02dd7
 md"""
@@ -75,22 +92,6 @@ begin
 	Random.seed!(seed)
 	X0 = rand(M; vector_at=U0)
 	is_vector(M, U0, X0)
-end
-
-# ╔═╡ 262c70ed-3bf3-4181-943b-41b374c020ae
-begin # Function to make matrices transferrable to MATLAB
-	var_to_print = X0
-	@printf "["
-for i in 1:size(var_to_print, 1)
-    for j in 1:size(var_to_print, 2)
-        @printf("%.32f", var_to_print[i, j])
-        if j < size(var_to_print, 2)
-            @printf "  "
-        end
-    end
-	@printf "\n"
-end
-    @printf "]"
 end
 
 # ╔═╡ 75aff951-90ed-491c-8d98-f0149cad8162
@@ -129,10 +130,10 @@ function euclid_hessian_cost_function(p::Matrix{Float64}, X::Matrix{Float64})
 	ppPlus = p*symplectic_inverse(p)
 	SST = S*S'
 	XpPlus = X*symplectic_inverse(p)
-	A_U_X = - XpPlus - symplectic_inverse(XpPlus) # JZ had -XpPlus
+	A_p_X = - XpPlus + symplectic_inverse(-XpPlus) 
 	ImppPlusSSTJ = (I-ppPlus)*SST*J'
-	A_U_XSSTJ = A_U_X*SST*J # Here JZ had J'
-	return -2 * ((A_U_XSSTJ-A_U_XSSTJ')*p*J+(ImppPlusSSTJ-ImppPlusSSTJ')*X*J)
+	A_p_XSSTJ = A_p_X*SST*J' 
+	return -2 * ((A_p_XSSTJ-A_p_XSSTJ')*p*J+(ImppPlusSSTJ-ImppPlusSSTJ')*X*J)
 end
 
 # ╔═╡ 51fc0bfb-8796-40a9-9d93-16d3f2282a75
@@ -142,9 +143,7 @@ md"""
 
 # ╔═╡ 60850703-1a35-4ca4-8830-8d02ca6b8cfd
 function r_grad(M,p)
-	#riemannian_gradient(M, p, euclid_grad_cost_function(p))
-	egrad = euclid_grad_cost_function(p)
-	return egrad * (p'*p) - symplectic_inverse(p')*(symplectic_inverse(egrad)*p)
+	riemannian_gradient(M, p, euclid_grad_cost_function(p))
 end
 
 # ╔═╡ 62e7e6aa-ed35-4df2-b07b-66bc2fd397c5
@@ -249,7 +248,7 @@ end
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
 # ⚠️ It was using Cayley as default!
-check_Hessian(M, cost_function, r_grad, r_hess#=, U0, X0=#; plot=true, error=:warn, check_symmetry=true, check_vector=true, retraction_method=ExponentialRetraction(), limits=(-8,0))
+check_Hessian(M, cost_function, r_grad, r_hess#=, U0, X0=#; plot=true, error=:warn, check_symmetry=true, check_vector=true, retraction_method=ExponentialRetraction(), limits=(-5,0))
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
@@ -269,12 +268,7 @@ function r_hess_approx(M, p, X)
 	eg = euclid_grad_cost_function(p)
 	eh = euclid_hessian_cost_function(p, X)
 	
-	XTp = X' * p # Memoization
-	#=
-	# Debug:
-    println("eg size: ", size(eg))
-    println("eh size: ", size(eh))
-	=#
+	XTp = X' * p 
 	Dgrad_f = (eh * (p' * p) 
 	+ eg * XTp 
 	+ eg * XTp' 
@@ -349,7 +343,7 @@ solver = gradient_descent(M, cost_function, r_grad, U0;
 	stepsize = stepsize, return_state = true, 
 	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
-		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",1000,:Stop],
+		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",500,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 
 # ╔═╡ 7301c2ba-706c-4797-b597-92877cd16a4b
@@ -464,7 +458,7 @@ begin
 	)
 	
 	# Save to a CSV file
-	# CSV.write("2nd_order_symplectic_decomposition_n100k10r20m30.csv", data)
+	CSV.write("2nd_order_symplectic_decomposition_n100k1r4m10.csv", data)
 end
 
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
@@ -482,7 +476,7 @@ begin
 end
 
 # ╔═╡ f2526a0a-f155-4e41-b9bd-1d824904907f
-run_diag = false
+run_diag = true
 
 # ╔═╡ 8c04cb67-1e83-4fce-a32e-9067790409cb
 md"""
@@ -494,7 +488,7 @@ begin
 	if run_diag
 		@benchmark gradient_descent(M, cost_function, r_grad, U0;
 		stepsize = stepsize, return_state = true, 
-		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol) | StopWhenStepsizeLess(10.0^-11))
+		stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol))
 	end
 end
 
@@ -507,9 +501,14 @@ md"""
 begin # Anal. Hess, TR-1
 	if run_diag
 		@benchmark trust_regions(M, cost_function, r_grad, r_hess, U0;
+		acceptance_rate = 0.1,
+		max_trust_region_radius = sqrt(min(2n,2k)),
+		reduction_threshold = 0.25,
+		trust_region_radius = sqrt(min(2n,2k))/8,
+		# Removed StopWHenModelIncreased() from subproblem stopping criterion
+		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 		return_state = true,
-		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
-		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0))
+		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol))
 	end
 end
 
@@ -522,9 +521,14 @@ md"""
 begin # Approx Hess, TR-2
 	if run_diag
 		@benchmark trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
+		acceptance_rate = 0.1,
+		max_trust_region_radius = sqrt(min(2n,2k)),
+		reduction_threshold = 0.25,
+		trust_region_radius = sqrt(min(2n,2k))/8,
+		# Removed StopWHenModelIncreased() from subproblem stopping criterion
+		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 		return_state = true,
-		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol),
-		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0))
+		stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol))
 	end
 end
 
@@ -2133,10 +2137,10 @@ version = "1.4.1+1"
 # ╠═97db13d5-9e70-41be-84e7-866d26558b90
 # ╟─755f4c1c-153c-4f64-9caa-cc2e30e06c61
 # ╟─8ab39b2a-6b4d-4ccc-a988-53654827b647
-# ╠═55d3d303-c6b5-4df3-bb2d-5b1b87a442d0
+# ╟─55d3d303-c6b5-4df3-bb2d-5b1b87a442d0
 # ╠═4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╟─d13677ef-d057-45f2-b7d0-514033aa0240
-# ╠═73612b28-4c8a-4214-b841-37d72c8b1aba
+# ╟─73612b28-4c8a-4214-b841-37d72c8b1aba
 # ╠═fec87766-fb88-4ebb-b2e8-31471c2ff885
 # ╟─de8bf366-f01d-43cd-bcd0-db8828d6745a
 # ╟─b51e80e3-1983-496c-ac6f-095fe8945ca0

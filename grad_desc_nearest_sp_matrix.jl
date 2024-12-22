@@ -235,6 +235,7 @@ md"""
 """
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
+#=╠═╡
 solver = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	stepsize = stepsize, return_state = true, 
 	stopping_criterion=StopAfterIteration(200) | StopWhenGradientNormLess(10.0^-9),
@@ -242,26 +243,37 @@ solver = gradient_descent(M, cost_function, rie_grad_cost_function, U0;
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",10,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
+  ╠═╡ =#
 
 # ╔═╡ 501d5dd5-541b-453f-b836-713196f5345d
+#=╠═╡
 get_record(solver)
+  ╠═╡ =#
 
 # ╔═╡ 8d732241-df58-48a7-af6f-6f3bab89f4a3
+#=╠═╡
 U = get_solver_result(solver)
+  ╠═╡ =#
 
 # ╔═╡ fc2d17ae-5bb5-4533-b473-9ba0fe76c380
 canonical_project(M, cay(Ω / 2)) # Only from Sp to SpSt!
 
 # ╔═╡ a7d991a0-b201-4158-b24f-6c9991aff684
+#=╠═╡
 project(M, U, A) # Nearest Tangent!
+  ╠═╡ =#
 
 # ╔═╡ 4723d019-935f-4344-90ff-b431a7e6388b
+#=╠═╡
 is_point(M, U; error=:warn)
+  ╠═╡ =#
 
 # ╔═╡ 0070c2e9-5329-4aac-8587-4bdaceb025c7
+#=╠═╡
 md"""
 ##### We see that U0 has a cost of $(round(cost_function(M, U0), digits = 2)), while U has a cost of $(round(cost_function(M, U), digits = 2)). 
 """ # The actual solution is $(round(canonical_project(M, U0)), digits = 2))
+  ╠═╡ =#
 
 # ╔═╡ d13677ef-d057-45f2-b7d0-514033aa0240
 md"""
@@ -269,32 +281,44 @@ md"""
 """
 
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
+#=╠═╡
 iterations = [rec[1] for rec in get_record(solver)];
+  ╠═╡ =#
 
 # ╔═╡ 19fa51c6-7ef6-4457-989e-dc3bad1ae3ec
+#=╠═╡
 cost_vals =  [rec[2] for rec in get_record(solver)];
+  ╠═╡ =#
 
 # ╔═╡ a82b1ec9-3d03-43dc-9b38-0f4ca3442927
+#=╠═╡
 gradient_vals = [rec[3] for rec in get_record(solver)];
+  ╠═╡ =#
 
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
+#=╠═╡
 plot(iterations[begin:end], cost_vals; title = "Convergence plot", xlabel = "# iterations", ylabel = "Cost")
+  ╠═╡ =#
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
+#=╠═╡
 plot(iterations[begin:end], gradient_vals; yaxis = :log10, title = "|∇f| plot", xlabel = "# iterations", ylabel = "|∇f|")
-
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
-# Init. step size as in paper
-
-# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
-# curcomvent calculation of injectivity radius 
+  ╠═╡ =#
 
 # ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
 # ╠═╡ disabled = true
 #=╠═╡
 stepsize = NonmonotoneLinesearch(M; 
 	initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
+  ╠═╡ =#
+
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+#=╠═╡
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
+# Init. step size as in paper
+
+# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
+# curcomvent calculation of injectivity radius 
   ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
