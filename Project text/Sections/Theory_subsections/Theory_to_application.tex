@@ -47,10 +47,10 @@ To approximate the Riemannian Hessian defined in \eqref{eq:riemannian_hessian} w
 \operatorname{Hess}f(p)[X]=\operatorname{Proj}_{p}(\operatorname{D}\overline{\operatorname{grad}}f(p)[X]),
 \end{equation}
 %
-where $\overline{\operatorname{grad}}f(p)$ is a smooth extension of $\operatorname{grad}f(p)$, and $\mathrm{Proj}_{p}(\cdot)$ is the projection onto the tangent space of $p$. Since we are using the metric $g_p$ defined in \eqref{eq:spst_metric}, \eqref{eq:approximate_hessian} is only an approximation of the Hessian defined in \eqref{eq:riemannian_hessian} \cite[p.~11]{JensenZimmermann2024}. The projection $\mathrm{Proj}_{p}(\cdot)$ is defined explicitly in \cite[Lemma~2.3]{JensenZimmermann2024}, but we will solve it numerically through the following optimization problem. For $q\in \mathbb{R}^{2n\times 2k}$,
+where $\overline{\operatorname{grad}}f(p)$ is a smooth extension of $\operatorname{grad}f(p)$, and $\mathrm{Proj}_{p}(\cdot)$ is the projection onto the tangent space of $p$. Since we are using the metric $g_p$ defined in \eqref{eq:spst_metric}, \eqref{eq:approximate_hessian} is only an approximation of the Hessian defined in \eqref{eq:riemannian_hessian} \cite[p.~11]{JensenZimmermann2024}. The projection $\mathrm{Proj}_{p}(\cdot)$ is defined explicitly in \cite[Lem.~2.3]{JensenZimmermann2024}, but we will solve it numerically through the following optimization problem. For $q\in \mathbb{R}^{2n\times 2k}$,
 %
-\begin{equation*}
+\begin{equation}\label{eq:projection_problem}
 \operatorname{Proj}_{p}(A)\approx \operatorname*{min}_{r\in \mathbb{R}^{2n\times2k}} \frac{1}{2}\lvert \lvert r-q \rvert  \rvert ^{2},\quad\text{subject to}\quad r^{\mathrm{T}}Jp+p^{\mathrm{T}}Jr=0.
-\end{equation*}
+\end{equation}
 %
 Having introduced the Cayley retraction, the pseudo-Riemannian geodesic, and the approximate Hessian, we have increased our toolbox in applying the theoretical results to optimization problems. The last thing on our agenda before we can conduct our experiments is to introduce the optimization algorithms we will use. 

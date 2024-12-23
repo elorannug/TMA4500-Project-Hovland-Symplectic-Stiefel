@@ -1,5 +1,6 @@
+\newpage
 \subsection{The Proper Symplectic Decomposition Problem}\label{sec:symplectic_decomposition}
-The final experiment we will conduct is to apply GD, TR-1 and TR-2 to the problem of computing the proper symplectic decomposition of a matrix $s\in \mathbb{R}^{2n\times 2m}$ in a similar manner to Jensen and Zimmermann \cite[p.~18]{JensenZimmermann2024}. This problem is an important task in symplectic model order reduction of Hamiltonian systems. This problem can be formulated as the following optimization problem:
+The final experiment we will conduct is to apply GD, TR-1, and TR-2 to the problem of computing the proper symplectic decomposition of a matrix $s\in \mathbb{R}^{2n\times 2m}$ in a similar manner to Jensen and Zimmermann \cite[p.~18]{JensenZimmermann2024}. This problem is an important task in symplectic model order reduction of Hamiltonian systems. This problem can be formulated as the following optimization problem:
 %
 \begin{equation}
 \min_{p \in \mathrm{SpSt}(2n, 2k)}f(p),\quad\text{where}\quad f(p)\coloneqq\lvert \lvert s-pp^{+}s \rvert  \rvert _{\mathrm{F}}^{2}.
@@ -12,70 +13,7 @@ In most applications $k\ll n$. For a point $p\in \mathrm{SpSt}(2n, 2k)$ and $X\i
 \nabla^{2}f(p)[X]&=-2\big(\alpha(p,X)pJ+\eta(p) XJ-\alpha(p,X)^{\mathrm{T}}pJ-\eta(p)^{\mathrm{T}}XJ\big),
 \end{align*}
 %
-where $\alpha(p,X)=\beta(p,X)ss^{\mathrm{T}}J^{\mathrm{T}}$, $\beta(p,X)=\operatorname{D}(I-pp^{+})[X]=-Xp^{+}+(-Xp^{+})^{+}$, and \\$\eta(p)=(I-pp^{+})ss^{\mathrm{T}}J^{\mathrm{T}}$. To construct $s$, we generate a matrix $u\in \mathrm{SpSt}(2n, 2r)$ as well as another matrix $v\in \mathbb{R}^{2r\times 2m}$, which we normalize; $v=v\cdot \lvert \lvert v \rvert \rvert_{\mathrm{F}}^{-1}$. From these two matrices we generate $s=u\cdot v$. For the optimization run we choose $n=100$, $k=10$, $r=20$, and $m=30$. The results are displayed in Figure~\ref{fig:symplectic_decomposition}.
-
-% \begin{figure}
-%     \begin{tikzpicture}[
-%         every mark/.append style={mark size=1.5pt}
-%     ]
-%         \begin{groupplot}[
-%             group style = {
-%                 group size = 2 by 1,
-%                 horizontal sep=1.75cm },
-%             width = 0.48\textwidth,
-%             height = 0.4\textwidth,        
-%             xlabel={Iteration}
-%         ]
-%         % (1,1)
-%         \nextgroupplot[
-%             title = {Convergence of $f(p)$},
-%             ylabel={$f(p)$},
-%             xmode=log,
-%             ymode=log]
-%             \addplot table [
-%                 x=iterations, 
-%                 y=cost_GD, 
-%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
-%             \addlegendentry{GD}
-
-%             \addplot table [
-%                 x=iteration_TR_hess, 
-%                 y=cost_TR_hess, 
-%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
-%             \addlegendentry{TR-1}
-
-%             \addplot table [
-%                 x=iteration_TR_hess_approx, 
-%                 y=cost_TR_hess_approx, 
-%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
-%             \addlegendentry{TR-2}
-%         % (1,2)
-%         \nextgroupplot[
-%             title = {Convergence of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
-%             ylabel={$\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$},
-%             ymode=log,
-%             xmode=log]
-%             \addplot table [
-%                 x=iterations, 
-%                 y=gradient_GD, 
-%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
-%             \addlegendentry{GD}
-
-%             \addplot table [
-%                 x=iteration_TR_hess, 
-%                 y=gradient_TR_hess, 
-%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
-%             \addlegendentry{TR-1}
-
-%             \addplot table [
-%                 x=iteration_TR_hess_approx, 
-%                 y=gradient_TR_hess_approx, 
-%                 col sep=comma]{../2nd_order_symplectic_decomposition_n100k10r20m30.csv};
-%             \addlegendentry{TR-2}
-%         \end{groupplot}
-%     \end{tikzpicture}
-%         \caption[Proper Symplectic Decomposition Comparison]{The proper symplectic decomposition problem attempted solved by GD, TR-1 and TR-2 on $\mathrm{SpSt}(2n, 2k)$, with $n=100$, $k=10$, $r=20$, and $m=30$. None of the algorithms converged. }\label{fig:symplectic_decomposition}
-% \end{figure}
+where $\alpha(p,X)=\beta(p,X)ss^{\mathrm{T}}J^{\mathrm{T}}$, $\beta(p,X)=\operatorname{D}(I-pp^{+})[X]=-Xp^{+}+(-Xp^{+})^{+}$, and \\$\eta(p)=(I-pp^{+})ss^{\mathrm{T}}J^{\mathrm{T}}$. To construct $s$, we generate a matrix $u\in \mathrm{SpSt}(2n, 2r)$ as well as another matrix $v\in \mathbb{R}^{2r\times 2m}$, which we normalize; $v=v\cdot \lvert \lvert v \rvert \rvert_{\mathrm{F}}^{-1}$. From these two matrices we generate $s=u\cdot v$. In an effort to replicate similar conditions as in \cite[p.~18]{JensenZimmermann2024}, for the  optimization experiment we choose $n=100$, $k=\{1,2,3\}$, $r=4$, and $m=10$. 
 
 \begin{figure}
     \begin{tikzpicture}[
@@ -235,13 +173,15 @@ where $\alpha(p,X)=\beta(p,X)ss^{\mathrm{T}}J^{\mathrm{T}}$, $\beta(p,X)=\operat
             \addlegendentry{TR-2}
         \end{groupplot}
     \end{tikzpicture}
-    \caption[The proper symplectic decomposition problem]{The proper symplectic decomposition problem attempted solved by GD, and solved by TR-1 and TR-2. The figures show $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ on $\mathrm{SpSt}(2n, 2k)$ as a function of iteration for all three algorithms, with $n=100$, $r=4$, and $m=10$ for $k={1,2,4}$.}
+    \caption[The proper symplectic decomposition problem]{The proper symplectic decomposition problem attempted solved by GD, and solved by TR-1 and TR-2. The figures show $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ on $\mathrm{SpSt}(2n, 2k)$ as a function of iteration for all three algorithms, with $n=100$, $r=4$, and $m=10$ for $k=\{1,2,3\}$.}
     \label{fig:symplectic_decomposition}
 \end{figure}
 %
+Figure \ref{fig:symplectic_decomposition} shows $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ as a function of iteration for the three different runs with $k=\left\{ 1,2,3 \right\}$, for the three algorithms GD, TR-1, and TR-2. As in the nearest symplectic matrix problem we see that for the different values of $k$, the algorithms generally show a similar pattern of convergence to itself. The most striking pattern in the figures is that the convergence rate of GD slows down until it is not able to  converge within $\text{iter}=1000$, while both TR-1 and TR-2 do. Regarding TR-1 and TR-2, the actual pattern of convergence is similar to the pattern of convergence in the previous experiment. For all three values of $k$, TR clearly displays an elbow shape in the $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ plot. After an initial period of a slower convergence rate, after it is close enough to the critical point the convergence rate increases dramatically. A less prominent pattern is that the relative convergence rate of TR-1 and TR-2, although initially similar, diverges as $k$ increases. For $k=3$ it TR-1 uses many more steps than TR-2 to converge. 
+
 \begin{table}
     \centering
-    \caption[The proper symplectic decomposition problem timetable]{The proper symplectic decomposition problem attempted solved by GD, and solved by TR-1 and TR-2. The table summarizes time to converge for all the algorithms on $\mathrm{SpSt}(2n, 2k)$, with $n=100$, $r=4$, and $m=10$ for $k={1,2,4}$.}\label{tbl:symplectic_decomposition}
+    \caption[The proper symplectic decomposition problem timetable]{The proper symplectic decomposition problem attempted solved by GD, and solved by TR-1 and TR-2. The table summarizes time to converge for all the algorithms on $\mathrm{SpSt}(2n, 2k)$, with $n=100$, $r=4$, and $m=10$ for $k={1,2,3}$.}\label{tbl:symplectic_decomposition}
     \begin{tabular}{l S[table-format=1.1] S[table-format=2.1] S[table-format=1.1]}
         \toprule
         & \multicolumn{3}{c}{\textbf{Runtime (s)}} \\ 
@@ -254,5 +194,6 @@ where $\alpha(p,X)=\beta(p,X)ss^{\mathrm{T}}J^{\mathrm{T}}$, $\beta(p,X)=\operat
         \bottomrule       
     \end{tabular}
 \end{table}
-%The proper symplectic decomposition problem attempted solved by GD, TR-1 and TR-2 on $\mathrm{SpSt}(2n, 2k)$, with $n=100$, $k=10$, $r=20$, and $m=30$
-It is clear from Figure~\ref{fig:symplectic_decomposition} that none of the algorithms converge as expected from the theory. We observe that all three algorithms are stopped by the maximum iteration count set at $10^{3}$ iterations. In addition, all three algorithms follow the pattern of very low convergence rate. The last thing all three algorithms share, is that they all have some temporary increase in the value of $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$. This is not infeasible for TR-1 and TR-2, but quite odd for GD. Similarly to Figure~\ref{fig:nearest_symplectic_matrix_2nd_order}, the values of TR-1 and TR-2 have, for both $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$, almost the same function value for all steps. 
+%
+In Table~\ref{tbl:symplectic_decomposition} the runtime for GD, TR-1, and TR-2 are displayed. As expected, for bigger systems the runtime for all three algorithms increase. Regarding GD, despite it not converging within $1000$ iterations, the runtime is still comparably low. As GD did not converge for any of the values of $k$ we will not comment on it further. For $k=1$ TR-1 was the fastest, while for $k=\{2,3\}$ TR-2 was significantly faster than TR-1. 
+

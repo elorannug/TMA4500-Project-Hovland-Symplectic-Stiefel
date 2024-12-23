@@ -17,6 +17,6 @@
 \contentsline {section}{\numberline {5}Numerical Experiments}{14}{section.5}%
 \contentsline {subsection}{\numberline {5.1}Nearest Symplectic Matrix Problem - Retraction comparison}{15}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}Nearest Symplectic Matrix Problem - 2nd Order}{16}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}The Proper Symplectic Decomposition Problem}{16}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Conclusion}{18}{section.6}%
-\contentsline {section}{Bibliography}{21}{section*.8}%
+\contentsline {subsection}{\numberline {5.3}The Proper Symplectic Decomposition Problem}{18}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Conclusion}{20}{section.6}%
+\contentsline {section}{Bibliography}{22}{section*.8}%

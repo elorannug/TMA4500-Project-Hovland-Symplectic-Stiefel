@@ -571,13 +571,6 @@ md"""
 We can see that the Cayley Retraction method is faster than projecting with the exponential map.
 """
 
-# ╔═╡ e7094d80-c194-4559-94fc-e3a92043bfa7
-#=╠═╡
-function rie_grad_cost_function(M,p)
-	riemannian_gradient(M, p, euclid_grad_cost_function(M, p))
-end
-  ╠═╡ =#
-
 # ╔═╡ 42206059-b75a-478f-b3d4-55aaa059a438
 # ╠═╡ disabled = true
 #=╠═╡
@@ -590,17 +583,24 @@ function rie_grad_cost_function(M, P)
 end
   ╠═╡ =#
 
+# ╔═╡ 2e862045-402d-4e6c-9c1f-b2f56e7a5420
+#=╠═╡
+U0 = cay(Ω / 2) * E;
+  ╠═╡ =#
+
+# ╔═╡ e7094d80-c194-4559-94fc-e3a92043bfa7
+#=╠═╡
+function rie_grad_cost_function(M,p)
+	riemannian_gradient(M, p, euclid_grad_cost_function(M, p))
+end
+  ╠═╡ =#
+
 # ╔═╡ 6312db82-ac57-4f28-8f4c-43ddb10e6233
 #=╠═╡
 begin
 	Random.seed!(seed)
 	U0 = rand(M)
 end
-  ╠═╡ =#
-
-# ╔═╡ 2e862045-402d-4e6c-9c1f-b2f56e7a5420
-#=╠═╡
-U0 = cay(Ω / 2) * E;
   ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001

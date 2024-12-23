@@ -1,5 +1,5 @@
 \subsection{Nearest Symplectic Matrix Problem - 2nd Order}\label{sec:NSM_2nd_order}
-As in the preceding section, we will conduct our experiments on the optimization problem called the nearest symplectic matrix problem, \eqref{eq:nearest_symplectic_matrix}. Striving to replicate the conditions in \cite[p.~15]{JensenZimmermann2024}, for $\mathrm{SpSt}(2n, 2k)$ we select $n=100$, and $k=\left\{ 5,10,20 \right\}$. The algorithms tested are GD, TR-1 and TR-2.  The results of these runs are summarized in Table~\ref{tbl:Nearest_symplectic_matrix_2nd_order} and Figure~\ref{fig:nearest_symplectic_matrix_2nd_order}.
+As in the preceding section, we will conduct our experiments on the optimization problem called the nearest symplectic matrix problem, \eqref{eq:nearest_symplectic_matrix}. Striving to replicate the conditions in \cite[p.~15]{JensenZimmermann2024}, for $\mathrm{SpSt}(2n, 2k)$ we select $n=100$, and $k=\left\{ 5,10,20 \right\}$. The algorithms tested are GD, TR-1, and TR-2.  The results of these runs are summarized in Table~\ref{tbl:Nearest_symplectic_matrix_2nd_order} and Figure~\ref{fig:nearest_symplectic_matrix_2nd_order}.
 
 \begin{figure}\label{fig:nearest_symplectic_matrix_2nd_order}
     \begin{tikzpicture}[
@@ -156,28 +156,26 @@ As in the preceding section, we will conduct our experiments on the optimization
             \addlegendentry{TR-2}
         \end{groupplot}
     \end{tikzpicture}
-    \caption[Nearest symplectic matrix problem solved by GD, TR-1 and TR-2]{Nearest symplectic matrix problem solved by GD, TR-1 and TR-2. The figures show $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ on $\mathrm{SpSt}(2n, 2k)$ as a function of iteration for all three algorithms, with $n=100$ for $k={5,10,20}$.}\label{fig:nearest_symplectic_matrix_2nd_order}
+    \caption[Nearest symplectic matrix problem solved by GD, TR-1, and TR-2]{Nearest symplectic matrix problem solved by GD, TR-1, and TR-2. The figures show $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ on $\mathrm{SpSt}(2n, 2k)$ as a function of iteration for all three algorithms, with $n=100$ for $k={5,10,20}$.}\label{fig:nearest_symplectic_matrix_2nd_order}
 \end{figure}
-Figure \ref{fig:nearest_symplectic_matrix_2nd_order} shows $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ as a function of iteration for the three different runs with $k=\left\{ 5,10,20 \right\}$, for the three algorithms GD, TR-1 and TR-2. We observe that for all the values of $k$, the algorithms behaved similarly in the sense that they all converged in a similar number of steps, and following a similar shape. We observe that TR-1 and TR-2 behave  similarly, so we will denote both of them as TR. The only major pattern to be observed between $k$'s is that the first $\sim 15$ iterations of TR in $k=5$ have a steeper slope than GD. This difference is smaller for $k=10$, and almost non-existent in $k=20$. Looking at $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ we observe that the major difference in convergence, as theoretically predicted, is visible after the first $\sim 15$ iterations. after this point, while the convergence rate of GD seem to slow down, the convergence rate of TR seems to increase. It should be noted that this "speeding up" and "slowing down" is an artifact of the loglog plotting, but it is clearly showing that the rate of convergence close to the critical point is fundamentally different between TR and GD. It should also be noted that all algorithms terminated as the result of hitting the condition $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}\leq10^{-6}$. This can give the perception that the final iteration of TR is more precise than GD. However, this is probably an artefact of the convergence rate of TR being so high that the final step before convergence is detected, significantly overshoots the convergence condition for $k=\left\{ 5,10 \right\}$. 
+Figure~\ref{fig:nearest_symplectic_matrix_2nd_order} shows $f(p)$ and $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ as a function of iteration for the three different runs with $k=\left\{ 5,10,20 \right\}$, for the three algorithms GD, TR-1, and TR-2. We observe that for all the values of $k$, the algorithms behaved similarly in the sense that they all converged in a similar number of steps, and following a similar shape. We observe that TR-1 and TR-2 behave  similarly, so we will denote both of them as TR. The only major pattern to be observed between $k$'s is that the first $\sim 15$ iterations of TR in $k=5$ have a steeper slope than GD. This difference is smaller for $k=10$, and almost non-existent in $k=20$. Looking at $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}$ we observe that the major difference in convergence, as theoretically predicted, is visible after the first $\sim 15$ iterations. After this point, while the convergence rate of GD seem to slow down, the convergence rate of TR seems to increase. It should be noted that this "speeding up" and "slowing down" is an artifact of the log-log plotting, but it is clearly showing that the rate of convergence close to the critical point is fundamentally different between TR and GD. It should also be noted that all algorithms terminated as the result of hitting the condition $\lvert \lvert \operatorname{grad}f(p) \rvert \rvert_{p}\leq10^{-6}$. This can give the perception that the final iteration of TR is more precise than GD. However, this is probably an artefact of the convergence rate of TR being so high that the final step before convergence is detected, significantly overshoots the convergence condition for $k=\left\{ 5,10 \right\}$. 
 
 \begin{table}
     \centering
-    \caption[Nearest symplectic matrix problem solved by GD, TR-1 and TR-2 timetable]{Nearest symplectic matrix problem solved by GD, TR-1 and TR-2. The table summarizes time to converge for all the algorithms on $\mathrm{SpSt}(2n, 2k)$, with $n=100$ for $k={5,10,20}$.}\label{tbl:Nearest_symplectic_matrix_2nd_order}
-    \begin{tabular}{l S[table-format=1.3] S[table-format=2.1] S[table-format=2.2]}
+    \caption[Nearest symplectic matrix problem solved by GD, TR-1, and TR-2 timetable]{Nearest symplectic matrix problem solved by GD, TR-1, and TR-2. The table summarizes time to converge for all the algorithms on $\mathrm{SpSt}(2n, 2k)$, with $n=100$ for $k={5,10,20}$.}\label{tbl:Nearest_symplectic_matrix_2nd_order}
+    \begin{tabular}{l S[table-format=1.3] S[table-format=2.2] S[table-format=1.2]}
         \toprule
         & \multicolumn{3}{c}{\textbf{Runtime (s)}} \\ 
         \cmidrule(l){2-4}
         & {GD} & {TR-1} & {TR-2} \\
         \midrule
-        $k=5$ & 0.051 & 9.7 & 0.70 \\
-        $k=10$ & 0.23 & 12 & 5.4 \\
-        $k=20$ & 1.1 & 35 & 23 \\ 
+        $k=5$ & 0.054 & 0.21 & 1.7 \\
+        $k=10$ & 0.22 & 11 & 0.12 \\
+        $k=20$ & 0.99 & 31 & 0.27 \\
         \bottomrule       
     \end{tabular}
 \end{table}
-Table \ref{tbl:Nearest_symplectic_matrix_2nd_order} displays the time to converge for the runs displayed in Figure~\ref{fig:nearest_symplectic_matrix_2nd_order}. We can see that GD has a significantly faster time to converge than TR-1 and TR-2. We also observe that TR-2 is faster than TR-1, though the difference in time shrinks as $k$ increases. We can also see that the time increase per $k$ for TR-1 and TR-2 is much slower than for GD, which increases the convergence time by approximately an order of magnitude for the increases in $k$. 
-
-
+Table~\ref{tbl:Nearest_symplectic_matrix_2nd_order} displays the time to converge for the runs displayed in Figure~\ref{fig:nearest_symplectic_matrix_2nd_order}. We can see that GD has a significantly faster time to converge than TR-1 and TR-2 for $k=5$. However, for $k=\{10,20\}$, TR-2 takes the lead. We also observe that while TR-2 is faster than TR-1 for $k=\{10,20\}$, it is not for $k=5$. While GD and TR-1 have increasing runtimes as $k$ increases, TR-2 has an initial dip from $k=5$ to $k=10$, before increasing again. 
 
 % Other plots  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

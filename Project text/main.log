@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  22 DEC 2024 19:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.11.9)  23 DEC 2024 21:53
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1141,7 +1141,6 @@ File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
 \c@@todonotes@numberoftodonotes=\count537
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 32.
 runsystem(for ^%i in (pygmentize.exe pygmentize.bat pygmentize.cmd) do set > main.aex <nul: /p x=^%~$PATH:i>> main.aex)...executed.
 
 runsystem(del main.aex)...executed.
@@ -1157,30 +1156,27 @@ LaTeX Warning: Label `fig:retractions' multiply defined.
 
 LaTeX Warning: Label `fig:nearest_symplectic_matrix_2nd_order' multiply defined.
 
-
-LaTeX Warning: Label `tbl:Nearest_symplectic_matrix_2nd_order' multiply defined.
-
 )
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
 Package biblatex Info: Trying to load language 'british'...
 Package biblatex Info: ... file 'british.lbx' found.
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/biblatex/lbx\british.lbx
@@ -1198,8 +1194,8 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (main.bbl)
-Package biblatex Info: Reference section=0 on input line 36.
-Package biblatex Info: Reference segment=0 on input line 36.
+Package biblatex Info: Reference section=0 on input line 37.
+Package biblatex Info: Reference segment=0 on input line 37.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
@@ -1224,7 +1220,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\rannu\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring ON on input line 36.
+Package hyperref Info: Link coloring ON on input line 37.
  (main.out) (main.out)
 \@outlinefile=\write8
 \openout8 = `main.out'.
@@ -1242,19 +1238,19 @@ File: translations-basic-dictionary-english.trsl (english translation file `tran
 )
 \symgns@font=\mathgroup9
 LaTeX Font Info:    Overwriting symbol font `gns@font' in version `bold'
-(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 36.
-Package gensymb Info: Math companion symbols declared on input line 36.
-LaTeX Info: Redefining \degree on input line 36.
-LaTeX Info: Redefining \celsius on input line 36.
-Package gensymb Info: Using text companion symbols for \degree, \celsius and \perthousand on input line 36.
-LaTeX Info: Redefining \ohm on input line 36.
-Package gensymb Info: Using \textohm for \ohm on input line 36.
-LaTeX Info: Redefining \micro on input line 36.
-Package gensymb Info: Using \textmu for \micro on input line 36.
+(Font)                  TS1/cmr/m/n --> TS1/cmr/b/n on input line 37.
+Package gensymb Info: Math companion symbols declared on input line 37.
+LaTeX Info: Redefining \degree on input line 37.
+LaTeX Info: Redefining \celsius on input line 37.
+Package gensymb Info: Using text companion symbols for \degree, \celsius and \perthousand on input line 37.
+LaTeX Info: Redefining \ohm on input line 37.
+Package gensymb Info: Using \textohm for \ohm on input line 37.
+LaTeX Info: Redefining \micro on input line 37.
+Package gensymb Info: Using \textmu for \micro on input line 37.
 
 
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable tick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into your preamble.
- on input line 36.
+ on input line 37.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -4526,15 +4522,9 @@ NOTE: coordinate (,) has been dropped because of a coordinate filter. (see also 
 [16]
 
 [17]
-
-Package caption Warning: \label without proper reference on input line 80.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:symplectic_decomposition' on page 18 undefined on input line 15.
-
 PGFPlots: reading {../2nd_order_symplectic_decomposition_n100k1r4m10.csv}
 PGFPlots: reading {../2nd_order_symplectic_decomposition_n100k1r4m10.csv}
+
 NOTE: coordinate (,) has been dropped because of a coordinate filter. (see also unbounded coords=jump). 
 NOTE: coordinate (,) has been dropped because of a coordinate filter. (see also unbounded coords=jump). 
 NOTE: coordinate (,) has been dropped because of a coordinate filter. (see also unbounded coords=jump). 
@@ -16309,34 +16299,26 @@ NOTE: coordinate (,) has been dropped because of a coordinate filter. (see also 
 NOTE: coordinate (,) has been dropped because of a coordinate filter. (see also unbounded coords=jump). 
 NOTE: coordinate (,) has been dropped because of a coordinate filter. (see also unbounded coords=jump). 
 NOTE: coordinate (,) has been dropped because of a coordinate filter. (see also unbounded coords=jump). 
-
-Package caption Warning: \label without proper reference on input line 80.
-See the caption package documentation for explanation.
-
-
-LaTeX Warning: Reference `fig:symplectic_decomposition' on page 18 undefined on input line 258.
-
 )) (Sections/Conclusion.tex
 
 [18]
 
-[19])
+[19]
 
-[20]
-Overfull \hbox (2.62471pt too wide) in paragraph at lines 70--70
+[20])
+
+[21]
+Overfull \hbox (2.62471pt too wide) in paragraph at lines 71--71
 []\OT1/cmr/m/n/10 Ole Gun-nar R^^\sholt Hov-land. \OT1/cmr/m/it/10 TMA4500-Project-Hovland-Symplectic-Stiefel\OT1/cmr/m/n/10 . 2024. \OT1/cmr/m/sc/10 url\OT1/cmr/m/n/10 : [][]$\OT1/cmss/m/n/10 https :
  []
 
 
 
-[21] (main.aux (custom_structures.aux))
+[22] (main.aux (custom_structures.aux))
  ***********
 LaTeX2e <2024-11-01>
 L3 programming layer <2024-10-09>
  ***********
-
-
-LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -16349,16 +16331,16 @@ Package logreq Info: Writing requests to 'main.run.xml'.
  ) 
 Here is how much of TeX's memory you used:
  54939 strings out of 473702
- 1293796 string characters out of 5719438
- 4360289 words of memory out of 5000000
- 76966 multiletter control sequences out of 15000+600000
+ 1293790 string characters out of 5719438
+ 4356089 words of memory out of 5000000
+ 76964 multiletter control sequences out of 15000+600000
  570593 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 117i,19n,121p,2104b,2616s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 117i,19n,121p,2039b,2616s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmib10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/rannu/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (24 pages, 1338751 bytes).
+Output written on main.pdf (25 pages, 1340249 bytes).
 PDF statistics:
- 660 PDF objects out of 1000 (max. 8388607)
- 123 named destinations out of 1000 (max. 500000)
+ 672 PDF objects out of 1000 (max. 8388607)
+ 125 named destinations out of 1000 (max. 500000)
  186 words of extra memory for PDF output out of 10000 (max. 10000000)
 

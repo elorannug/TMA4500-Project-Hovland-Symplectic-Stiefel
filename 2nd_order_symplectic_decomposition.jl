@@ -27,16 +27,16 @@ md"""
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 100 
+n = 100 # In project report 100 were used
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 1
+k = 1   # In project report {1,2,3} were used
 
 # ╔═╡ 1b0763d0-3c2b-43bb-b663-c792f5f4ce24
-r = 4
+r = 4   # In project report 4 were used
 
 # ╔═╡ 0011fbe2-acd2-4798-8e82-9cd4b567423f
-m = 10 # Jensen picked 100
+m = 10  # In project report 10 were used
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
@@ -159,29 +159,14 @@ R–TR2 uses the approximation given in (2.25). We will write R–TR when addres
 both variants."*
 """
 
-# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
-# ╠═╡ disabled = true
-#=╠═╡
-function Ω(P, X) # Seems to work the same as MATLAB JZ
-	J = SymplecticElement(1)
-	invPTP = inv(P'*P) # Storing to not compute 3 times
-	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
-end
-  ╠═╡ =#
-
-# ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
-function Ω(p,X) # translated from MATLAB JZ
-	Q = p/(p'*p)
-	XQT = -symplectic_inverse(X*Q')
-	return X*Q' + XQT - (XQT*Q)*p'
-end
-
 # ╔═╡ cab5b270-2bfa-493b-9885-12b2d01a227c
+#=╠═╡
 function Γ(p,η)
 	Ω_p = Ω(p, η) 
 	ΩTp = Ω_p' * p 
 	return -(Ω_p - Ω_p') * (η +#=this was -=# ΩTp) - Ω_p' * ΩTp  
 end
+  ╠═╡ =#
 
 # ╔═╡ bbd894c9-b269-4919-8af5-e0b03869a0ce
 # ╠═╡ disabled = true
@@ -215,6 +200,7 @@ end
   ╠═╡ =#
 
 # ╔═╡ 8d97e650-7584-49f3-9a76-4af9b0426b37
+#=╠═╡
 function r_hess(M, p, X) 
 	eg = euclid_grad_cost_function(p)
 	eh = euclid_hessian_cost_function(p, X)
@@ -245,15 +231,18 @@ function r_hess(M, p, X)
 
 	return Dgrad_f + 0.25*((Np^2) * Γ(p,(rg + X)/Np) - (Nn^2) * Γ(p,(rg - X)/Nn))
 end
+  ╠═╡ =#
 
 # ╔═╡ 2ab8e98a-c09f-4d7b-b549-e4b1c90b8074
+#=╠═╡
 # ⚠️ It was using Cayley as default!
 check_Hessian(M, cost_function, r_grad, r_hess#=, U0, X0=#; plot=true, error=:warn, check_symmetry=true, check_vector=true, retraction_method=ExponentialRetraction(), limits=(-5,0))
+  ╠═╡ =#
 
 # ╔═╡ e3878383-0f27-4859-bd9e-165076a52da6
 md"""
 ### Implementing an approximate Riemannian Hessian (JZ)
-Below is the implementation of equation (2.25) in BZ:
+Below is the implementation of equation (2.25) in JZ:
 
 $$\operatorname{Hess} f(p)[X] = P_p \left( \operatorname{D} \overline{\operatorname{grad}} f(p)[X] \right)$$
 
@@ -306,19 +295,6 @@ md"""
 As the trial step size,$k$, use the alternating BB method $\gamma_{k}^{ABB}$.
 """
 
-# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
-stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
-# Init. step size as in paper
-
-# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
-# curcomvent calculation of injectivity radius 
-
-# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
-# ╠═╡ disabled = true
-#=╠═╡
-stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
-  ╠═╡ =#
-
 # ╔═╡ 5918c34b-c435-428f-bd18-5b156b5bb0bc
 md"""
 ### Running algorithms
@@ -339,14 +315,17 @@ md"""
 """
 
 # ╔═╡ 761c40ec-878a-42a6-b372-f79394dcf4f8
+#=╠═╡
 solver = gradient_descent(M, cost_function, r_grad, U0;
 	stepsize = stepsize, return_state = true, 
 	stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol),
 	debug = [:Iteration,(:Cost, " F(p): %1.6f, "),
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),:Stepsize,"\n",500,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
+  ╠═╡ =#
 
 # ╔═╡ 7301c2ba-706c-4797-b597-92877cd16a4b
+#=╠═╡
 begin # JZ: TR-1
 solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
 	acceptance_rate = 0.1,
@@ -361,6 +340,7 @@ solver_og_tr_hess = trust_regions(M, cost_function, r_grad, r_hess, U0;
 		(:GradientNorm, "|▽F(p)|: %1.4e, "),"\n",1000,:Stop],
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 end
+  ╠═╡ =#
 
 # ╔═╡ 97db13d5-9e70-41be-84e7-866d26558b90
 # JZ: TR-2
@@ -378,22 +358,28 @@ solver_og_tr_approx = trust_regions(M, cost_function, r_grad, r_hess_approx, U0;
 	record=[:Iteration, :Cost, RecordGradientNorm()])
 
 # ╔═╡ 755f4c1c-153c-4f64-9caa-cc2e30e06c61
+#=╠═╡
 begin
 	#isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_approx); error=:info)
 	println("Difference between the SD and Hess approx: ", norm(get_solver_result(solver)-get_solver_result(solver_og_tr_approx)))
 end
+  ╠═╡ =#
 
 # ╔═╡ 8ab39b2a-6b4d-4ccc-a988-53654827b647
+#=╠═╡
 begin
 	#isapprox(M, get_solver_result(solver), get_solver_result(solver_og_tr_hess))
 	println("Difference between the SD and Hessian: ", norm(get_solver_result(solver)-get_solver_result(solver_og_tr_hess)))
 end
+  ╠═╡ =#
 
 # ╔═╡ 55d3d303-c6b5-4df3-bb2d-5b1b87a442d0
+#=╠═╡
 begin
 	#isapprox(M, get_solver_result(solver_og_tr_approx), get_solver_result(solver_og_tr_hess))
 	println("Difference between Hessian and Hessian approx: ", norm(get_solver_result(solver_og_tr_approx)-get_solver_result(solver_og_tr_hess)))
 end
+  ╠═╡ =#
 
 # ╔═╡ 4cb21eeb-90ce-4ac7-8535-4c3ba59f90c4
 # ╠═╡ disabled = true
@@ -410,6 +396,7 @@ md"""
 """
 
 # ╔═╡ 73612b28-4c8a-4214-b841-37d72c8b1aba
+#=╠═╡
 begin
 	#solver_og_tr_hess
 	iterations = [rec[1] for rec in get_record(solver)]
@@ -426,8 +413,10 @@ begin
 
 	println("Fetched arrays for plotting")
 end
+  ╠═╡ =#
 
 # ╔═╡ fec87766-fb88-4ebb-b2e8-31471c2ff885
+#=╠═╡
 begin
 	using CSV, DataFrames
 	# Saving data as dataframe to csv
@@ -460,20 +449,25 @@ begin
 	# Save to a CSV file
 	CSV.write("2nd_order_symplectic_decomposition_n100k1r4m10.csv", data)
 end
+  ╠═╡ =#
 
 # ╔═╡ de8bf366-f01d-43cd-bcd0-db8828d6745a
+#=╠═╡
 begin
 	plot(iterations, cost_vals; title = "Convergence plot comparison", xlabel = "# iterations", ylabel = "Cost", xaxis=:log10, yaxis=:log10,label = "Grad. Descent")
 	plot!(iterations_og_tr_approx, cost_vals_og_tr_approx, label = "TR approx Hess")
 	plot!(iterations_og_tr_hess, cost_vals_og_tr_hess, label = "TR exact Hess")
 end
+  ╠═╡ =#
 
 # ╔═╡ b51e80e3-1983-496c-ac6f-095fe8945ca0
+#=╠═╡
 begin
 	plot(iterations, gradient_vals; yaxis = :log10, title = "|∇f| plot comparison", xlabel = "# iterations", ylabel = "|∇f|", xaxis = :log10, label = "Grad. Descent")
 	plot!(iterations_og_tr_approx, gradient_vals_og_tr_approx, label = "TR approx Hess")
 	plot!(iterations_og_tr_hess, gradient_vals_og_tr_hess, label = "TR exact Hess")
 end
+  ╠═╡ =#
 
 # ╔═╡ f2526a0a-f155-4e41-b9bd-1d824904907f
 run_diag = true
@@ -531,6 +525,40 @@ begin # Approx Hess, TR-2
 		stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol))
 	end
 end
+
+# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
+# ╠═╡ disabled = true
+#=╠═╡
+stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
+  ╠═╡ =#
+
+# ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
+#=╠═╡
+function Ω(p,X) # translated from MATLAB JZ
+	Q = p/(p'*p)
+	XQT = -symplectic_inverse(X*Q')
+	return X*Q' + XQT - (XQT*Q)*p'
+end
+  ╠═╡ =#
+
+# ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
+#=╠═╡
+stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Works
+# Init. step size as in paper
+
+# Potential add: initial_guess=Manopt.ConstantStepsize(M, cost_function(M, U0)
+# curcomvent calculation of injectivity radius 
+  ╠═╡ =#
+
+# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
+# ╠═╡ disabled = true
+#=╠═╡
+function Ω(P, X) # Seems to work the same as MATLAB JZ
+	J = SymplecticElement(1)
+	invPTP = inv(P'*P) # Storing to not compute 3 times
+	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
+end
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """

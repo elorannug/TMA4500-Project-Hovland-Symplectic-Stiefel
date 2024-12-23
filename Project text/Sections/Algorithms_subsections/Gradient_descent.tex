@@ -22,7 +22,7 @@ The step-size $t_{k}$ is calculated as $t_{k}=\gamma_{k}\delta^{h}$, where $\gam
 % org/10.1137/20M1348522.
 \begin{algorithm}[H]
     \caption{Riemannian gradient descent}\label{alg:grad_descent}
-    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, parameters $\beta, \gamma \in(0,1)$, steplength range $0<\gamma_{\text{min}}<\gamma_{\text{max}}$, initial step size $\gamma_{0}=f(p_{0})$, maximum number of iterations $N\in \mathbb{N}$, step parameters $h_{\text{min}}<h_{\text{max}}\in \mathbb{Z}$, tolerance parameters $\epsilon, \epsilon_{p}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with Riemannian gradient $\operatorname{grad}f(p)$, and $\lvert \lvert \cdot,\cdot \rvert  \rvert_{\text{F}}$ denotes the Frobenius norm.
+    \textbf{Input:} Initial point $p_{0}\in \mathrm{SpSt}(2n, 2k)$, objective function $f\colon\mathrm{SpSt}(2n, 2k)\to \mathbb{R}$, retraction $\mathcal{R}$, parameters $\beta, \gamma \in(0,1)$, step length range $0<\gamma_{\text{min}}<\gamma_{\text{max}}$, initial step size $\gamma_{0}=f(p_{0})$, maximum number of iterations $N\in \mathbb{N}$, step parameters $h_{\text{min}}<h_{\text{max}}\in \mathbb{Z}$, tolerance parameters $\epsilon, \epsilon_{p}>0$, Riemannian metric $\langle \cdot,\cdot \rangle_{p}$, with Riemannian gradient $\operatorname{grad}f(p)$, and $\lvert \lvert \cdot,\cdot \rvert  \rvert_{\text{F}}$ denotes the Frobenius norm.
     \begin{algorithmic}[1]
         \For{$0\leq k\leq N$}
         \State $X_{k}=-\operatorname{grad}f(p_{k})$

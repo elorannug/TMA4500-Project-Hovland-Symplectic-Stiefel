@@ -31,10 +31,10 @@ md"""
 """
 
 # ╔═╡ ba92e87a-6ac3-4490-ab75-148cc0a25666
-n = 10 # In the problem report {100} were utilized
+n = 100 # In the problem report {100} were utilized
 
 # ╔═╡ fd42108d-79bd-4db5-a1ce-1875341513c2
-k = 2 # In the problemreport {5, 10, 20} were utilized
+k = 20 # In the problemreport {5, 10, 20} were utilized
 
 # ╔═╡ 7d05e993-ae82-4e41-b36f-e76224483849
 M = SymplecticStiefel(2*n, 2*k)
@@ -68,7 +68,7 @@ is_point(M, A; error=:info)
 # ╔═╡ 9281660e-6a48-4b2d-b792-13b8803e2a5e
 # ╠═╡ disabled = true
 #=╠═╡
-begin
+begin # these disabled cells are for comparing with JZ matlab code
 	@printf "["
 for i in 1:size(U0, 1)
     for j in 1:size(U0, 2)
@@ -487,7 +487,7 @@ end
   ╠═╡ =#
 
 # ╔═╡ f2526a0a-f155-4e41-b9bd-1d824904907f
-run_diag = false
+run_diag = true
 
 # ╔═╡ 8c04cb67-1e83-4fce-a32e-9067790409cb
 md"""
@@ -499,7 +499,7 @@ begin
 	if run_diag
 		@benchmark gradient_descent(M, cost_function, r_grad, U0;
 		stepsize = stepsize, return_state = true, 
-		stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol))
+		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol))
 	end
 end
 
@@ -539,25 +539,9 @@ begin # Approx Hess, TR-2
 		# Removed StopWHenModelIncreased() from subproblem stopping criterion
 		sub_stopping_criterion=StopAfterIteration(manifold_dimension(M))|StopWhenTrustRegionIsExceeded()|StopWhenResidualIsReducedByFactorOrPower(; κ=0.1, θ=1.0),
 		return_state = true,
-		stopping_criterion=StopAfterIteration(no_iterations) | StopWhenGradientNormLess(grad_tol))
+		stopping_criterion=StopAfterIteration(1000) | StopWhenGradientNormLess(grad_tol))
 	end
 end
-
-# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
-# ╠═╡ disabled = true
-#=╠═╡
-stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
-  ╠═╡ =#
-
-# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
-# ╠═╡ disabled = true
-#=╠═╡
-function Ω(P, X) # Seems to work the same as MATLAB JZ
-	J = SymplecticElement(1)
-	invPTP = inv(P'*P) # Storing to not compute 3 times
-	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
-end
-  ╠═╡ =#
 
 # ╔═╡ 30ceffac-5c28-4c53-9f3a-0375828ac2cb
 #=╠═╡
@@ -565,30 +549,6 @@ begin
 	Random.seed!(seed)
 	U0 = rand(M)
 end
-  ╠═╡ =#
-
-# ╔═╡ 5895c078-5f50-4783-9ecd-acdacc38ab5d
-# ╠═╡ disabled = true
-#=╠═╡
-begin # n = 2, k = 1
-	A = [-0.480444   0.470344
-  		0.304117  -0.104969
-  		0.318186   0.143638
-  		0.567337   0.0264584]
-	U0 = [-1.40663890210255781987314094294561  0.23371634267482957469930227034638
-		0.40603619258114187484665080773993  -0.55070185394803905509775177051779
-		1.09738409755748933527286226308206  -1.23250078660319939416467605042271
-		-0.44419512036050057268710133939749  -0.57282548568309843428636440876289]
-	X = [-0.45604098553023686424268134942395  1.00874277615952712139346658659633
-		0.49420549013378234359805674102972  -0.19475315178057600595806775345409
-		1.14370352044281964332128609385109  -0.57741159467602198862579143678886
-		0.34114544561118481658112955301476  0.44757702285017553212043139865273]
-end
-  ╠═╡ =#
-
-# ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
-#=╠═╡
-A = rand_A/norm(rand_A)
   ╠═╡ =#
 
 # ╔═╡ fdfd12e9-0e14-4f45-9f89-eec488f1bdf5
@@ -600,6 +560,11 @@ stepsize = ArmijoLinesearch(M; initial_stepsize = cost_function(M, U0)) # ✔ Wo
 # curcomvent calculation of injectivity radius 
   ╠═╡ =#
 
+# ╔═╡ 212f0565-d5ee-48e7-90bc-05351d905157
+#=╠═╡
+A = rand_A/norm(rand_A)
+  ╠═╡ =#
+
 # ╔═╡ 71170916-48e8-42b1-a1f1-c0d55ae73fc5
 #=╠═╡
 function Ω(p,X) # translated from MATLAB JZ
@@ -607,6 +572,16 @@ function Ω(p,X) # translated from MATLAB JZ
 	#println(Q)
 	XQT = -symplectic_inverse(X*Q')
 	return X*Q' + XQT - (XQT*Q)*p'
+end
+  ╠═╡ =#
+
+# ╔═╡ 3e1e94a9-1356-47ea-993f-df79a5105fdb
+# ╠═╡ disabled = true
+#=╠═╡
+function Ω(P, X) # Seems to work the same as MATLAB JZ
+	J = SymplecticElement(1)
+	invPTP = inv(P'*P) # Storing to not compute 3 times
+	return X*invPTP*P'+J*P*invPTP*X'*(I-J'*P*invPTP*P'*J)*J
 end
   ╠═╡ =#
 
@@ -641,6 +616,31 @@ begin # n = 4, k = 1
 	0.0773827859190266 0.15919402104081007
 	0.18553779175069454 0.04534051646419934]
 end;
+  ╠═╡ =#
+
+# ╔═╡ afdac687-8170-4679-bb9e-2af82b6877de
+# ╠═╡ disabled = true
+#=╠═╡
+stepsize = NonmonotoneLinesearch(M;initial_stepsize = cost_function(M, U0), memory_size=1)#, storage = storage)
+  ╠═╡ =#
+
+# ╔═╡ 5895c078-5f50-4783-9ecd-acdacc38ab5d
+# ╠═╡ disabled = true
+#=╠═╡
+begin # n = 2, k = 1
+	A = [-0.480444   0.470344
+  		0.304117  -0.104969
+  		0.318186   0.143638
+  		0.567337   0.0264584]
+	U0 = [-1.40663890210255781987314094294561  0.23371634267482957469930227034638
+		0.40603619258114187484665080773993  -0.55070185394803905509775177051779
+		1.09738409755748933527286226308206  -1.23250078660319939416467605042271
+		-0.44419512036050057268710133939749  -0.57282548568309843428636440876289]
+	X = [-0.45604098553023686424268134942395  1.00874277615952712139346658659633
+		0.49420549013378234359805674102972  -0.19475315178057600595806775345409
+		1.14370352044281964332128609385109  -0.57741159467602198862579143678886
+		0.34114544561118481658112955301476  0.44757702285017553212043139865273]
+end
   ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
