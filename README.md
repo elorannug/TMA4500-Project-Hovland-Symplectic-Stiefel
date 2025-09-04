@@ -5,7 +5,7 @@ This repo contains
 * the LaTex code for the report, as well as the actual report in .pdf format, and
 * an updated report in .pdf format, written after the course was completed, fixing some small mistakes and typos in the original report.
 
-The original text is found in `Project text/Hovland_Specialization_Project_Report_Optimization_on_Symplectic_Stiefel.pdf`, and the new text is named `Project text/Updated_Hovland_Specialization_Project_Report_Optimization_on_Symplectic_Stiefel.pdf`.
+The original text is found in `Project text/Hovland_Specialization_Project_Report_Optimization_on_Symplectic_Stiefel.pdf`, and the new text is found in `Project text/Updated_Hovland_Specialization_Project_Report_Optimization_on_Symplectic_Stiefel.pdf`.
 
 Note that the scripts "gr_desc_SpGr_retract_comparison.jl", "grad_desc_nearest_sp_matrix.jl", and "pluto_warmup.jl" are not part of the report, but some users might find them insightful in how to use `Manopt.jl` and `Pluto` notebooks. 
 
