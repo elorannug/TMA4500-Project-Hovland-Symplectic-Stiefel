@@ -1,5 +1,7 @@
 ## Riemannian Optimization using Second Order Information on the Symplectic Stiefel Manifold
 
+<p align="center"><img width="700" height="330" alt="image" src="https://github.com/user-attachments/assets/a8020e8e-b43a-4776-a24e-b88c7f6e9d8f" />
+
 This repo contains 
 * code for the project report "_Riemannian Optimization using second order Information on the Symplectic Stiefel manifold_",
 * the LaTex code for the report, as well as the actual report in .pdf format, and
